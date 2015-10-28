@@ -1,0 +1,9 @@
+CREATE ASSEMBLY asm FROM "Microsoft.Analytics.Samples.Formats.dll";
+REFERENCE ASSEMBLY asm;
+REFERENCE SYSTEM ASSEMBLY [System.Xml];
+@e = EXTRACT a string
+     FROM "xpathExample.xml"
+     USING Extractors.Tsv();
+@q = SELECT Microsoft.Analytics.Samples.Formats.Xml.XPath.FindNodes(a, "row/qux")[0] AS qux FROM @e;
+OUTPUT @q TO "xpathExample.out" USING Outputters.Tsv();
+
