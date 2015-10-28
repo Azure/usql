@@ -18,10 +18,15 @@ To deploy, you have two options, leveraging the Visual Studio tools, or using th
 
 1. Inside Visual Studio, navigate to your Data Lake Analytics account 
 2. Navigate to the database you want to deploy the Assembly
+
 ![](md_media/navigate_to_database.png)
+
 3. Right click and add assembly (you may need to upload the assembly to a location in the store to register it) 
+
 ![](md_media/register_assembly.png)
+
 4. Browse to the assembly, and include dependent assemblies (this will pull in the Newtonsoft.Json dll as well) 
+
 ![](md_media/save_assembly.png) 
 
 
