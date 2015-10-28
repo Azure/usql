@@ -1,0 +1,15 @@
+CREATE ASSEMBLY asm FROM "Microsoft.Analytics.Samples.Formats.dll";
+REFERENCE ASSEMBLY asm;
+@e = EXTRACT a string, b string
+     FROM "example.xml"
+     USING new Microsoft.Analytics.Samples.Xml.XmlDomExtractor(rowPath:"foo",
+                             columnPaths:new SQL.MAP<string, string> { {"bar", "a"}, {"baz", "b"} });
+@q = SELECT *, "<root><row><qux>1.01</qux></row><row><qux>1.001</qux></row></root>" AS x FROM @e;
+@q = SELECT @q.a, @q.b, t.c
+     FROM @q
+     CROSS APPLY new Microsoft.Analytics.Samples.Formats.Xml.XmlApplier("x",
+                                 "row",
+                                 new SQL.MAP<string,string> { {"qux", "c"} })
+                 AS t(c string);
+OUTPUT @q TO "foo.xml" USING new Microsoft.Analytics.Samples.Xml.XmlOutputter("foo");
+
