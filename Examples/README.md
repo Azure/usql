@@ -1,4 +1,4 @@
-# U-SQL End to End Examples
+# U-SQL Examples
 
 This folder contains several solutions, which demonstrate how to build U-SQL extractors.
 
