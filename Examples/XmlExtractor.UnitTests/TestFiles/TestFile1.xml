@@ -1,0 +1,54 @@
+﻿<Root>
+  <Locations>
+    <Location>
+      <Id>77</Id>
+      <City>Frankfurt</City>
+      <ForecastTemp>27.7</ForecastTemp>
+      <ForecastHumidity>1200</ForecastHumidity>
+    </Location>
+
+    <Location>
+      <Id>78</Id>
+      <City>Berlin</City>
+      <ForecastTemp>24.1</ForecastTemp>
+      <ForecastHumidity>1100</ForecastHumidity>
+    </Location>
+
+    <Location>
+      <Id>79</Id>
+      <City>Sarajevo</City>
+      <ForecastTemp>31.5</ForecastTemp>
+      <ForecastHumidity>1300</ForecastHumidity>
+    </Location>
+
+    <Location>
+      <Id>78</Id>
+      <City>Berlin</City>
+      <ForecastTemp>25.1</ForecastTemp>
+      <ForecastHumidity>1100</ForecastHumidity>
+    </Location>
+
+    
+    <Location>
+      <Id>78</Id>
+      <City>Berlin</City>
+      <ForecastTemp>27.1</ForecastTemp>
+      <ForecastHumidity>1120</ForecastHumidity>
+    </Location>
+
+    <Location>
+      <Id>79</Id>
+      <City>Sarajevo</City>
+      <ForecastTemp>30.7</ForecastTemp>
+      <ForecastHumidity>1100</ForecastHumidity>
+    </Location>
+  
+      <Location>
+      <Id>71</Id>
+      <City>Frankfurt</City>
+      <ForecastTemp>27.5</ForecastTemp>
+      <ForecastHumidity>1000</ForecastHumidity>
+    </Location>
+
+  </Locations>
+</Root>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlExtractor", "XmlExtractor\XmlExtractor.csproj", "{814C7009-A4CE-4403-9998-166AAFD83E10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlExtractor.UnitTests", "XmlExtractor.UnitTests\XmlExtractor.UnitTests.csproj", "{7DDECB19-8A8A-4C08-989A-CF172DD04601}"
+EndProject
+Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "XmlExtractor.USQLScriptApplication", "XmlExtractor.USqlSampleApplication\XmlExtractor.USQLScriptApplication.usqlproj", "{180D7303-13E5-4EC2-82BE-6AEB0052990F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{814C7009-A4CE-4403-9998-166AAFD83E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{814C7009-A4CE-4403-9998-166AAFD83E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814C7009-A4CE-4403-9998-166AAFD83E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{814C7009-A4CE-4403-9998-166AAFD83E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DDECB19-8A8A-4C08-989A-CF172DD04601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DDECB19-8A8A-4C08-989A-CF172DD04601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DDECB19-8A8A-4C08-989A-CF172DD04601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DDECB19-8A8A-4C08-989A-CF172DD04601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180D7303-13E5-4EC2-82BE-6AEB0052990F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180D7303-13E5-4EC2-82BE-6AEB0052990F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180D7303-13E5-4EC2-82BE-6AEB0052990F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180D7303-13E5-4EC2-82BE-6AEB0052990F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
