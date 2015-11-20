@@ -138,16 +138,15 @@ columns from binary file. By writing of unit tests methods like getColumns() sho
 
 In the real execution process Azure Data Analytics creates schema (columns) on the fly during execution of the script. To understand this, take a look on following script:
 
- ``` EXTRACT A int, B string, C double
-```
+```EXTRACT A int, B string, C double```
 
 
 This script will create a schema of 3 columns: A, B and C. To emulate this in unit test we could use following code:
 
-  ```       columns.Add(new USqlColumn<int>("A"));
+
+ ``` columns.Add(new USqlColumn<int>("A"));
             columns.Add(new USqlColumn<string>("B"));
-            columns.Add(new USqlColumn<double>("C"));
-```
+            columns.Add(new USqlColumn<double>("C"));```
 
 
 
@@ -158,12 +157,11 @@ To deploy Extractor to Azure Data Lake do following.
 After you created a database you can expand database node in Server Explorer. 
 Database will hold all customization assemblies, which you will have to register. There are two ways to register an assembly: Register Assembly by Server Explorer Wizard and Register Assembly from U-Sql script.
 
-##### Register assembly by Server Explorer Wizard
+#### Register assembly by Server Explorer Wizard
 
 Right Mouse click on node 'Assemblies' and then Register Assembly' . In the wizard, you can add a assembly from local disk, which is your build folder or you can upload it from cloud. After upload of assembly, you can set (change) 'Assembly Name'. This is the name, which will be later used by SQL statement:
 
- ```REFERENCE ASSEMBLY <assembly name>
-```
+ ```REFERENCE ASSEMBLY <assembly name>```
 
 Note that wizard enables you to add dependent assemblies ('Managed Dependencies'). Use this button to add all dependent assemblies. Please note that you SHOULD NOT ass any assembly from namespace Microsoft.Analytics, because these are system assemblies, which already exist in database hive.
 
@@ -174,7 +172,7 @@ At the end U-SQL script has to be implemented, which uses custom extractor.
 If the assembly with extractor (or some other customization) is NOT uploaded (registered) in data lake database, you will have to do following.
 Upload the assembly and all its dependencies to data lake storage and then use following statements in the script:
 
-- Example I:
+####Example I:
 
 ```
     USE sampledb1;
@@ -182,7 +180,7 @@ Upload the assembly and all its dependencies to data lake storage and then use f
     REFERENCE ASSEMBLY asmXmlExtractor;
 ```
 
-- Example II:
+####Example II:
 Developers will most likely upload assemblies by using wizard. In that case U-SQL script does not require statement 'CREATE ASSEMBLY '
 This is the script, which references the assembly:
 
