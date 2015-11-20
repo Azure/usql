@@ -13,7 +13,7 @@ This solution contains an end to end example which demonstrates on example of XM
 3.  How to deploy Extractor in Data Lake 
 4.  How to write U-SQL script which uses extractor
 
-### How to implement extractor?
+### How to implement extractor ?
 Following example shows implementation of extractor. For more information please take a look on Microsoft.Analytics.Samples solution.
 
 ```
@@ -41,7 +41,7 @@ Following example shows implementation of extractor. For more information please
     }
 ```
 
-### How to write Unit Test for extractor
+### How to write Unit Test for extractor ?
 
 To create a unit test for extractor, please create common unit test project. As next add references to following assemblies:
 
@@ -141,6 +141,7 @@ In the real execution process Azure Data Analytics creates schema (columns) on t
  ``` EXTRACT A int, B string, C double
 ```
 
+
 This script will create a schema of 3 columns: A, B and C. To emulate this in unit test we could use following code:
 
   ```       columns.Add(new USqlColumn<int>("A"));
@@ -150,14 +151,15 @@ This script will create a schema of 3 columns: A, B and C. To emulate this in un
 
 
 
-### How to deploy Extractor in Data Lake 
+### How to deploy Extractor in Data Lake ?
 To deploy Extractor to Azure Data Lake do following.
 
-#### 1. Create Database in DataLake
+#### Create Database in DataLake
 After you created a database you can expand database node in Server Explorer. 
 Database will hold all customization assemblies, which you will have to register. There are two ways to register an assembly: Register Assembly by Server Explorer Wizard and Register Assembly from U-Sql script.
 
 ##### Register assembly by Server Explorer Wizard
+
 Right Mouse click on node 'Assemblies' and then Register Assembly' . In the wizard, you can add a assembly from local disk, which is your build folder or you can upload it from cloud. After upload of assembly, you can set (change) 'Assembly Name'. This is the name, which will be later used by SQL statement:
 
  ```REFERENCE ASSEMBLY <assembly name>
@@ -167,7 +169,7 @@ Note that wizard enables you to add dependent assemblies ('Managed Dependencies'
 
 Add additional files can be used to upload any other file, which can be referred from the U-SQL script.
 
-### How to write U-SQL script which uses extractor
+### How to write U-SQL script which uses extractor ?
 At the end U-SQL script has to be implemented, which uses custom extractor.
 If the assembly with extractor (or some other customization) is NOT uploaded (registered) in data lake database, you will have to do following.
 Upload the assembly and all its dependencies to data lake storage and then use following statements in the script:
