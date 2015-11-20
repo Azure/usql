@@ -10,7 +10,7 @@ using Microsoft.Analytics.Interfaces;
 public class XmlDomExtractor : IExtractor
 {
     private string m_XPath;
-
+     
     public XmlDomExtractor(string xPath)
     {
         this.m_XPath = xPath;
