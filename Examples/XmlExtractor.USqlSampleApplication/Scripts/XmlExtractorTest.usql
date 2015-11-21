@@ -1,0 +1,44 @@
+﻿//CREATE ASSEMBLY SampleDotNetCode
+//FROM @"mafs://accounts/sandbox/fs/DLLs/SampleDotNetCode.dll";         
+    
+//CREATE ASSEMBLY asm FROM "XmlExtractor/bin/Debug/xmlextractor.dll";
+//CREATE ASSEMBLY asmXmlExtractor FROM @"asmXmlExtractor" ;
+USE sampledb1;
+REFERENCE ASSEMBLY asmXmlExtractor;
+
+
+//0. Initialize some parameters/constants
+DECLARE @INPUT_FILE string = "/Samples/XmlExtractor/TestFile1.xml";
+DECLARE @OUTPUT_FILE string = "/Samples/XmlExtractor/TestFile1Result.txt";
+
+@XmlRows =
+    EXTRACT Id int,
+            City string,
+            ForecastTemp double,
+            ForecastHumidity string
+    FROM @INPUT_FILE
+    USING new XmlDomExtractor("Locations/Location");
+
+//2. SELECT Transformation
+@Result =
+SELECT City,  COUNT(*) AS NumberOfSamples , MAX(ForecastTemp) AS MaxTemp
+FROM @XmlRows
+GROUP BY City
+ORDER BY NumberOfSamples DESC, City
+FETCH FIRST 200 ROWS; 
+
+
+//@Result =
+//SELECT City,  COUNT(*) AS NumberOfSamples, MAX(ForecastTemp) as MaxTemp
+//FROM @XmlRows
+//GROUP BY City
+//ORDER BY NumberOfSamples DESC, City
+//FETCH FIRST 200 ROWS; 
+
+
+//3. Output
+OUTPUT @Result 
+TO @OUTPUT_FILE 
+USING Outputters.Csv(quoting : true);
+
+

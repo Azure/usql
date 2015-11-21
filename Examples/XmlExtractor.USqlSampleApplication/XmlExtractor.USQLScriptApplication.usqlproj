@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RuntimeVersion>default</RuntimeVersion>
+    <Name>USQLScriptApplication</Name>
+    <RootNamespace>USQLSampleApplication1</RootNamespace>
+    <ProjectGuid>{180d7303-13e5-4ec2-82be-6aeb0052990f}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Scripts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Script Include="Scripts\XmlExtractorTest.usql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ScriptCode Include="Scripts\XmlExtractorTest.usql.cs">
+      <DependentUpon>Scripts\XmlExtractorTest.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+</Project>
