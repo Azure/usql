@@ -8,7 +8,7 @@ Unless otherwise noted, they are provided as VisualStudio solutions.
 
 The individual projects are:
 
-- [***Data Formats***](DataFormats] : contains samples for working with data formats such as XML and JSON.
+- [***Data Formats***](DataFormats) : contains samples for working with data formats such as XML and JSON.
 
 - [***Ambulance Demo Samples***](AmbulanceDemo) : Contains several topical demo scripts for operating on the AmbulanceDemo samples. It covers topics such as federated queries over WASB and SQL data, file sets, partitioned tables, custom extractors and processors, windowing functions etc. Note that the federated query samples need additional access and resources that may not be accessible from your account.
 
