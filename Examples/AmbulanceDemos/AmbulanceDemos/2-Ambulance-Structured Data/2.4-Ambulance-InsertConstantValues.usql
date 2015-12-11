@@ -1,0 +1,32 @@
+﻿// Insert constant values and how to incrementally add to a table
+
+USE DATABASE master;
+
+// now insert some constant data into master.dbo.USDrivers and USTrips first and then append data to it. 
+//  show how incrementally insert with just insert and with truncate table union 
+// in seperate script.
+TRUNCATE TABLE USDrivers;
+TRUNCATE TABLE USTrips;
+
+DECLARE @newdriver_id int = 100;
+
+INSERT INTO USDrivers(driver_id, name, street, city, region, country, phone_numbers)
+VALUES (
+       @newdriver_id
+     , "Jane Doe"
+     , "100 Main Street West"
+     , "Redmond"
+     , "WA"
+     , "USA"
+     , new SQL.MAP<string,string> {{"cellphone", "(425) 555-1212"}, {"office","(206) 555-1212"}, {"home","(425) 555-1234"}}
+);
+
+INSERT INTO USTrips
+VALUES (
+       Convert.ToDateTime("2014-12-12")
+     , @newdriver_id
+	 , 1
+     , new SQL.ARRAY<int>{1, 4, 5}
+);
+
+// The incremental insert and the Union of the tables with the incremental append needs to be done in a separate script!

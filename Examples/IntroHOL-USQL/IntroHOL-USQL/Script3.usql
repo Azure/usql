@@ -1,0 +1,19 @@
+﻿@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@rs1 =
+    SELECT Start, Region, Duration
+    FROM @searchlog
+WHERE Region == "en-gb";
+
+OUTPUT @rs1   
+    TO "/output/sl_gb.csv"
+      USING Outputters.Csv();

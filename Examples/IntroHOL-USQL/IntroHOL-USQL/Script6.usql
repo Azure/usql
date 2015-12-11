@@ -1,0 +1,23 @@
+﻿@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@res =
+    SELECT
+        Region,
+        SUM(Duration) AS TotalDuration
+    FROM @searchlog
+GROUP BY Region
+HAVING SUM(Duration) > 200;
+
+OUTPUT @res
+    TO "/output/sl_longduration_region.csv"
+    ORDER BY TotalDuration DESC
+    USING Outputters.Csv();

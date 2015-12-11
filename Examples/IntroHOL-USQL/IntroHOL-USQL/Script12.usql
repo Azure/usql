@@ -1,0 +1,17 @@
+﻿@rs1 =
+    SELECT
+        Region,
+        SUM(Duration) AS TotalDuration
+    FROM SLog.dbo.SearchLog2
+GROUP BY Region;
+
+@res =
+SELECT *
+FROM @rs1
+ORDER BY TotalDuration DESC
+FETCH 5 ROWS;
+
+OUTPUT @res
+    TO "/output/slog.csv"
+    ORDER BY TotalDuration DESC
+    USING Outputters.Csv();

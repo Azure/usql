@@ -1,0 +1,82 @@
+﻿// Unstructured file sets
+// Assumes that vehicle CSV data has been already loaded to specified ADL store location
+
+// Define paths
+DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/Data/Ambulance/";
+
+DECLARE @ADL_FILESET_REQVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+@data_req = EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int // virtual file set column
+    , date DateTime // virtual file set column
+    FROM @ADL_FILESET_REQVID
+    USING Extractors.Csv();
+ 
+@alldata_req = SELECT * 
+        FROM @data_req
+        WHERE date>= DateTime.Parse("2014-08-31") AND date < DateTime.Parse("2014-10-31")
+        AND vid == 1
+;
+
+OUTPUT @alldata_req
+TO "/output/vehicles_req.txt"
+USING Outputters.Csv();
+
+////////////////////
+
+DECLARE @ADL_FILESET_OPTVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+@data_opt = EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int // virtual file set column
+    , date DateTime // virtual file set column
+    FROM @ADL_FILESET_OPTVID
+    USING Extractors.Csv();
+
+@alldata_opt = SELECT * 
+        FROM @data_opt
+        WHERE date>= DateTime.Parse("2014-08-31") AND date < DateTime.Parse("2014-10-31")
+;
+
+OUTPUT @alldata_opt
+TO "/output/vehicles_opt.txt"
+USING Outputters.Csv();
+
+//////////////////////////////
+
+DECLARE @ADL_FILESET_PATH string = @ADL_DIR + "{date:yyyy}/{date:MM}/{date:dd}/vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.csv";
+
+@data_opt = EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int // virtual file set column
+    , date DateTime // virtual file set column
+    FROM @ADL_FILESET_PATH
+    USING Extractors.Csv();
+
+@alldata_path = SELECT * 
+        FROM @data_opt
+        WHERE date>= DateTime.Parse("2014-09-16")
+;
+
+OUTPUT @alldata_path
+TO "/output/vehicles_path.txt"
+USING Outputters.Csv();

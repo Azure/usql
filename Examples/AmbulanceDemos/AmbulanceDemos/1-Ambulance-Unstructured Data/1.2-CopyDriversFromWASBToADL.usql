@@ -1,0 +1,32 @@
+﻿// Copy an unstructured stream from WASB to Azure Data Lake
+
+//0. Initialize some parameters/constants
+DECLARE @CONTAINER string = "ambulancedemo";
+DECLARE @ACCT string = "mryskona2"; 
+// BUG BUG: DECLARE @ACCT string = "mryskona2.blob.core.windows.net"; // use fully qualified name
+
+DECLARE @BASEURI string = "wasb://"+@CONTAINER+"@"+@ACCT+"/";
+DECLARE @INPUTDIR string = @BASEURI + "DemoData/";
+DECLARE @INPUT_DRIVERS string = @INPUTDIR + "Drivers.txt";
+
+// ADL target relative to the default ADL storage account
+DECLARE @OUTPUTDIR string = "/DemoData/Ambulance/";
+DECLARE @OUTPUT string = @OUTPUTDIR + "Drivers.txt";
+
+//1. Extract from WASB
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string
+ FROM @INPUT_DRIVERS
+ USING Extractors.Tsv(encoding: Encoding.Unicode);
+
+//2. Output to Azure Data Lake
+OUTPUT @Drivers
+TO @OUTPUT
+USING Outputters.Tsv(encoding: Encoding.Unicode);

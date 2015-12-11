@@ -1,0 +1,13 @@
+﻿// Insert from tables into tables and CREATE TABLE AS
+
+USE DATABASE DriverDB;
+USE SCHEMA [Driver Schema];
+
+// Empty existing tables
+TRUNCATE TABLE DriverDB.[Driver Schema].Drivers;
+DROP TABLE IF EXISTS Trips;
+
+// Copy data from other tables (and other database)
+INSERT INTO Drivers SELECT * FROM master.dbo.Drivers;
+CREATE TABLE DriverDB.[Driver Schema].Trips(INDEX [idx_Trips] CLUSTERED (driver_id ASC, date, vehicle_id)  PARTITIONED BY HASH (driver_id)) 
+       AS SELECT * FROM master.dbo.Trips;

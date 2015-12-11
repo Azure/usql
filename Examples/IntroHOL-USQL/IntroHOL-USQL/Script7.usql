@@ -1,0 +1,25 @@
+﻿DROP FUNCTION IF EXISTS Searchlog;
+CREATE FUNCTION Searchlog() 
+RETURNS @searchlog TABLE
+  (
+            UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+  )
+AS BEGIN 
+ @searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+USING Extractors.Tsv();
+RETURN;
+END;

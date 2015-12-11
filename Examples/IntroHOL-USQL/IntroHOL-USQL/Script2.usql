@@ -1,0 +1,17 @@
+﻿DECLARE @in  string = "/Samples/Data/SearchLog.tsv";
+DECLARE @out string = "/output/sl.csv";
+
+@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM @in
+    USING Extractors.Tsv();
+
+OUTPUT @searchlog   
+    TO @out
+      USING Outputters.Csv();

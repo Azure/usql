@@ -1,0 +1,23 @@
+// Show definition and usage of a Procedure. 
+// Note that procedures are not allowed to contain DDL statements.
+
+DROP PROCEDURE IF EXISTS VehicleData_Proc;
+CREATE PROCEDURE VehicleData_Proc
+(
+    @speed int = 0
+)
+AS BEGIN
+  @southbound = 
+      SELECT * FROM VehicleData_for_Speed(DEFAULT) AS S WHERE direction == "S";
+       
+  OUTPUT @southbound 
+  TO "/output/southbound.csv"
+  USING Outputters.Csv();
+
+  OUTPUT VehicleData_for_Speed(@speed)
+  TO "/output/speed.csv"
+  USING Outputters.Csv();
+END;
+
+// Now call it
+VehicleData_Proc(25);

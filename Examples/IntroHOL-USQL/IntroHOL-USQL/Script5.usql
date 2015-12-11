@@ -1,0 +1,37 @@
+﻿DECLARE @outpref string = "/output/sl";
+DECLARE @out1    string = @outpref+"_agg.csv";
+DECLARE @out2    string = @outpref+"_top5agg.csv";
+
+@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@rs1 =
+    SELECT
+        Region,
+        SUM(Duration) AS TotalDuration
+    FROM @searchlog
+GROUP BY Region;
+
+@res =
+SELECT *
+FROM @rs1
+ORDER BY TotalDuration DESC
+FETCH 5 ROWS;
+
+OUTPUT @rs1
+    TO @out1
+    ORDER BY TotalDuration DESC
+    USING Outputters.Csv();
+
+OUTPUT @res
+    TO @out2 
+    ORDER BY TotalDuration DESC
+    USING Outputters.Csv();

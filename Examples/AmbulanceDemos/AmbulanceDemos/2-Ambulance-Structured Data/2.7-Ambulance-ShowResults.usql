@@ -1,0 +1,26 @@
+﻿// Show the results
+//
+// Note that ARRAY and MAP currently do not have a default serializer. 
+// Either provide custom outputters (see other samples) or serialize in expression as shown below.
+
+DECLARE @DIR string = "/output/";
+DECLARE @USDRIVERS string = @DIR + "usdrivers.txt";
+DECLARE @USTRIPS string = @DIR + "ustrips.txt";
+
+OUTPUT 
+  (SELECT name, street, city, region, zipcode, country
+        , String.Join(",", phone_numbers.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS phones
+   FROM USDrivers
+  ) 
+TO @USDRIVERS
+USING Outputters.Csv();
+
+@trips =
+   SELECT date, driver_id, vehicle_id
+        , String.Join(",", trips) AS trips
+   FROM USTrips;
+
+OUTPUT @trips
+TO @USTRIPS
+ORDER BY driver_id DESC
+USING Outputters.Csv();

@@ -1,0 +1,37 @@
+﻿//0. Initialize some parameters/constants
+DECLARE @CONTAINER string = "ambulancedemo";
+DECLARE @ACCT string = "mryskona2";
+
+DECLARE @BASEURI string = "wasb://"+@CONTAINER+"@"+@ACCT+"/";
+DECLARE @INPUTDIR string = @BASEURI + "DemoData/";
+DECLARE @INPUT_DRIVERS string = @INPUTDIR + "Drivers.txt";
+
+DECLARE @OUTPUTDIR string = @BASEURI + "output/";
+DECLARE @OUTPUT string = @OUTPUTDIR + "drivers.out";
+
+//1. Extract
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string
+ FROM @INPUT_DRIVERS
+ USING Extractors.Tsv(encoding: Encoding.Unicode);
+
+//2. SELECT Transformation
+@Result =
+SELECT country, city, COUNT(*) AS NumberOfDrivers
+FROM @Drivers
+GROUP BY country, city
+ORDER BY NumberOfDrivers DESC, country, city
+FETCH FIRST 10 ROWS; 
+//OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY;
+
+//3. Output
+OUTPUT @Result 
+TO @OUTPUT 
+USING Outputters.Csv();

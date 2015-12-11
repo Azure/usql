@@ -1,0 +1,67 @@
+﻿// Table-Valued Function and unstructured file sets
+// Assumes that vehicle CSV data has been already loaded to specified ADL store location
+// Use View, TVF and show partition elimination
+
+// First change the function to use a file set
+DROP FUNCTION IF EXISTS VehicleData_of_Speed;
+CREATE FUNCTION VehicleData_of_Speed
+(
+    @minspeed int = 0
+)
+RETURNS @result TABLE
+(
+    vehicle_id int,
+    entry_id long,
+    event_date DateTime,
+    latitude float,
+    longitude float,
+    speed int,
+    direction string,
+    trip_id int?,
+    vid int, // virtual file set column
+    date DateTime // virtual file set column
+)
+AS BEGIN
+
+    // Define paths
+    DECLARE @INPUT_FILE_PFX string = "vehicle";
+    DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/Data/Ambulance/";
+    DECLARE @ADL_DATA string = @ADL_DIR + @INPUT_FILE_PFX;
+    DECLARE @ADL_FILESET string = @ADL_DATA + "{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+    @data = EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int // virtual file set column
+    , date DateTime // virtual file set column
+    FROM @ADL_FILESET
+    USING Extractors.Csv();
+
+    @result = SELECT * FROM @data WHERE speed >= @minspeed;
+END;
+
+// Now use it
+
+@v_early = SELECT * 
+           FROM VehicleData_of_Speed(DEFAULT) AS V 
+           WHERE date < DateTime.Parse("2014-09-16");
+           //WHERE date < new DateTime(2014,09,16);
+
+OUTPUT @v_early 
+TO "/output/early_drives.txt" 
+USING Outputters.Csv();
+/*
+
+@v_2_3 = SELECT * 
+         FROM VehicleData_of_Speed(DEFAULT) AS V 
+         WHERE vid>1 AND vid<=3;
+
+OUTPUT @v_2_3 
+TO "/output/veh2_3_drives.txt" 
+USING Outputters.Csv();
+*/

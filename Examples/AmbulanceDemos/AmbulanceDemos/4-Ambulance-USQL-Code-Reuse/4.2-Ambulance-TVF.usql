@@ -1,0 +1,39 @@
+// Table-Valued Function
+// Assumes that vehicle CSV data has been already loaded to specified ADL store location and that view has been created
+
+DROP FUNCTION IF EXISTS VehicleData_for_Speed;
+CREATE FUNCTION VehicleData_for_Speed
+(
+    @minspeed int = 0
+)
+RETURNS @result TABLE
+(
+    vehicle_id int,
+    entry_id long,
+    event_date DateTime,
+    latitude float,
+    longitude float,
+    speed int,
+    direction string,
+    trip_id int?
+)
+AS BEGIN
+    @result = SELECT * FROM VehicleData_View;
+    @result = SELECT * FROM @result WHERE speed >= @minspeed;
+END;
+
+// Output default
+OUTPUT VehicleData_for_Speed
+       (
+           DEFAULT
+       )
+TO "/output/speed0.csv"
+USING Outputters.Csv();
+
+// Output above inner city speedlimit
+OUTPUT VehicleData_for_Speed
+       (
+           35
+       )
+TO "/output/speed35.csv"
+USING Outputters.Csv();

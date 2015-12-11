@@ -1,0 +1,43 @@
+﻿//Federated Query sample script
+// Step 1: Create CREDENTIAL and DATA SOURCE
+
+// Cleanup
+DROP TABLE IF EXISTS a_dispatches; // needed to allow dropping the data source
+DROP TABLE IF EXISTS a_patients;   // needed to allow dropping the data source
+DROP TABLE IF EXISTS sql_dispatches; // needed to allow dropping the data source
+DROP TABLE IF EXISTS sql_patients;   // needed to allow dropping the data source
+DROP DATA SOURCE IF EXISTS ASQL_PATIENTS;
+DROP DATA SOURCE IF EXISTS SQL_PATIENTS;
+DROP CREDENTIAL IF EXISTS AmbulanceDB_Secret;
+DROP CREDENTIAL IF EXISTS PatientDB_Secret;
+
+// First your Azure SQL DB credentials need to be registered via the Azure Data Lake PowerShell commands:
+/* The SQL DB password is for example for the scope@rkm4grspxa SQL Azure DB database account in this sample
+   The database is the U-SQL database name that the secret is going to be associated with.
+
+   Set-AzureRMContext -SubscriptionId <insert your subscription id>
+
+   $passwd = ConvertTo-SecureString "<insert your SQL DB password>" -AsPlainText -Force
+   $mysecret = New-Object System.Management.Automation.PSCredential("AmbulanceDB_Secret", $passwd)
+   New-AzureRMDataLakeAnalyticsCatalogSecret -Database master -Host rkm4grspxa.database.windows.net -Port 1433 -Secret $mysecret -AccountName <your ADL Analytics Account>
+*/
+
+// Now create the credential based on the key store secret
+CREATE CREDENTIAL AmbulanceDB_Secret WITH USER_NAME = "scope@rkm4grspxa", IDENTITY = "AmbulanceDB_Secret";
+CREATE CREDENTIAL PatientDB_Secret WITH USER_NAME = "sqlipdq", IDENTITY = "PatientDB_Secret";
+    
+// Create External Data source on AZURESQLDB
+CREATE DATA SOURCE ASQL_PATIENTS FROM AZURESQLDB WITH
+       ( PROVIDER_STRING = "Database=PATIENTDB;Trusted_Connection=False;Encrypt=True"
+       , CREDENTIAL = AmbulanceDB_Secret
+       , REMOTABLE_TYPES = (bool, byte, sbyte, short, ushort, int, uint, long, ulong, decimal, float, double, string, DateTime)
+       );
+
+// Create External Data source on SQLSERVER (IaaS)
+CREATE DATA SOURCE SQL_PATIENTS FROM SQLSERVER WITH
+       ( PROVIDER_STRING = "Database=PatientDB;Trusted_Connection=False;Encrypt=False"
+       , CREDENTIAL = PatientDB_Secret
+       , REMOTABLE_TYPES = (bool, byte, sbyte, short, ushort, int, uint, long, ulong, decimal, float, double, string, DateTime)
+       );
+
+// Queries have to be in separate script

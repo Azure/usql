@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>f40d4d55-7848-49bb-8002-0b72fa1b7971</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Name>IntroHOL-USQL</Name>
+    <RootNamespace>IntroHOL-SQLIP</RootNamespace>
+    <RuntimeVersion>default</RuntimeVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="Script1.usql" />
+    <Script Include="Script10.usql" />
+    <Script Include="Script12.usql" />
+    <Script Include="Script13.usql" />
+    <Script Include="Script2.usql" />
+    <Script Include="Script3.usql" />
+    <Script Include="Script4.usql" />
+    <Script Include="Script5.usql" />
+    <Script Include="Script6.usql" />
+    <Script Include="Script7.usql" />
+    <Script Include="Script8.usql" />
+    <Script Include="Script11.usql" />
+    <Script Include="Script9.usql" />
+  </ItemGroup>
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+</Project>

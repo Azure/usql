@@ -1,0 +1,76 @@
+﻿// Showing Analytics capabilities over Ambulance Data using Windowing functions
+//
+// Requires Ambulance data to be loaded into vehicle_GPS table.
+
+// First define some paths
+DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/output/windowing/";
+DECLARE @WINFCT_OUTPUT string = @ADL_DIR + "analytics_window_functions.txt";
+DECLARE @RUNAGG_OUTPUT string = @ADL_DIR + "analytics_running_aggregates.txt";
+DECLARE @LONGESTTRIP_OUTPUT string = @ADL_DIR + "ambulance_longest_trips.txt";
+
+@vehicles = 
+	SELECT 
+		a.vehicle_id AS vehicle_id, 
+		(a.event_date).ToString("yyyy-MM-dd") AS event_date,
+		a.trip_id AS trip_id, 
+		(DateTime) MIN (a.event_date) AS start_time, 
+		(DateTime) MAX (a.event_date) AS finish_time, 
+		AVG(speed) AS avg_speed,
+		MAX(speed) AS max_speed
+	FROM vehicle_GPS AS a
+	GROUP BY vehicle_id, (a.event_date).ToString("yyyy-MM-dd"), trip_id;
+
+@add_duration = SELECT vehicle_id
+	, event_date
+	, trip_id
+	, start_time
+	, finish_time
+	, (finish_time).Subtract(start_time).TotalMinutes AS duration
+	, (start_time).ToString("yyyy-MM-dd") AS dispatch_date
+	, avg_speed
+	, max_speed
+	FROM @vehicles;
+
+@duration_analytics = SELECT 
+	DISTINCT dispatch_date AS dispatch_date
+	, vehicle_id AS vehicle_id
+	, AVG (duration) OVER (PARTITION BY dispatch_date, vehicle_id) AS avg_trip_length_per_vehicle_eachday
+	, SUM (duration) OVER (PARTITION BY dispatch_date, vehicle_id) AS total_trip_length_per_vehicle_eachday
+	, SUM (duration) OVER () AS total_trip_length
+	, PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY duration ASC) OVER (PARTITION BY dispatch_date, vehicle_id) AS median_trip_length_per_vehicle_eachday
+	, PERCENTILE_DISC(0.9) WITHIN GROUP (ORDER BY duration ASC) OVER (PARTITION BY dispatch_date, vehicle_id) AS top_percentile_trip_length_per_vehicle_eachday
+	, MAX (duration) OVER (PARTITION BY dispatch_date, vehicle_id) AS the_longest_trip_per_vehicle_eachday
+	, MAX (duration) OVER (PARTITION BY dispatch_date) AS the_longest_trip_eachday
+	FROM @add_duration;
+
+OUTPUT @duration_analytics 
+TO @WINFCT_OUTPUT 
+ORDER BY dispatch_date, vehicle_id
+USING Outputters.Csv();
+
+@duration_analytics1 = SELECT 
+	dispatch_date AS dispatch_date
+	, vehicle_id AS vehicle_id
+	, AVG (duration) OVER (PARTITION BY dispatch_date ORDER BY dispatch_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS avg_trip_length_eachday
+	, SUM (duration) OVER (PARTITION BY dispatch_date ORDER BY dispatch_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS total_trip_length_eachday
+	FROM @add_duration; 
+
+OUTPUT @duration_analytics1 
+TO @RUNAGG_OUTPUT 
+ORDER BY dispatch_date, vehicle_id
+USING Outputters.Csv();
+
+@ordered_trips_by_duration = SELECT *,
+	ROW_NUMBER() OVER (PARTITION BY dispatch_date ORDER BY duration DESC) AS row_number
+	FROM @add_duration;
+
+@three_longest_trips = SELECT dispatch_date
+	, row_number
+	, duration
+	FROM @ordered_trips_by_duration
+	WHERE row_number <=3;
+
+OUTPUT @three_longest_trips 
+TO @LONGESTTRIP_OUTPUT 
+ORDER BY dispatch_date, row_number, duration
+USING Outputters.Csv();

@@ -1,0 +1,16 @@
+﻿@adlog =
+    EXTRACT UserId int,
+            Ad string,
+            Clicked int
+    FROM "/Samples/Data/AdsLog.tsv"
+    USING Extractors.Tsv();
+	
+@join =
+    SELECT a.Ad, s.Query, s.Start AS Date
+    FROM @adlog AS a JOIN SLog.dbo.SearchLog1 AS s 
+                     ON a.UserId == s.UserId
+    WHERE a.Clicked == 1;
+
+OUTPUT @join   
+    TO "/output/sl_al.csv"
+      USING Outputters.Csv();

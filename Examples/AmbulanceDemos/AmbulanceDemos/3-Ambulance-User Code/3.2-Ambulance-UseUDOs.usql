@@ -1,0 +1,128 @@
+﻿// Shows the use of custom extractors, custom processors, UDFs and custom outputters
+//
+// o Custom extractor that can read MAP<string,string> and ARRAY<int> directly.
+// o Custom processors:
+//   - Schema changing processor that returns a different rowset from the input by
+//     pivoting requested columns from the map if they don't exist in the input.
+//   - Pass through processor that only updates one column based on some local resource (in this case kept in memory).
+// o user defined functions (to read/write Scope complex types
+// o Custom outputter that can output MAP<string,string> and ARRAY<int> directly.
+
+// Declare path constants
+DECLARE @DRIVERFILE string = "Drivers.txt"; // TAB Separated Unicode file
+
+DECLARE @AMBULANCEDIR string = "/DemoData/Ambulance/";
+DECLARE @DRIVER string = @AMBULANCEDIR + @DRIVERFILE;
+DECLARE @OUTPUTDIR string = "/output/";
+
+DECLARE @PIVOTCELL string = @OUTPUTDIR + "cell.txt";
+DECLARE @PIVOTCELLOFFICE string = @OUTPUTDIR + "cell_office.txt";
+DECLARE @PIVOTHOME string = @OUTPUTDIR + "home.txt";
+DECLARE @PIVOTENGLISH string = @OUTPUTDIR + "english.txt";
+DECLARE @OUTPUT string = @OUTPUTDIR + "udodemo_output.txt";
+
+USE UdoDemo;                    
+       
+// REFERENCE Assembly to use user defined CLR function and UDOs 
+REFERENCE ASSEMBLY AmbulanceDriverAsm;
+
+// Use custom extractor with parameters
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street   string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  SQL.MAP<string, string>
+ FROM @DRIVER
+ USING new AmbulanceDriver.DriverExtractor(col_delim: "\t", encoding: Encoding.Unicode);
+
+/* 
+Alternative with built-in extractor:
+
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street   string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string // Map
+ FROM @DRIVER
+ USING Extractors.Tsv(encoding: Encoding.Unicode );
+
+@Drivers =
+ SELECT driver_id, name, street, city, region, zipcode, country
+     , phone_numbers == null ? null : AmbulanceDriver.DriverFunctions.ReadStringMap(phone_numbers) AS phone_numbers
+FROM @Drivers;
+*/
+
+// Pivot the cell phone number from the MAP into a column using a special MapPivoter
+@DriverCells =
+ PROCESS @Drivers
+ PRODUCE driver_id int
+       , name string
+       , city string
+       , cell string
+       , phone_numbers  SQL.MAP<string, string>
+ USING new AmbulanceDriver.MapPivoter();
+
+// Output using the UDF using the DefaultTextOutputter
+OUTPUT 
+  (SELECT driver_id, name, city, cell
+        , phone_numbers == null ? null : AmbulanceDriver.DriverFunctions.WriteQuotedStringMap(phone_numbers) AS phones
+   FROM @DriverCells
+  ) 
+TO @PIVOTCELL
+USING Outputters.Csv(encoding: Encoding.Unicode);
+
+
+// Pivot office and cell numbers from the phone_numbers map
+@DriverCellOffices =
+ PROCESS @Drivers
+ PRODUCE driver_id int
+       , city string
+       , name string
+       , office string
+       , cell string
+       , phone_numbers SQL.MAP<string, string>
+ USING new AmbulanceDriver.MapPivoter();
+
+// Output using the custom outputter
+OUTPUT @DriverCellOffices
+TO @PIVOTCELLOFFICE
+USING new AmbulanceDriver.DriverOutputter(encoding: Encoding.Unicode);
+
+// Pivot home phone numbers (which do not exist in the original data set)
+@DriverHomes =
+ PROCESS @Drivers
+ PRODUCE driver_id int
+       , city string
+       , name string
+       , home string
+       , phone_numbers SQL.MAP<string, string>
+ USING new AmbulanceDriver.MapPivoter();
+
+// The home column is expected to be empty with the given test data
+OUTPUT @DriverHomes
+TO @PIVOTHOME
+USING new AmbulanceDriver.DriverOutputter();
+
+// Show the Processor that only updates existing columns based on a local (in memory in this case) resource
+@DriverTranslated =
+ PROCESS @Drivers
+ PRODUCE driver_id int
+       , name string
+       , city string
+       , country string
+       , phone_numbers SQL.MAP<string, string>
+ READONLY driver_id, name, city, phone_numbers
+ USING new AmbulanceDriver.EnglishCountryNames();
+
+OUTPUT @DriverTranslated
+TO @PIVOTENGLISH
+USING new AmbulanceDriver.DriverOutputter();
+

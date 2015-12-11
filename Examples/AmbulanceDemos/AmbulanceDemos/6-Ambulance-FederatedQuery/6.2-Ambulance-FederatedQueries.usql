@@ -1,0 +1,126 @@
+﻿// Federated Query examples
+// Note that the script creating the CREDENTIAL and DATA SOURCE needs to be run first
+
+// define some paths
+DECLARE @ADL_DIR string = "/output/dq/";
+DECLARE @ADL_OUTPUT0 string = @ADL_DIR + "patients.txt";
+DECLARE @ADL_OUTPUT1 string = @ADL_DIR + "AmbulanceIncidents1.txt";
+DECLARE @ADL_OUTPUT2 string = @ADL_DIR + "AmbulanceIncidents2.txt";
+
+// Cleanup
+DROP TABLE IF EXISTS a_dispatches;
+DROP TABLE IF EXISTS a_patients;
+
+//QUERY USING PASS THROUGH QUERY
+@alive_patients =
+    SELECT *
+    FROM EXTERNAL ASQL_PATIENTS EXECUTE @"
+               SELECT p_name
+                    , CASE WHEN is_alive = 1 THEN 'Alive' ELSE 'Deceased' END AS p_status
+                    , p_address, p_nationkey, p_phone
+               FROM dbo.patients
+               WHERE is_alive = 1";
+
+OUTPUT @alive_patients 
+TO @ADL_OUTPUT0 ORDER BY p_name USING Outputters.Csv();
+
+
+////QUERY W/O EXTERNAL TABLES (LAZY METADATA LOADING)
+@patients = SELECT * FROM EXTERNAL master.ASQL_PATIENTS LOCATION "dbo.patients";
+@dispatches = SELECT * FROM EXTERNAL master.ASQL_PATIENTS LOCATION "dbo.dispatches";
+
+@vehicles = 
+	SELECT 
+		a.vehicle_id, 
+		(a.event_date).ToString("yyyy-MM-dd") AS event_date,
+		a.trip_id, 
+		(DateTime) MIN (a.event_date) AS start_time, 
+		(DateTime) MAX (a.event_date) AS finish_time, 
+		AVG(speed) AS avg_speed, 
+		MAX(speed) AS max_speed
+	FROM vehicle_GPS AS a
+	GROUP BY vehicle_id, (a.event_date).ToString("yyyy-MM-dd"), trip_id;
+
+
+DECLARE @num_heart_attacks int = 0;
+
+@patient_dispatches1 = 
+	SELECT 
+		a.p_custkey AS patient_id, 
+		a.p_name AS patient_name, 
+		b.dispatch_date AS dispatch_date, 
+		a.is_alive AS alive, 
+		b.vehicle_id AS vehicle_id, 
+		(int?) b.trip_id AS trip_id, 
+		b.reason AS reason
+	FROM @patients AS a JOIN @dispatches AS b ON a.p_custkey == b.p_custkey;
+
+@result1 =
+    SELECT a.patient_id AS patient_id,
+           a.patient_name AS patient_name,
+           a.alive AS alive,
+           a.reason AS reason,
+           b.vehicle_id AS vehicle_id,
+           b.trip_id AS trip_id,
+           b.start_time AS start_time,
+           b.finish_time AS finish_time,
+           (b.finish_time).Subtract(b.start_time).TotalMinutes AS duration,
+           b.avg_speed AS avg_speed,
+           b.max_speed AS max_speed
+    FROM @patient_dispatches1 AS a
+         JOIN
+             @vehicles AS b
+         ON a.vehicle_id == b.vehicle_id AND a.trip_id == b.trip_id
+    WHERE (a.dispatch_date).ToString("yyyy-MM-dd") == (b.start_time).ToString("yyyy-MM-dd");
+
+OUTPUT @result1 TO @ADL_OUTPUT2 USING Outputters.Csv();
+
+// CREATE EXTERNAL TABLES
+// Note external tables are optional. You can refer to data source tables in queries directly, see above. 
+CREATE EXTERNAL TABLE a_patients (
+	[p_custkey] int,
+	[p_name] string,
+	[p_address] string,
+	[p_nationkey] int?,
+	[p_phone] string,
+	[is_alive] bool?
+) FROM ASQL_PATIENTS LOCATION "dbo.patients";
+
+CREATE EXTERNAL TABLE a_dispatches (
+	[p_custkey] int,
+	[vehicle_id] int,
+	[dispatch_date] DateTime,
+	[trip_id] int,
+	[reason] string
+) FROM ASQL_PATIENTS LOCATION "dbo.dispatches";
+
+//QUERY USING EXTERNAL TABLES
+@patient_dispatches = 
+	SELECT 
+		a.p_custkey AS patient_id, 
+		a.p_name AS patient_name, 
+		b.dispatch_date AS dispatch_date, 
+		a.is_alive AS alive, 
+		b.vehicle_id AS vehicle_id, 
+		(int?) b.trip_id AS trip_id, 
+		b.reason AS reason
+	FROM a_patients AS a JOIN a_dispatches AS b ON a.p_custkey == b.p_custkey;
+
+@result = 
+	SELECT 
+		a.patient_id, 
+		a.patient_name, 
+		a.alive, 
+		a.reason, 
+		b.vehicle_id AS vehicle_id, 
+		b.trip_id AS trip_id, 
+		b.start_time, 
+		b.finish_time, 
+		(b.finish_time).Subtract(b.start_time).TotalMinutes AS duration, 
+		b.avg_speed, 
+		b.max_speed 
+	FROM @patient_dispatches AS a JOIN @vehicles AS b 
+	ON a.vehicle_id == b.vehicle_id AND a.trip_id == b.trip_id 
+	WHERE (a.dispatch_date).ToString("yyyy-MM-dd") == (b.start_time).ToString("yyyy-MM-dd");
+
+OUTPUT @result TO @ADL_OUTPUT1 USING Outputters.Csv();

@@ -1,0 +1,29 @@
+﻿// Incrementally add to a table
+//
+// Note at the moment one can only insert once into a table/partition. 
+// In order to incrementally append to an existing table you have to use one of the following approaches:
+// 1. Use TRUNCATE, and INSERT WITH UNION (shown below)
+// 2. Use delta tables and then provide a view that unions them together
+// 3. Use partitioned tables and add new partitions (shown in the partition scripts)
+
+// The Union of the original table with the incremental append needs to be done in a separate script from the first loading of the tables!
+
+@d = SELECT * FROM USDrivers
+     UNION ALL
+     SELECT D.*
+     FROM Drivers AS D
+     WHERE country == "USA";
+
+TRUNCATE TABLE USDrivers;
+
+INSERT INTO USDrivers SELECT * FROM @d;
+
+@t = SELECT * FROM USTrips
+     UNION ALL
+     SELECT T.*
+     FROM Trips AS T INNER JOIN Drivers AS D ON T.driver_id == D.driver_id
+     WHERE D.country == "USA";
+
+TRUNCATE TABLE USTrips;
+
+INSERT INTO USTrips SELECT * FROM @t;

@@ -1,0 +1,102 @@
+﻿// Create partitioned table, assume existing regular table holds order data.
+//
+DROP TABLE IF EXISTS vehiclesP;
+
+CREATE TABLE vehiclesP(
+      vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , INDEX idx CLUSTERED (vehicle_id ASC) PARTITIONED BY BUCKETS (event_date) HASH (vehicle_id) INTO 4
+);
+
+// Create partitions
+//
+DECLARE @pdate1 DateTime = new DateTime(2014, 9, 14, 00,00,00,00,DateTimeKind.Utc);
+DECLARE @pdate2 DateTime = new DateTime(2014, 9, 15, 00,00,00,00,DateTimeKind.Utc);
+DECLARE @pdate3 DateTime = new DateTime(2014, 9, 16, 00,00,00,00,DateTimeKind.Utc);
+DECLARE @pdate4 DateTime = new DateTime(2014, 9, 17, 00,00,00,00,DateTimeKind.Utc);
+ 
+// Load 2 days dynamically.
+// Filter and insert clean data only.  Not testing the dirty case, which as of now silently drops dirty rows.
+ALTER TABLE vehiclesP ADD PARTITION (@pdate1), PARTITION (@pdate2);
+
+DECLARE @date1 DateTime = DateTime.Parse("2014-09-14");
+DECLARE @date2 DateTime = DateTime.Parse("2014-09-15");
+DECLARE @date3 DateTime = DateTime.Parse("2014-09-16");
+DECLARE @date4 DateTime = DateTime.Parse("2014-09-17");
+
+DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/Data/Ambulance/";
+DECLARE @ADL_FILESET string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+@data = EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int // virtual file set column
+    , date DateTime // virtual file set column
+    FROM @ADL_FILESET
+    USING Extractors.Csv();
+
+INSERT INTO vehiclesP ON INTEGRITY VIOLATION IGNORE
+       SELECT 
+         vehicle_id 
+       , entry_id 
+       , event_date
+       , latitude 
+       , longitude 
+       , speed 
+       , direction 
+       , trip_id
+       FROM @data
+       WHERE date >= @date1 AND date <= @date3;
+
+// Load a day statically.
+ALTER TABLE vehiclesP ADD PARTITION (@pdate4);
+
+INSERT vehiclesP PARTITION (@pdate4)
+       SELECT vehicle_id 
+       , entry_id 
+ // Do not specify:      , event_date
+       , latitude 
+       , longitude 
+       , speed 
+       , direction 
+       , trip_id
+       FROM @data
+       WHERE date == @date4;
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+DECLARE @date1 DateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Parse("2014-09-14"),TimeZoneInfo.Utc);
+DECLARE @date2 DateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Parse("2014-09-15"),TimeZoneInfo.Utc);
+DECLARE @date3 DateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Parse("2014-09-16"),TimeZoneInfo.Utc);
+DECLARE @date4 DateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Parse("2014-09-17"),TimeZoneInfo.Utc);
+*/

@@ -1,0 +1,83 @@
+﻿// Create tables and index in one statement
+// and in the default database and schema
+DROP TABLE IF EXISTS Drivers;
+CREATE TABLE Drivers(
+       driver_id     int
+     , name          string
+     , street        string
+     , city          string
+     , region        string
+     , zipcode       string
+     , country       string
+     , phone_numbers SQL.MAP<string,string>
+     , INDEX [idx Drivers] CLUSTERED (driver_id ASC) 
+       PARTITIONED BY HASH (driver_id)
+);
+
+DROP TABLE IF EXISTS Trips;
+CREATE TABLE Trips(
+       date DateTime
+     , driver_id int
+	 , vehicle_id int
+     , trips  SQL.ARRAY<int>
+     , INDEX [idx_Trips] CLUSTERED (driver_id ASC, date, vehicle_id) 
+       PARTITIONED BY HASH (driver_id)
+);
+
+// Create a new database and new schema
+DROP DATABASE IF EXISTS DriverDB;
+CREATE DATABASE DriverDB;
+USE DriverDB;
+CREATE SCHEMA [Driver Schema];
+USE SCHEMA [Driver Schema];
+
+// Create table and create clustered index
+CREATE TABLE Drivers(
+       driver_id     int
+     , name          string
+     , street        string
+     , city          string
+     , region        string
+     , zipcode       string
+     , country       string
+     , phone_numbers SQL.MAP<string,string>
+);
+CREATE CLUSTERED INDEX idx_Drivers
+ON DriverDB.[Driver Schema].Drivers(driver_id ASC) PARTITIONED BY HASH (driver_id);
+
+CREATE TABLE Trips(
+       date DateTime
+     , driver_id int
+	 , vehicle_id int
+     , trips  SQL.ARRAY<int>
+);
+CREATE CLUSTERED INDEX idx_Trips
+ON Trips(driver_id ASC, date, vehicle_id) PARTITIONED BY HASH (driver_id);
+
+// Create a second version of the table back in the default database
+
+USE DATABASE master;
+
+DROP TABLE IF EXISTS USDrivers;
+CREATE TABLE USDrivers(
+       driver_id     int
+     , name          string
+     , street        string
+     , city          string
+     , region        string
+     , zipcode       string
+     , country       string
+     , phone_numbers SQL.MAP<string,string>
+     , INDEX idx1 CLUSTERED (driver_id ASC) 
+       PARTITIONED BY HASH (driver_id)
+);
+
+DROP TABLE IF EXISTS USTrips;
+CREATE TABLE USTrips(
+       date DateTime
+     , driver_id int
+	 , vehicle_id int
+     , trips  SQL.ARRAY<int>
+);
+CREATE CLUSTERED INDEX idx_Trips
+ON USTrips(driver_id ASC, date, vehicle_id) PARTITIONED BY HASH (driver_id);

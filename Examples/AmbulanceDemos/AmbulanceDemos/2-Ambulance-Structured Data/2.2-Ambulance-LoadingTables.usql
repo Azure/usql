@@ -1,0 +1,53 @@
+﻿// Load data from ADL file into tables. 
+
+DECLARE @ADL_INPUTDIR string =  "/DemoData/Ambulance/";
+DECLARE @ADL_DRIVERS string = @ADL_INPUTDIR + "Drivers.txt"; // TAB Separated Unicode file
+DECLARE @ADL_TRIPS string = @ADL_INPUTDIR + "DriverShiftTrips.csv"; // Excel CSV (ANSI)
+
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street   string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string // Map
+ FROM @ADL_DRIVERS
+ USING Extractors.Tsv(encoding:Encoding.Unicode);
+
+// Rowset expression names can be reused
+@Drivers =
+ SELECT driver_id, name, street, city, region, zipcode, country
+     , phone_numbers == "" ? null :
+          new SQL.MAP<string,string> (from p in phone_numbers.Split(',') select new KeyValuePair<string, string>(p.Split(':')[0],p.Split(':')[1])) AS phone_numbers
+FROM @Drivers;
+
+INSERT INTO Drivers
+SELECT *
+FROM @Drivers;
+
+@Trips =
+ EXTRACT date DateTime
+       , driver_id int
+	   , vehicle_id int
+       , trips  string // Array
+ FROM @ADL_TRIPS
+ USING Extractors.Csv(); 
+
+@Trips =
+SELECT date
+     , driver_id
+     , vehicle_id
+     , trips == null ? null : new SQL.ARRAY<int>(trips.Split(',').Select(x => Convert.ToInt32(x))) AS trip_ids
+FROM @Trips;
+
+INSERT INTO Trips
+SELECT * FROM @Trips;
+
+// Expressions can be reused in a script across database boundaries
+USE DATABASE DriverDB;
+USE SCHEMA [Driver Schema];
+
+INSERT INTO Drivers SELECT * FROM @Drivers;
+INSERT INTO Trips SELECT * FROM @Trips;

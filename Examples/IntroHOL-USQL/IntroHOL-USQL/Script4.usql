@@ -1,0 +1,24 @@
+﻿@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@rs1 =
+    SELECT Start, Region, Duration
+    FROM @searchlog
+WHERE Region == "en-gb";
+
+@rs1 =
+    SELECT Start, Region, Duration
+    FROM @rs1
+    WHERE Start >= DateTime.Parse("2012/02/16") AND Start <= DateTime.Parse("2012/02/17");
+
+OUTPUT @rs1   
+    TO "/output/sl_gb_feb2012.csv"
+      USING Outputters.Csv();

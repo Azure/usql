@@ -1,0 +1,28 @@
+﻿// In separate script, query the partitioned table.
+DECLARE @date2 DateTime = new DateTime(1992, 1, 11, 00,00,00,00,DateTimeKind.Utc);
+DECLARE @date3 DateTime = new DateTime(1992, 1, 12, 00,00,00,00,DateTimeKind.Utc);
+
+// First 3 partitions are in this table.  Select 2 of them.  Group by a virtual column.
+@all_v =        
+       SELECT *
+       FROM vehiclesP;
+
+@histogramptable_1 =
+       SELECT event_date AS theDate, COUNT(*) AS theCount
+       FROM @all_v
+       GROUP BY event_date;
+
+OUTPUT @histogramptable_1 TO @"/output/AllBucketPartitioning.out"
+ORDER BY theDate
+USING Outputters.Csv();
+
+@histogramptable_2 =
+       SELECT event_date AS theDate, COUNT(*) AS theCount
+       FROM @all_v
+       GROUP BY event_date
+       HAVING event_date >= @date2 AND event_date <= @date3;
+
+OUTPUT @histogramptable_2 TO @"/output/2DayBucketPartitioning.out"
+ORDER BY theDate
+USING Outputters.Csv();
+

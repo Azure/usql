@@ -1,0 +1,26 @@
+﻿// Unstructured file sets
+// Assumes that vehicle CSV data has been already loaded to specified ADL store location
+
+// Define paths
+DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/Data/Ambulance/{date:YYYY}/{date:MM}/";
+
+DECLARE @ADL_FILESET_FILENAME string = @ADL_DIR + "{filename:*}.{ext:*}";
+
+@data = EXTRACT data string
+    , filename string // virtual file set column
+    , ext string // virtual file set column
+    FROM @ADL_FILESET_FILENAME
+    USING Extractors.Csv(delimiter : '\r'); //Extractors.Text
+
+@filenames =
+    SELECT filename
+         , ext
+    FROM @data
+//    WHERE ext == "txt"
+//    WHERE filename.StartsWith("vehicle")
+;
+
+OUTPUT @filenames
+TO "/output/filenames.txt"
+USING Outputters.Csv();
+

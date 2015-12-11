@@ -1,0 +1,12 @@
+﻿@res =
+    SELECT
+        Region,
+        SUM(Duration) AS TotalDuration
+    FROM Searchlog() AS S
+GROUP BY Region
+HAVING SUM(Duration) > 200;
+
+OUTPUT @res
+    TO "/output/sl_largeduration_region2.csv"
+    ORDER BY TotalDuration DESC
+    USING Outputters.Csv();

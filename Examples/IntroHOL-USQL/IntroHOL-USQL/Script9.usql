@@ -1,0 +1,11 @@
+﻿DROP VIEW IF EXISTS SearchlogView;
+CREATE VIEW SearchlogView AS  
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+USING Extractors.Tsv();

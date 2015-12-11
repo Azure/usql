@@ -1,0 +1,14 @@
+﻿@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+OUTPUT @searchlog   
+    TO "/output/sl.csv"
+      USING Outputters.Csv();

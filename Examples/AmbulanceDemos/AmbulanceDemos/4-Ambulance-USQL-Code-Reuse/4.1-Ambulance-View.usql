@@ -1,0 +1,27 @@
+// Creating a View and a table from the view with CTAS
+// Assumes that vehicle CSV data has been already loaded to specified ADL store location
+
+// Currently View definitions cannot see variables, so we have to inline the paths explicitly
+
+DROP VIEW IF EXISTS VehicleData_View;
+CREATE VIEW VehicleData_View
+AS 
+    EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    FROM 
+    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09142014.csv",
+    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09142014.csv",
+    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09142014.csv",
+    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09142014.csv"
+    USING Extractors.Csv();
+
+// Create and load table from CSV files
+DROP TABLE IF EXISTS vehicle_GPS;
+CREATE TABLE vehicle_GPS(INDEX vehicle_GPS_idx CLUSTERED (vehicle_id ASC) PARTITIONED BY HASH (entry_id, vehicle_id)
+) AS SELECT * FROM VehicleData_View;
