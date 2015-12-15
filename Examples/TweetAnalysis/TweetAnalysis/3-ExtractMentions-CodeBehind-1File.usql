@@ -1,0 +1,42 @@
+﻿// Analyzes a Tweetdownload.net tweet file
+//
+// Cook file into counts of tweet per author and mentioned
+// 
+// 1. Show code-behind C# user-defined function (see ExtractMentions-CodeBehind-1File.usql.cs for code) 
+// 2. Show U-SQL ARRAY type
+// 2. CROSS APPLY and EXPLODE
+// 3. UNION ALL
+// 4. GROUP BY with expression
+
+@t = EXTRACT date string
+           , time string
+           , author string
+           , tweet string
+      FROM "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
+    USING Extractors.Csv();
+
+@m = SELECT TweetAnalysis.Udfs.get_mentions(tweet) AS mentions
+     FROM @t;
+
+@m = SELECT m.Substring(1) AS m
+          , "mention" AS category
+     FROM @m CROSS APPLY EXPLODE(mentions) AS t(m)
+     WHERE m != "@";
+
+@t =
+    SELECT author, "author" AS category
+    FROM @t
+    UNION ALL
+    SELECT *
+    FROM @m;
+
+@res = SELECT author.ToLowerInvariant() AS author
+            ,  category
+            , COUNT( * ) AS tweetcount
+       FROM @t
+       GROUP BY author.ToLowerInvariant(), category;
+
+OUTPUT @res
+TO "/Output/TweetAnalysis/MyTwitterAnalysis3.csv"
+ORDER BY tweetcount DESC
+USING Outputters.Csv();

@@ -1,0 +1,707 @@
+11/12/2015,23:51,MikeDoesBigData,@ctesta_oneill No questions on #U-SQL yet? :) Enjoy the weekend!
+12/12/2015,08:17,ctesta_oneill,@MikeDoesBigData I will get back to you. A production release has got in the way at the moment.
+11/12/2015,20:08,MikeDoesBigData,We just released a video on @ch9 showing how the new #Azure #DataLake Tools give you local run and debug for #U-SQL. https://t.co/jz05XdpL4c
+11/12/2015,20:00,MikeDoesBigData,@bwishan It is mentioned but not clearly enough. Will have to make it pop more.
+11/12/2015,20:00,bwishan,"@MikeDoesBigData Reading those in more detail, I guess it is doc'd, but was just hard for me to find. Thanks again!"
+11/12/2015,19:56,MikeDoesBigData,@bwishan pattern is at https://t.co/bIcv6T6BgE ; https://t.co/mbbiz0Ay6z shows the syntax in EXTRACT; sample at https://t.co/ug3OCPangc
+11/12/2015,19:59,bwishan,@MikeDoesBigData Thanks! Found those last night and figured it out. The virtual column is what got me confused since it's not doc'd yet.
+11/12/2015,19:51,MikeDoesBigData,@SqlWaldorf here is the link where we discuss it: https://t.co/7oLtJ2Yaav
+11/12/2015,19:49,MikeDoesBigData,@SqlWaldorf This is a known issue that the team is working on fixing. The work around is to set your local locale to en-us for now.
+11/12/2015,09:10,aramkoukia,Creation U-SQL project fails in Visual Studio when Windows region format is non-US. #Azure #DataLake @MikeDoesBigData don't forget Europe :)
+11/12/2015,09:09,SqlWaldorf,Creation U-SQL project fails in Visual Studio when Windows region format is non-US. #Azure #DataLake @MikeDoesBigData don't forget Europe :)
+11/12/2015,08:52,SqlWaldorf,"@MikeDoesBigData VS2015 fails when creating new U-SQL project, requests to mail cosctcs@microsoft.com, which bounces. Suggestions for help?"
+11/12/2015,07:25,bwishan,"@MikeDoesBigData figured it out... the virtual columns weren't documented yet, but managed to find your ambulance code samples. thx!"
+11/12/2015,05:06,bwishan,@MikeDoesBigData Sorry for the multiple tags.... The web app was giving me trouble submitting the tweet. lol.
+11/12/2015,05:04,bwishan,"@MikeDoesBigData Formatting is clear, just not sure how to pass the ranges in."
+11/12/2015,05:04,bwishan,@MikeDoesBigData Looking for examples on how to use the fileset notation for u-sql extractors. Got any pointers? https://t.co/hjmDgvdZnD
+02/12/2015,09:14,MikeDoesBigData,RT @azureweekly: Automated builds for #Azure Data Lake Analytics extensibility by @TomKerkhove https://t.co/GBnppPznlZ #AzureDataLake
+01/12/2015,19:59,MikeDoesBigData,@realHermitian Thx for the req. Blog on #U-SQL UDAGGs are on our blog backlog. Probably sometimes early next year unless we have a volunteer
+01/12/2015,19:56,MikeDoesBigData,Check out #U-SQL and #Azure #DataLake hands on in Germany at @sqlpass_de :) https://t.co/g7bvAIRmBs
+01/12/2015,19:55,MikeDoesBigData,@MarkTabNet @Azure @sqlpass Cool :) #U-SQL
+01/12/2015,16:07,MarkTabNet,"Ran a U-SQL query today, thanks @MikeDoesBigData  @Azure @sqlpass https://t.co/snaDUrilSw"
+01/12/2015,02:27,MikeDoesBigData,@ctesta_oneill Sure. Just fire away :)
+28/11/2015,13:37,sqlpass_de,"so, #sqlpass_de für das #passcamp  #azuredatalake + #adla klar gemacht zum #handson. #usql rocks! Danke an @MikeDoesBigData und Team!"
+28/11/2015,13:37,oengels,"so, #sqlpass_de für das #passcamp  #azuredatalake + #adla klar gemacht zum #handson. #usql rocks! Danke an @MikeDoesBigData und Team!"
+27/11/2015,17:40,ctesta_oneill,Refreshing USQL knowledge. I may have questions for you @MikeDoesBigData
+20/11/2015,03:05,MikeDoesBigData,@saveenr shows how to analyze #U-SQL jobs from Visual Studio over 11 TB of data https://t.co/jziDWgG11G via @ch9 #connect2015
+27/11/2015,08:51,realHermitian,@MikeDoesBigData i would be very interested in a blog post on implementing aggregation UDOs.
+20/11/2015,03:02,MikeDoesBigData,My #connect2015 contribution: Introduction to U-SQL for Developers: Big Data Processing Made Easy (via @ch9) https://t.co/1qY9uTn5rN
+12/11/2015,02:51,iC,Spark-9999 DataFrame (&amp;Data Set) looks a lot like data guides meets adaptive query execution / @MikeDoesBigData https://t.co/pzUisnS3kQ
+09/11/2015,02:19,isaac_abraham,@mwinkle @MikeDoesBigData @OliverAsmus done :-) https://t.co/FHddYyeoKg
+09/11/2015,02:05,mwinkle,@isaac_abraham @MikeDoesBigData @OliverAsmus please make sure to add a request here so we can track: https://t.co/1h9nF5EoHP
+07/11/2015,01:53,MikeDoesBigData,@jamie_dixon So sorry but I was just too swamped. Any other opportunities to catch up?
+06/11/2015,23:19,jamie_dixon,@MikeDoesBigData you never showed up for the F# ML workshop!  We missed you.
+06/11/2015,19:17,oengels,Oh for sure we attended @MikeDoesBigData session so we know how! ;) coolest stuff we saw @ #summit #usql https://t.co/urjMyzxHcX
+06/11/2015,06:25,MikeDoesBigData,@memsql Cosmos rocks :)
+06/11/2015,01:49,OliverAsmus,@jamie_dixon @MikeDoesBigData That would make sense too
+06/11/2015,01:21,MikeDoesBigData,@jamie_dixon @OliverAsmus I can neither confirm nor deny that it stands for 'being next after T' or for U- as in U-Boot (sub to dive in ADL)
+06/11/2015,00:51,isaac_abraham,@MikeDoesBigData @OliverAsmus in fact having worked with both for years i'd go as far as to say i'm not sure when C# is a better fit period
+06/11/2015,00:13,MikeDoesBigData,"@isaac_abraham @OliverAsmus You can write the assembly code in F#. And well, there are many more C# than F# programmers (unfortunately ;) )"
+06/11/2015,00:14,isaac_abraham,"@MikeDoesBigData @OliverAsmus yep, re: assembly - that's what I meant in my original tweet the other day."
+06/11/2015,00:15,isaac_abraham,"@MikeDoesBigData @OliverAsmus  Re: more C# than F# - spot on, but that doesn't change the fact that it's a missed opportunity."
+06/11/2015,00:10,MikeDoesBigData,@Dennes There was a U-SQL intro session the day before...
+06/11/2015,01:40,Dennes,"@MikeDoesBigData Yes, I think I attended, but the basic data lake session was after both u-sql sessions... ;-)"
+06/11/2015,00:02,MikeDoesBigData,RT @DocComp: Took a look at USQL and I have to say it's pretty interesting @SQLJudo
+06/11/2015,00:01,MikeDoesBigData,"RT @billinkc: U-SQL looks like fun, probably because I'm already familiar with both C# and SQL"
+05/11/2015,23:35,csharpdigest,Articles about #nuget #ldap and #sql by @auth0 @shanselman and @MikeDoesBigData featured in latest https://t.co/0gMC4RUMHM
+05/11/2015,21:57,MikeDoesBigData,"@OliverAsmus U in #U-SQL stands for Unifying, as in unifying over all data, unifying declarative SQL and expressive power of C#, etc."
+05/11/2015,23:16,OliverAsmus,@MikeDoesBigData That helps...thank you!
+06/11/2015,00:09,isaac_abraham,"@MikeDoesBigData @OliverAsmus it is nice. but it's a really big missed opportunity not having F# integration, IMHO. A much better fit."
+06/11/2015,01:17,jamie_dixon,"@MikeDoesBigData @OliverAsmus I thought it was bc it was the next letter after T, as in tsql..."
+05/11/2015,21:53,MikeDoesBigData,"@billinkc Go to https://t.co/PYyk1XrH4U and select the tweets, retweet and mentions and send me the csv file. Sent you my email in pvt."
+05/11/2015,20:41,OliverAsmus,@MikeDoesBigData What does the 'U' in U-SQL stand for?
+05/11/2015,20:37,ItzikBenGan,@MikeDoesBigData A suggested nick name for your language U-SQL: KnowSQL. :)
+05/11/2015,19:43,billinkc,Do I dare ask @MikeDoesBigData to include my tweet history. It's for science and all
+05/11/2015,19:34,PurpleFrogSys,"Learning more U-SQL awesomeness at #MVPSummit - this is great stuff, thanks @MikeDoesBigData"
+05/11/2015,05:23,MikeDoesBigData,@PurpleFrogSys I am inside already. Where are you all?
+05/11/2015,05:20,PurpleFrogSys,"@MikeDoesBigData Hi Mike, we've made it to the Tap House if you're still up for a beer &amp; more chat. (Alex Whittles)"
+05/11/2015,05:16,MikeDoesBigData,@SaugetCh yes. The pattern would be {*}.csv and allows named patterns and predicates on them. #U-SQL file sets
+05/11/2015,18:24,SaugetCh,"@MikeDoesBigData Works like a charm, thanks for your help ! #USQL"
+05/11/2015,05:13,MikeDoesBigData,@ctesta_oneill I just arrived. See you in a bit
+05/11/2015,05:04,ctesta_oneill,@MikeDoesBigData we are running 10 mins late to the taphouse. But we will be there
+04/11/2015,20:12,MikeDoesBigData,@rob_farley @jmarx @billinkc @jasonhorner :) the important folder only has 3k. The other inbox just contains a lot of test account reports
+04/11/2015,19:59,rob_farley,@jmarx @billinkc @jasonhorner There was a 146k earlier. @MikeDoesBigData
+04/11/2015,18:19,SaugetCh,@MikeDoesBigData is it possible to use pattern with extraction in #USQL ? EXTRACT ... FROM '/Samples/*.csv' ... ?
+04/11/2015,04:42,MladenPrajdic,@MikeDoesBigData we're going to Lot nr 3 instead of taphouse
+04/11/2015,03:58,MladenPrajdic,@MikeDoesBigData test tweet!
+02/11/2015,07:52,MikeDoesBigData,@Toyin_Tech how are you updating?
+01/11/2015,19:30,Toyin_Tech,"@MikeDoesBigData Hi Mike, updating (100 records) on a table with over 5M records takes 16secs, any ideas on improving the query?"
+31/10/2015,17:37,zubairdotnet,@MikeDoesBigData never mind I found it
+31/10/2015,17:30,zubairdotnet,@MikeDoesBigData when I click on the big Try button it takes me nowhere
+31/10/2015,17:30,zubairdotnet,"@MikeDoesBigData Hi Mike,how do I activate Azure Data Lake preview using my Bizspark subscription?"
+30/10/2015,23:43,DejanSarka,@mauridb count Magi Naumova in. @spaghettidba @MikeDoesBigData @allanSQLIS
+30/10/2015,23:31,MikeDoesBigData,@DejanSarka @mauridb @spaghettidba @allanSQLIS See you at 7pm in the Sheraton lobby.
+30/10/2015,23:30,mauridb,@spaghettidba @DejanSarka @MikeDoesBigData @allanSQLIS ok
+30/10/2015,23:30,mauridb,@DejanSarka @MikeDoesBigData @spaghettidba @allanSQLIS or Lobby in the Sheraton :)
+30/10/2015,23:30,spaghettidba,"@DejanSarka @mauridb @MikeDoesBigData @allanSQLIS sorry, I can't join you tonight"
+30/10/2015,23:29,DejanSarka,@mauridb @MikeDoesBigData @spaghettidba @allanSQLIS so 7PM Sheraton lobby or...?
+30/10/2015,20:21,mwinkle,"@sensware @MikeDoesBigData @CindyGross Luke, thanks for coming, it was very nice to meet you!"
+30/10/2015,17:37,sensware,Great session on Azure Data Lake &amp; U/SQL with @mwinkle. Also great seeing @MikeDoesBigData again and @CindyGross &amp; her cool sword #summit15
+30/10/2015,15:02,DejanSarka,"@mauridb @MikeDoesBigData @spaghettidba @allanSQLIS I am in, and so is @dekiper"
+30/10/2015,14:41,mauridb,@MikeDoesBigData @DejanSarka @spaghettidba @allanSQLIS so who's in for a dinner together tonight? Feel free to extend the invite.
+30/10/2015,04:24,mwinkle,@mauridb @MikeDoesBigData details :-) and an important reminder of being clear on operator precedence
+30/10/2015,00:49,MikeDoesBigData,@SirSQL @MidnightDBA Glad to hear T-SQL is following U-SQL &lt;grin&gt;
+30/10/2015,00:01,MikeDoesBigData,@OliverAsmus Thanks for joining. I hope you enjoyed it!
+29/10/2015,22:18,OliverAsmus,About to start the U-SQL workshop with @MikeDoesBigData #summit15 #sqlpass
+29/10/2015,22:00,MikeDoesBigData,"RT @SqlWaldorf: Attending @MikeDoesBigData session on U-SQL, U because as a U-boat (submarine) we can dive in the data in the data lake #su…"
+29/10/2015,22:00,MikeDoesBigData,Thanks @mauridb. I am glad to pass the kudos on to the whole team! https://t.co/HwbdSNM59S
+29/10/2015,21:25,mauridb,Impressive work done by MS on #usql! Also the Dev and Mgmt experience is *great*! Basically Hadoop as it should have been! @MikeDoesBigData
+29/10/2015,21:13,mauridb,#usql with @MikeDoesBigData. I. Want. it. Now! (#usql not @MikeDoesBigData...just to be sure you get it correctly) :) :) :)
+29/10/2015,20:52,SqlWaldorf,"Attending @MikeDoesBigData session on U-SQL, U because as a U-boat (submarine) we can dive in the data in the data lake #summit15"
+29/10/2015,17:45,MikeDoesBigData,Oliver and @Nishantthacker shows some of the SQL syntax of #U-SQL https://t.co/ncGeOY6RD0 via @azure
+29/10/2015,06:47,MikeDoesBigData,#U-SQL Job Graph Playback from #SQLPASS #summit15 by @saveenr https://t.co/WNyEiUg0eu
+29/10/2015,06:44,MikeDoesBigData,RT @iC: Two #datalakes one evening at #seascale @MikeDoesBigData taking over at half time from @nmotgi https://t.co/9HyXGJN753
+29/10/2015,06:44,MikeDoesBigData,RT @iC: Azure #datalake live demo snippet by @MikeDoesBigData (MS stock prob like Oracles w/o this to supersede SQL era) https://t.co/LcDkx…
+29/10/2015,03:52,iC,Azure #datalake live demo snippet by @MikeDoesBigData (MS stock prob like Oracles w/o this to supersede SQL era) https://t.co/LcDkxGAu5D
+29/10/2015,03:06,iC,Two #datalakes one evening at #seascale @MikeDoesBigData taking over at half time from @nmotgi https://t.co/9HyXGJN753
+28/10/2015,23:22,MikeDoesBigData,"RT @SQLServer: Stay up-to-date w/ the latest in #BigData &amp; #Data Warehousing. Watch the #Summit15 Foundation Session, live: https://t.co/sl…"
+28/10/2015,23:21,MikeDoesBigData,RT @jorg__klein: Visualize and analyze your U-SQL Data Lake queries. This is really great!! #summit15 https://t.co/YBmiJPbmqf
+28/10/2015,23:21,MikeDoesBigData,RT @MrSiWhiteley: U-SQL Tools to pull out exec plan &amp; let you analyse your SQL-esque code to find bottlenecks &amp; fix. That's all kinds of aw…
+28/10/2015,23:17,MikeDoesBigData,RT @mwinkle: Join @MikeDoesBigData and the gang here in 6/e at #sqlpass to learn about data warehousing and big data https://t.co/DtGLhhfU7X
+28/10/2015,23:17,MikeDoesBigData,@SQLGal is scaling up and scaling down and scaling off #azure #sqldw at #sqlpass #summit15 very cool
+28/10/2015,23:01,MrSiWhiteley,"@mwinkle @MikeDoesBigData Oh I'll wander along to tomorrow's session, don't worry :) I'll be playing when back in the UK next week!"
+28/10/2015,23:00,mwinkle,"@MrSiWhiteley Let us know what you think, or check out @MikeDoesBigData 's session later this week!"
+28/10/2015,22:15,mwinkle,Join @MikeDoesBigData and the gang here in 6/e at #sqlpass to learn about data warehousing and big data https://t.co/DtGLhhfU7X
+28/10/2015,21:29,MikeDoesBigData,Adding to the #summit15 tag :)
+28/10/2015,20:55,iC,Seattle Scalability folks hear directly tonight @MikeDoesBigData + Nitan CTO @CaskData https://t.co/3fvrNJuRHw https://t.co/sVCK56hCp0
+28/10/2015,20:50,MikeDoesBigData,"Oh, I almost forgot! @Azure #DataLake and #U-SQL accepts preview signups. We are onboarding customers from today! :) https://t.co/FCFKV5KRMB"
+28/10/2015,20:47,MikeDoesBigData,RT @mwinkle: Check out our team site for the #U-SQL team https://t.co/cwaekN19Ag (10/10)
+28/10/2015,20:47,MikeDoesBigData,RT @mwinkle: Give us feedback on @Azure #DataLakeAnalytics and #DataLakeStore https://t.co/0DDTk8OFkB (9/10)
+28/10/2015,20:44,MikeDoesBigData,RT @mwinkle: Going to a have 10 tweets for you to checkout for the Public Preview of @Azure #DataLakeAnalytics and #DataLakeStore (1/10)
+28/10/2015,20:44,MikeDoesBigData,RT @mwinkle: Learn more about #U-SQL in @Azure #DataLakeAnalytics https://t.co/ih8cP5wVCQ (4/10)
+28/10/2015,20:44,MikeDoesBigData,RT @mwinkle: Get started with @Azure #DataLakeAnalytics https://t.co/y4mSbequP8 (3/10)
+28/10/2015,20:44,mwinkle,Dive super deep into #U-SQL with our reference docs (hat tip to @MikeDoesBigData) https://t.co/Gz9qsEXFMU (5/10)
+28/10/2015,20:40,MikeDoesBigData,"And if you attend #SQLPASS, come to my session about #U-SQL on Thursday 3:15pm (Rm 611) and the workshop right after at the TCC."
+28/10/2015,20:32,MikeDoesBigData,Want to learn about #Azure #DataLake and #U-SQL and are in Seattle? Come to the #SeaScale meetup tonight https://t.co/Jma7PZQwm7.
+28/10/2015,20:20,MikeDoesBigData,@TomKerkhove Thanks... Still a lot to be done... a few conceptual and more obscure features are not included yet. Samples are missing etc
+28/10/2015,20:46,TomKerkhove,@MikeDoesBigData It's a good start and it's still in preview so enjoy a good night off!
+28/10/2015,19:16,MikeDoesBigData,"What I have been spending my last two month's nights on, the draft of the #U-SQL reference documentation is out on https://t.co/Irecvz0uxP."
+28/10/2015,19:17,TomKerkhove,@MikeDoesBigData nicely done!
+28/10/2015,17:59,MikeDoesBigData,Getting ready for the #sqlpass foundation session on #Azure #DataLake. Prepping my #U-SQL demo.
+28/10/2015,17:57,MikeDoesBigData,My next blog post on how to write and reference user-defined functions and code in U-SQL - https://t.co/WoL9apIPzl
+28/10/2015,04:59,MikeDoesBigData,@saveenr explaining the U-SQL Query Execution (Channel 9) https://t.co/kzKrDgnT79 via @ch9
+28/10/2015,04:27,MikeDoesBigData,@saveenr and @nishantthacker taking us through Azure Data Lake Developer Tools (Channel 9) https://t.co/xphz0oCwsw via @ch9
+28/10/2015,04:00,MikeDoesBigData,@saveenr and I talking about U-SQL - A new language for Massive Data processing (Channel 9) https://t.co/wsmmW8FqzO via @ch9
+23/10/2015,17:51,MikeDoesBigData,@pkanavos I am working on a logical grammar file to be published. I will tweet/blog it once it is ready.
+23/10/2015,07:46,MikeDoesBigData,"A great overview on #Azure #DataLake of one of our brave and valuable early adopters @CoditCompany, #U-SQL. https://t.co/t3BPhcr7Dw"
+23/10/2015,08:50,pkanavos,"@MikeDoesBigData Speaking of #U-SQL, it's a very nice language for defining complex TPL Dataflows. Any grammar files available?"
+23/10/2015,07:42,MikeDoesBigData,#USQL and #Azure #DataLake from a #Mac :) https://t.co/qprdtNSMLq
+22/10/2015,15:58,mwinkle,@wisniewskit @MikeDoesBigData glad to hear you are enjoying it.  Let us know what you think!
+21/10/2015,19:10,wisniewskit,#AzureDataLake and #USQL training on #MSFT campus with @MikeDoesBigData - very interesting stuff! :)
+19/10/2015,07:05,MikeDoesBigData,@dj_uber officially before the end of 2015. Stay tuned :). Go to https://t.co/ImlP8kSE3m to sign up and get informed.
+18/10/2015,23:00,indizenbigdata,Introducing U-SQL – A Language that makes #BigData Processing Easy  http://t.co/qlr7l33uFa via @MikeDoesBigData
+09/10/2015,09:25,MikeDoesBigData,@marin_dim @KirkDBorne 2. Extending #ApachePig with #USQL concepts would make Pig look different enough to be new hype and be taking years
+09/10/2015,09:23,MikeDoesBigData,@marin_dim @KirkDBorne 1. #USQL is an evolution of #SCOPE that has been around for some time (MS-internal) .
+07/10/2015,22:59,MikeDoesBigData,@marin_dim @KirkDBorne Is that a bad thing if it combines good ideas? :)
+08/10/2015,08:22,marin_dim,@MikeDoesBigData @KirkDBorne it's def a good thing. I just hoped @microsoft would extend &amp; improve #ApachePig instead of creating a new hype
+07/10/2015,22:57,MikeDoesBigData,Love the picture! :) #U-SQL https://t.co/wMtWNx5rtm
+06/10/2015,22:31,MikeDoesBigData,@NinjaPowell @Pablyte @msdev The declarative framework is SQL both in syntax and semantics. The type system and expression language is not
+06/10/2015,22:23,MikeDoesBigData,@Pablyte @msdev LINQ is integrating a declarative framework into a (procedural in the case of C#) language. U-SQL the other way around.
+05/10/2015,23:08,MikeDoesBigData,@mauridb Indeed that would be useful. Best to mention it to our friends in #sqlserver at #SQLPASS.
+06/10/2015,06:20,mauridb,@MikeDoesBigData I will for sure! :)
+05/10/2015,20:22,mauridb,@MikeDoesBigData studying #usql...it would be *very* nice to have the same in T-SQL...BCP looks so old! Don't you think so? :) #sqlserver
+03/10/2015,11:00,govindsyadav,Read about #U-sql excellent feature of #ETO and tremendous capabilities #msdn article by @mikedoesbigdata http://t.co/OCuMFefkbt
+02/10/2015,20:24,MikeDoesBigData,Another nice article summarizing our #Azure #DataLake and #USQL announcements https://t.co/Jfynju06Dp
+01/10/2015,20:10,MikeDoesBigData,@SQLScott True T(elepathic)-SQL ;)
+01/10/2015,20:09,MikeDoesBigData,"If you are at #StrataHadoop #strataconf in NYC, stop by @mwinkle  https://t.co/0glFU1gqgw"
+01/10/2015,17:45,edwin_torres,Introducing U-SQL – A Language that makes Big Data Processing Easy  https://t.co/h5OguZHJn0 | @MikeDoesBigData
+01/10/2015,06:47,DeepFat,"new tactic, track rockstars not tech  e.g. @MikeDoesBigData is now on USQL @BuckWoodyMSFT is all over R #respect"
+01/10/2015,06:35,BestSQL,Meet U-SQL: Microsoft's New Language for Big Data http://t.co/S2rdyJ5tjZ h/t @Azure @Microsoft @MikeDoesBigData @CoditCompany #SQL
+01/10/2015,04:20,thenewstack,Meet U-SQL: Microsoft’s New Language for Big Data http://t.co/BerQdwl11j h/t @Azure @Microsoft @MikeDoesBigData @CoditCompany #SQL
+30/09/2015,17:16,MikeDoesBigData,"Raghu gives some background on #Cosmos, #Azure #DataLake and our involvement with #Hadoop https://t.co/951JX0EqMy via @azure"
+30/09/2015,03:22,mikeypine,@Joab_Jackson @CurtMonash @MikeDoesBigData Great article! My main client is implementing smart water meters. This is exactly why I attended.
+30/09/2015,02:30,MikeDoesBigData,@CurtMonash Indeed #SQLMR (http://t.co/4GPrZgvkdA) as #USQL (and #SCOPE) scale out usercode. IMO #USQL's ease of extensibility goes farther
+30/09/2015,02:25,MikeDoesBigData,@Joab_Jackson @CurtMonash @mikeypine Thanks for the article!
+30/09/2015,01:05,MikeDoesBigData,@stevenabanks Thanks for spending the time!
+29/09/2015,23:17,stevenabanks,@MikeDoesBigData Thanks for the session this afternoon!
+29/09/2015,22:57,tomcanter,"Great session with @MikeDoesBigData about really big data analysis, I wonder if it does #HL7 @phidiax #AzureCon"
+29/09/2015,21:47,Joab_Jackson,Meet U-SQL: Microsoft’s New Language for #BigData http://t.co/pD106gVTtW @CurtMonash @mikeypine @MikeDoesBigData #StrataHadoop
+29/09/2015,21:08,MikeDoesBigData,RT @thenewstack: Meet U-SQL: Microsoft's New Language for Big Data http://t.co/cYzIeSHmNt
+29/09/2015,20:58,MikeDoesBigData,@jamiet #USQL is at its core functional/declarative. Program-flow should be handled at large by a comp like #ADF or inside a row with C#.
+29/09/2015,20:59,jamiet,"@MikeDoesBigData got it. I assumed as much, just thought I'd check"
+29/09/2015,20:33,MikeDoesBigData,good summary :) https://t.co/kv3KwBZO2u
+29/09/2015,20:50,jamiet,"@MikeDoesBigData is u-SQL procedural? I.e. Program-flow. Loops, cursors, if then else etc..."
+29/09/2015,20:31,MikeDoesBigData,@saveenr shows some of the tooling support for #Azure #DataLake for #storm and #USQL https://t.co/IA73sq8KzO via @ch9
+29/09/2015,20:27,MikeDoesBigData,See the #USQL Demo at 29mins! https://t.co/Ey83vtGAvE via @ch9
+29/09/2015,19:04,neocam,"Exciting news: In all the #BigData chaos, MS preps to unleash #AzureDataLake Kudos @saveenr @MikeDoesBigData http://t.co/sZPfu7hUpU"
+29/09/2015,18:54,MikeDoesBigData,@trengarajan and #VMob demo #USQL over 200TB scaling to 30k nodes and reducing a 23h step to 1.11 min #AzureCon  https://t.co/98zBG6NPzz
+29/09/2015,18:19,MikeDoesBigData,@martinbodocky Since you can call any .Net assembly from #USQL you can write them in #fsharp. But the expression language itself is C#
+29/09/2015,19:09,martinbodocky,"@MikeDoesBigData Thank you for clarification, I will do my best to try it out :)"
+29/09/2015,18:16,MikeDoesBigData,"RT @VisualStudio: New, awesome stuff coming our way. Introducing U-SQL – A Language that makes Big Data Processing Easy, http://t.co/fSNlp6…"
+29/09/2015,04:00,iC,Is @Microsoft hiding in plain site The Cure for #NextGenApps in Azure Data Lake / @holgermu @mikedoesbigdata https://t.co/OkXK3mIndW
+29/09/2015,00:37,MikeDoesBigData,Showing some #SCOPE love on #U-SQL day :)  https://t.co/P0Q5iBswj8
+29/09/2015,00:29,MikeDoesBigData,@hemasail Note that the language described in the VLDB paper has been used internally for several years as SCOPE ;) which evolved into #USQL
+29/09/2015,00:30,hemasail,@MikeDoesBigData I know. I used to work for the social data analytics team at Bing before joining Snowflake.
+29/09/2015,00:34,hemasail,"@MikeDoesBigData e.g. all of the analytics in this study were done in SCOPE http://t.co/mzWrgrRXZh (together with @elunca, it was GREAT!)"
+28/09/2015,23:34,BigDataTop,Introducing U-SQL – A Language that makes Big Data Processing Easy - ... http://t.co/1S4JRwacGB via @MikeDoesBigData http://t.co/IhMapr85Bg
+28/09/2015,22:40,MikeDoesBigData,"@ajaynairthinks Hi Ajay, good to see you here. As you can see, Cosmos and SCOPE is evolving ;)"
+28/09/2015,23:44,ajaynairthinks,@MikeDoesBigData Good to see it come to fruition! Loving the familiar screenshots and execution plans :) Congrats to the team!
+28/09/2015,21:32,MikeDoesBigData,RT @JeffreySchwartz: Microsoft Readies Big Data Service That Includes New U-SQL Language -- http://t.co/lZn0sc52ID https://t.co/VRuAcLAu7i
+28/09/2015,21:22,MikeDoesBigData,@mauridb Looking forward to it :)
+28/09/2015,21:20,KostjaKlein,Great to read from @MikeDoesBigData what he's been working on: http://t.co/Ufm1QqDrmG #USQL #DataLake http://t.co/Rs2KvhM8xu Exciting!
+28/09/2015,21:17,MikeDoesBigData,"@mauridb Yes, I will be at #SQLPASS, and I will present a session on #U-SQL"
+28/09/2015,21:18,mauridb,@MikeDoesBigData great! See you there then! And we have to celebrate the release of U-SQL with a whisky at least:)
+28/09/2015,21:16,MikeDoesBigData,@mauridb Glad to be back and talk about what we are building again :)
+28/09/2015,21:16,mauridb,@MikeDoesBigData :) are you going to be at PASS?
+28/09/2015,18:30,MikeDoesBigData,@sachinghai @CurtMonash They are a bit like ying (PL inside QL) and yang (QL inside PL). And SparkSQL is embedded as string. No tooling etc
+28/09/2015,18:29,MikeDoesBigData,"@sachinghai @CurtMonash While Spark SQL and #U-SQL have similar goals around programmability and both are based on lambda composition, ..."
+28/09/2015,18:06,MikeDoesBigData,"@timalo_officiel @scottgu Eventually you can build a LINQ provider over U-SQL, although we focus on the backend at the moment :) #USQL"
+28/09/2015,18:10,timalo_officiel,"@MikeDoesBigData @scottgu Thanks, good to know !"
+28/09/2015,18:05,MikeDoesBigData,@timalo_officiel @scottgu  U-SQL is the Query Language embedding procedural ying to the C# containing LINQ yang so to speak.
+28/09/2015,17:33,MicrosoftTpNews,Introducing U-SQL – A Language that makes Big Data Processing Easy - ... http://t.co/3MfWGw3MLE via @MikeDoesBigData http://t.co/RqdhcfpxkN
+28/09/2015,15:01,timalo_officiel,. @MikeDoesBigData Will we have U-SQL in C# just like LINQ ? cc @scottgu
+28/09/2015,14:35,MikeDoesBigData,Looking forward to seeing some of you https://t.co/E7a1aqyDGQ
+28/09/2015,20:29,mauridb,@MikeDoesBigData hey welcome back to the twittersphere :) Great nick btw! ;) Looking forward to play with U-SQL!
+28/09/2015,14:30,Johnmont,"@mikedoesbigdata has a blog post out today on U-SQL, a language for processing big data. http://t.co/2OLz8T8IkQ"
+28/09/2015,14:12,MikeDoesBigData,@TomKerkhove @mwinkle Thanks Tom... It is great to be able to finally share our work. Now the hard work begins :)
+28/09/2015,14:10,mwinkle,"@TomKerkhove @MikeDoesBigData thanks Tom, super excited to get word out today !"
+28/09/2015,14:00,MikeDoesBigData,"RT @maryjofoley: MS codenames Cabo, Kona, SQL-IP -- and Hadoop -- all in one post. More on MS' coming Azure Data Lake previews: http://t.co…"
+28/09/2015,13:52,TomKerkhove,"Congrats @mwinkle, @MikeDoesBigData and team on the #Azure #DataLake announcement! http://t.co/McW2YTXtyI"
+28/09/2015,13:47,TomKerkhove,'Introducing U-SQL – A Language that makes Big Data Processing Easy' by @MikeDoesBigData http://t.co/gFSjCY6mvt #Azure #BigData #usql
+28/09/2015,13:46,MikeDoesBigData,"RT @SQLServer: #Microsoft unveils #USQL, #BigData for #SQL and #Csharp developers at #StrataHadoop: http://t.co/ZRwQKj52TG http://t.co/WjkF…"
+28/09/2015,13:21,MikeDoesBigData,"We are release #AzureDataLake with #usql, a #SQL based #BigData query language read more on http://t.co/z982ZWRaTa, http://t.co/DJLrZRamRR"
+15/10/2015,20:56,dj_uber,@MikeDoesBigData any idea of the availability of the preview ?
+14/02/2015,19:23,iC,Mongo 3.0 allows to use different storage engines for different replicas of data http://t.co/21wycbihEv … / @jtuple @mikedoesbigdata @xefyr
+04/02/2015,08:16,MikeDoesBigData,"For those of you who are into cars, check out my non-work related alter ego @Mike981S. I hope to have more action here soon as well."
+04/02/2015,08:14,MikeDoesBigData,"How time flies! Over 18 months. I guess I am too busy at work. Since I left SQLSvr and joined Cosmos, I changed to @MikeDoesBigData"
+25/09/2014,03:50,iC,Animated @sqlservermike on first row drilling into bushy trees in Apache Optic in Hive w/ @julianhyde #seascale http://t.co/uBuOx4BAb0
+12/03/2014,20:35,jamiet,"Listening to @robconery on #dotnetrocks eulogise postgres's JSON datatype. Hmm, sounds like a good idea huh @sqlserver? cc @SQLServerMike"
+22/01/2014,18:42,iC,Koverse + Smaza tonight at Seattle Scalability hosted by Microsoft Bing #seascale http://t.co/hpxnrShxCC @LusciousPear @SQLServerMike
+30/10/2013,10:55,syediddi,@SQLServerMike Thanks for a great video on SQL Server Spatial data. Do you have a download to the database used world and netherlands?
+16/09/2013,07:55,GiessweinWeb,@SQLServerMike Hi do you know http://t.co/yIJvQ6KXD8 ?
+04/09/2013,20:11,MikeDoesBigData,@dracopaladine You can use STEquals: SELECT * FROM T WHERE geogcol.STEquals(@mypt)=1. Note that 4362 is not a valid SRID
+04/09/2013,21:47,dracopaladine,@SQLServerMike @mypt any good URLs to resources to learn more about Geo in SQL?
+04/09/2013,21:49,dracopaladine,"@SQLServerMike ah left off =1 in where clause.  4362 might not be a valid SRID, however it is what is being used by whoever designed the DB."
+04/09/2013,04:17,dracopaladine,"@SQLServerMike Can you help me with a geospatial question? How can I find all rows with geometry field equal to POINT('0, 0', 4362)?"
+29/08/2013,04:07,iC,@sqlservermike rocking the protobuffs with @ted_dunning and @jtuple. BigTable features in SQLserver a definite maybe! #seascale
+01/08/2013,19:16,Wainyone,"@iC @holgermu @SQLServerMike  This is new to me I use FB how are you mate? Why u not use FB anymore it easy for me I think, all the best"
+31/07/2013,09:21,holgermu,@iC @SQLServerMike No surprise - getting connectivity is a high priority for #SAP #HANA - but it's not a short road to get there.
+31/07/2013,02:03,iC,HANA 'scalability issues' predictable at the distributed Seven Bridges of Konigsberg http://t.co/DlUZTpfjvu / @holgermu @SQLServerMike
+25/07/2013,03:08,MikeDoesBigData,Interesting petabyte scale data processing platform with geospatial support by #spacecurve presented by @jandrewrodgers at #seascale
+25/07/2013,03:39,amits,@SQLServerMike welcome back to twitter
+25/07/2013,02:42,MikeDoesBigData,Simply measured on #hbase and spacecurve on new big data analytics at Seattle's scalability meet up #seascale
+16/07/2013,02:14,iC,#sglm seattle graphlab meetup coming soon http://t.co/Y8gtgXF8uF @mlmilleratmit @SQLServerMike @jtuple
+16/07/2013,01:17,mlmilleratmit,@iC @jedisct1 @SQLServerMike @jtuple @thenetworkhub @wdsnow so incredibly bummed that I missed the workshop. Sounds awesome.
+05/07/2013,22:19,iC,RT @jedisct1: Insights from the #graphlab workshop: http://t.co/eDxHKaTwpS / @mlmilleratmit @sqlservermike @jtuple @thenetworkhub @wdsnow
+10/05/2013,18:58,iC,#BigGraph talks and demos 7/1 SF http://t.co/2JGXHSXzv4 @siah @adrianco @Doug_Laney @andrewbrust ‏@mlmilleratmit @sqlservermike
+26/04/2013,18:09,JosephNotJoeSyr,A classic of #SQL / relational database technology writing. http://t.co/NrAr0SkmLc | @SQLServerMike #SocialMedia #Analytics #BigData #MRX
+25/04/2013,18:23,TinaMunro,@eSageGroup is getting a presentation from @SQLServerMike on #HDInsights Lots of cool possibilities for our customers! #bigdata
+23/04/2013,02:15,WholeChainCom,.RT @iC: Why no out-of-the-box high-availability solutions for SQL Server in the cloud? http://t.co/e0qFC0Gg2d / @saptak @sqlservermike
+22/04/2013,03:01,iC,Why no out-of-the-box high-availability solutions for SQL Server in the cloud? http://t.co/F0Swb7uBoU / @saptak @sqlservermike
+21/03/2013,21:13,MikeDoesBigData,My blog post on #Azure #HDInsight and Azure #Storage is up at http://t.co/ecoHK0x7Xn
+21/03/2013,21:37,mwinkle,@SQLServerMike kudos sir!
+18/03/2013,19:23,MikeDoesBigData,Windows Azure HDInsight Service is live on US East Data Centers! - ScottGu's Blog http://t.co/muEVgqOAl6
+12/03/2013,03:43,MikeDoesBigData,"@Viktor_MS @kncukier: the responsibility of BigData will be an important social, economic and legal topic"
+12/03/2013,03:42,Dreffed,@SQLSocialite @SQLServerMike that has a certain 'cache' to it
+12/03/2013,03:31,SQLSocialite,I think @SQLServerMike is another year older today... Does that make him beyond relational?  Or an artifact? :)  Happy Birthday
+12/03/2013,03:28,MikeDoesBigData,At the Seattle #Townhall Big Data @viktor_MS and @kncukier http://t.co/a5FyGgKWcL
+12/03/2013,03:00,MikeDoesBigData,At Seattle #Townhall at #Bigdata - a Revolution talk. Interesting high level presentation you can use to explain your mom what BigData is
+04/03/2013,22:25,iC,"NoSQL, three years on. Defenestration of dull SQL databases continues.  http://t.co/dHOGPAFX7u / @lusciouspear @mlmilleratmit @sqlservermike"
+08/02/2013,23:50,markginnebaugh,Michael Rys on 'Hadoop and Microsoft' http://t.co/LMsFhac7 #hadoop @SQLServerMike
+30/01/2013,22:15,markginnebaugh,Michael Rys on #Hadoop and Microsoft [slides] http://t.co/LMsFhac7 via @SQLServerMike
+24/01/2013,08:41,iC,RT @SQLServerMike: My presentation of today's #seascale meetup: Microsoft and #Hadoop is now at http://t.co/dJrWwlAf. #HDInsight / @graa1005
+24/01/2013,08:02,MikeDoesBigData,Non-work: I wrote a travel blog on my #Europeandelivery of the new #Porsche #Boxster #981 at http://t.co/wNRECe1S.
+24/01/2013,07:59,MikeDoesBigData,"My presentation of today's #seascale meetup: Microsoft and #Hadoop is now at http://t.co/l9n0faeM. @iC, #HDInsight"
+24/01/2013,03:37,mikelikesitalot,@bennage @SQLServerMike Could this be the kickoff of the 'Big Data Solutions on Windows Azure' guidance? #Awesome
+24/01/2013,03:27,iC,@SQLServerMike telling the Microsoft Hadoop story http://t.co/J0s8NLZa #seascale http://t.co/0JWfGbQf
+24/01/2013,03:20,TinaMunro,Listening to @sqlservermike talk HDInsights at #seascale MeetUp. @esagegroup is happy to sponsor the 'Post MeetUp MeetUp'
+24/01/2013,03:17,bennage,listening to @SQLServerMike talk about Microsoft and Hadoop at #seascale
+13/01/2013,20:01,BryanPray1,@SQLServerMike 8 SQL DBA's needed in Jacksonville various level of experience needed. #ITJobs  #SQLDBA #SQLJobs
+11/01/2013,23:00,iC,RT @andrewbrust [We] wonder if Microsoft will rework Dynamics ERP (and CRM) to run on Hekaton. #SAPOnHANA / @SQLServerMike :)
+21/12/2012,17:58,adron,"@iC @stephensmith @sqlservermike man, you gotta get to page 4 or 5 of google results to find an ERP that could use a NoSQL solution! ;)"
+21/12/2012,17:49,iC,NoSQL ERP... via Sage's @StephenSmith and Basho's @Adron http://t.co/KseAkdcf http://t.co/tYtvUMNh / @SQLServerMike
+28/11/2012,16:31,edgillett,#sqlserver2012 Spatial Index Hint with Template Plan Guide #fail #sqlhelp @bobbeauch @sqlservermike http://t.co/PoUxUEls More details
+20/11/2012,03:39,AdanAdeje,@SQLServerMike Hi. Im looking for your presentation on XQuery and Xml in MS SQL in video.Can you tell me where to find it? thx
+09/11/2012,22:54,MikeDoesBigData,Thanks for attending! RT @ajneuman: It was great to have @spatial_ed join @sqlserverMike for the #geospatial session! #sqlpass Thanks guys!
+09/11/2012,22:53,MikeDoesBigData,Looks like I lost my black Nokia Lumia 900 at around 1pm at #sqlpass between the lunch room (probably left it on the table) and 608. help!
+09/11/2012,23:39,mwinkle,@SQLServerMike 😞
+09/11/2012,21:53,ajneuman,It was great to have @spatial_ed join @sqlserverMike for the #geospatial session! #sqlpass #summit12 Thanks guys!
+09/11/2012,00:41,MikeDoesBigData,"RT @MidnightDBA: FILL OUT YOUR SESSION EVALS. If you didn't like a session, say why. If you do, say why. Speakers LOVE specific feedback ..."
+08/11/2012,02:44,MikeDoesBigData,#SQLPASS AD-313-M #sql12 #filetable and #semanticsearch demo can soon be downloaded from http://t.co/VqPHjs5F Data at http://t.co/mP4DxAyI
+08/11/2012,01:43,MikeDoesBigData,"#SQLPASS AD-500-M #sqlserver #XQuery demo scripts are now downloadable as ZIP files from http://t.co/MyivjtWN. For the SXI parts, use SP1."
+08/11/2012,01:47,BeachBum,@SQLServerMike excellent session. Thank You!
+08/11/2012,00:42,MikeDoesBigData,@SqlDUCK68 File compression should work with Filetable. See http://t.co/ZGR79z6H
+08/11/2012,00:36,SqlDUCK68,@sqlservermike how does SQL and Windows folder compression work with FileTables?
+08/11/2012,00:05,innovativeBI,@sqlpass - SQL Server 12 SP1 - awesome semantic search enhancements - classify and find similar docs with 3 lines of code. @sqlservermike
+07/11/2012,23:41,akarcher,Listen to @sqlservermike talk and file table and semantic search at #SQLPASS
+07/11/2012,22:23,MikeDoesBigData,3pm this afternoon at #SQLPASS in 613-614 I will present on #SQL2012 FileTable &amp; Semantic Search http://t.co/QJY87Tm0
+07/11/2012,20:39,SQLServer,3pm this afternoon 613-614 @sqlservermike presents Inside Unstructured Data: #SQL2012 FileTable &amp; Semantic Search http://t.co/IIQYRC1G
+07/11/2012,19:12,SQLServer,RT @SQLServerMike Getting ready to present at #SQLPASS on #XQuery performance in #SQLServer inc. new selective XML index feature in SP1!
+07/11/2012,18:19,Toine_R,Waiting for @sqlservermike his session to start!
+07/11/2012,18:00,MikeDoesBigData,Getting ready to present at #SQLPASS on #XQuery performance in #SQLServer including new selective XML index feature in SP1!
+07/11/2012,19:39,anildas,"Excellent, dense presentation by @SQLServerMike, glad I ordered the recording so I can watch again (and again and again). #sqlpass"
+21/09/2012,06:16,MikeDoesBigData,Here is the feedback link for #sqlserver feedback and feature requests I mentioned at #24HOP: http://t.co/92jNvC2X
+21/09/2012,06:14,MikeDoesBigData,RT @SQLCindy: Demo steps to load AW table to #Hive is uploaded #24HOP What’s All the Buzz about Hadoop and Hive? http://t.co/1GRD6m0I  # ...
+21/09/2012,05:54,MikeDoesBigData,Thanks to all who attended my #SQLPASS #24HOP presentation http://t.co/Z7NiQB2b  Slides are at http://t.co/sTNUthGv
+22/09/2012,20:25,iC,@SQLServerMike Taking SQL Server beyond the relational realm means architecting tunable ACID compliance. RT on Tnxs. Eventual on docs?
+21/09/2012,04:53,MikeDoesBigData,RT @sqlpass: Don't miss @sqlservermike on 'Taking #SQLServer into the Beyond Relational Realm' at #24hop in 15 mins! http://t.co/s6fyhut ...
+21/09/2012,04:45,sqlpass,Don't miss @sqlservermike on 'Taking #SQLServer into the Beyond Relational Realm' at #24hop in 15 mins! http://t.co/s6fyhutB #sqlpass
+21/09/2012,00:34,SQLServer,RT @SQLServerMike: Uploaded my #SQLPASS #24hop presentation about beyond relational #SQL2012 to http://t.co/lgJeLEnF
+20/09/2012,09:01,sqlpass,RT @sqlservermike: Uploaded my #SQLPASS #24HOP presentation http://t.co/e8ohADHd about #beyondrelational #sql2012 to http://t.co/D2Ydl2Hs
+20/09/2012,01:12,MikeDoesBigData,Uploaded my #SQLPASS #24HOP presentation for http://t.co/Z7NiQB2b about #beyondrelational #sql2012 to http://t.co/sTNUthGv
+18/09/2012,22:01,SQLCindy,#24HOP Sept 20 @SQLServerMike Taking SQL Server Into the Beyond Relational Realm http://t.co/mMjOZu7R #SQLPASS #NoSQL #BigData
+05/09/2012,21:21,iC,Apache #DrillBabyDrill https://t.co/vHIs5jDD Drill Spire. Drill Big Couch. Drill SQL Server / @lusciouspear @mlmilleratmit @sqlservermike
+07/08/2012,19:20,fscavo,"@iC haha, I have no idea what you just said @tableau @rwang0 @sqlservermike"
+07/08/2012,17:36,iC,HANA road map includes Pat Han(a)rahan's @tableau and Ha(na)doop adapters. @fscavo @rwang0 / @sqlservermike LT DB licences not req'd;)
+28/06/2012,10:31,MikeDoesBigData,"Getting ready for my #sqlserver #XQuery performance session #TEDBI404 at #TEE12. Bar is high, was highest scoring for DBI track at #msteched"
+28/06/2012,10:28,MikeDoesBigData,Thanks to all who attended the #TEE12 sessions on #sqlserver #spatial #TEDBI324 and #TEDBI405. Sample codes should be on Channel9 tomorrow
+28/06/2012,08:13,Ivco_SQL,Waiting for @SQLServerMike to start his session #teched2012
+28/06/2012,08:10,telmo_sampaio,Waiting for @sqlservermike to start his Spatial Index presentation #teched2012
+27/06/2012,21:00,iC,In a great debate Cloud SQL vs NoSQL (Sync v Async) (LiteSchema v RigidSchema) / @SQLServerMike convergence..? http://t.co/oYtz7b9O
+27/06/2012,10:16,ch9,"Live with @ch9 at #TEE12: Panel on Big Data &amp; The #Cloud w/ Jeffrey Snover, @SQLServerMike &amp; @markrussinovich http://t.co/gpUBJUp0 #Ch9Live"
+27/06/2012,10:15,teched_europe,"Live with @Ch9 at #TEE12: Panel on Big Data &amp; The #Cloud w/ Jeffrey Snover, @SQLServerMike &amp; @MarkRussinovich http://t.co/ishk5q0A  #Ch9Live"
+26/06/2012,16:07,MartineBurden,RT @sqlserver  working the #tee12 booths with @sqlservermike discussing #sqlazure federations and #xvelocity #sqlserver #sql2012 cc @te .
+26/06/2012,15:37,edknox,RT @sqlserver  working the #tee12 booths with @sqlservermike discussing #sqlazure federations and #xvelocity #sqlserver #sql2012 cc @te .
+26/06/2012,13:07,jenstirrup,working the #TEE12 booths with @SQLServerMike discussing #SQLAzure federations and #xVelocity #sqlserver #sql2012 cc @teched_europe
+14/06/2012,22:42,MikeDoesBigData,@Amit_Shukla_ #I #will #do #so. #I #guess #this #is #new #Twitter #policy #? #:-P #toomanyhashes
+14/06/2012,23:35,amits,@SQLServerMike please tweet more often - not just when you are presenting at a conference 😊. Need to get the number of active users up.
+14/06/2012,19:46,MikeDoesBigData,Getting ready for my  #MSTechEd session #TEDBI404 on #XML and #XQuery #performance in #SQLServer. Showing future #SXI index!
+14/06/2012,22:39,amits,@SQLServerMike I suggest you put a # on every word in your posts 😉
+12/06/2012,20:30,SQLServer,#MSTechEd: Taking #SQL2012 into the World of Spatial Data Mgmt W/ @SQLServerMike &amp; @spatial_ed at 5PM in S330A: http://t.co/w4PZyMpJ
+12/06/2012,20:13,MikeDoesBigData,Getting ready for my #MSTechEd #sqlserver #spatial presentation at 5pm in S330A #TEDBI324.
+11/06/2012,16:14,amits,@sqlservermike good luck with your demo!
+11/06/2012,15:58,MikeDoesBigData,Thanks! @SQLServerMike Good luck on the demos!
+11/06/2012,15:57,MikeDoesBigData,"Julie shows #Powerpivot, #Powerview and its #Powerpoint (power to the power of 3) in #sqlserver foundational session #MSTechEd VERY COOL!"
+11/06/2012,15:31,MikeDoesBigData,"RT @SQLServer: #MSTechEd: Quentin Clark #Microsoft CVP leads demo-intensive session on #SQL2012,new world of data, hybrid IT #TEFDN01 #s ..."
+11/06/2012,15:04,MikeDoesBigData,Getting ready for #beyondrelation demo in Quentin's foundational session #MSTechEd. Got analog devils of projector corralled just in time :)
+11/06/2012,15:53,mwinkle,@SQLServerMike Good luck on the demos!
+16/05/2012,00:30,TechEd_NA,"@SQLServerMike Hey Michael, your session details page is live in the content catalog if you want to check it out: http://t.co/1RI9n7sd"
+14/05/2012,22:33,iC,Privacy by Design sources http://t.co/9wapAaJf but thinking @SQLServerMike's sharded hierarchical keys nail web 2.0 #ensw #pii2012
+26/04/2012,18:11,MikeDoesBigData,RT @SQLServer: Thanks everybody for playing today!  We hope you had fun.  We'll have a new episode up next Thursday! #SQL2012
+26/04/2012,17:55,MikeDoesBigData,"@SirSQL @SQLServer Indeed, thanks! That list was the early CTP list."
+26/04/2012,17:44,MikeDoesBigData,RT @SQLServer: We have a winner!  Congrats!  RT @AliRebaie: @SQLServer #SQL2012 sys.fulltext_semantic_languages and 15 languages
+26/04/2012,17:44,MikeDoesBigData,"RT @SQLServer: We may have a winner but since so many peeps are playing, we’ll do a BONUS ROUND in 5 min! Tips on question @: http://t.c ..."
+26/04/2012,17:12,MikeDoesBigData,RT @SQLServer: Fantastic 12 of #SQL2012 contest starts in 20 min (10:30am PT)! Get tips: http://t.co/mVrzms3F. Details & rules: http://t ...
+26/04/2012,17:04,MikeDoesBigData,RT @SQLServer: New episode of The Fantastic 12 of #SQL2012: Behind the Scenes feat. @SQLServerMike! Watch: http://t.co/mVrzms3F #SQLServer
+26/04/2012,17:03,SQLServer,New episode of The Fantastic 12 of #SQL2012: Behind the Scenes feat. @SQLServerMike! Watch: http://t.co/mVrzms3F #SQLServer
+26/04/2012,03:48,MikeDoesBigData,"RT @iC: Tom White, Hadoop book author, on #Hadoop2.0 todo's #SeaScale http://t.co/O0CWC1o1"
+26/04/2012,03:24,MikeDoesBigData,RT @iC: .@Cloudera's Tom White on moving Hadoop to Node managers for splitting resources and tasks #SeaScale http://t.co/gEV5pLSB
+26/04/2012,03:14,MikeDoesBigData,Listening to @tom_e_white from #Cloudera on #Hadoop #MapReduce v2 and #YARN now that the recruiting is over and a new mic arrived #SeaScale
+26/04/2012,03:11,MikeDoesBigData,@blueben Technical companies hiring at #seascale tonight... Don't forget #Microsoft's #SQLServer #BigData team.
+26/04/2012,03:11,blueben,@SQLServerMike I knew I missed one while I was looking for a battery.
+26/04/2012,02:44,MikeDoesBigData,"At #SeaScale, listening to @jedberg talking about #nosql, #postgres, #cassandra, #hadoop, #honu usage at #reddit and #netflix"
+24/04/2012,04:27,ImScottHall,#Blazing #Fast #Performance #FileTables #Full-#Text #Search #Semantic #Search http://t.co/O8J55yRN #via @sqlservermike #sql2012
+12/04/2012,00:41,MikeDoesBigData,"I like my new #Nokia #Lumia900, and the customer support addressing a software glitch is tops http://t.co/4VqGnk8J"
+31/03/2012,16:28,sql_r,Thanks @SQLServerMike @SQLBeat and everyone who attended the Lightning Talks! A gift for you: http://t.co/HzdIgMy4 #sqlbits cc/@SQLGator
+31/03/2012,14:43,troublewithdata,"“@SQLServerMike: I am hanging a bit at the #sqlcat clinic at #sqlbits...” &gt; yeah, make the most of them, helped me with two issues yesterday"
+31/03/2012,14:40,MikeDoesBigData,I am hanging a bit at the #sqlcat clinic at #sqlbits...
+31/03/2012,14:33,MikeDoesBigData,@sql_r was showing us some deranged things you can do with Unicode in T-SQL at #sqlbits #lightningtalk. Cool and naughty stuff.
+30/03/2012,17:46,TechEd_NA,#FF - #msTechEd 2012 Speakers: @BrianPeek @cwrenniks @markrussinovich @SQLServerMike @SymonPerriman @SeanC_MSFT @Schnoll @Randsnet
+30/03/2012,16:33,MikeDoesBigData,@iC #sql2012 #semanticsearch does 'important' keyword extraction and semantic document similarity search. Check out http://t.co/dYVzCh0R
+30/03/2012,16:25,MikeDoesBigData,@SQLSocialite Thanks #blush
+30/03/2012,16:20,SQLSocialite,"I love how @SQLServerMike puts all his slides out there for people to access. He's a great speaker, and a great guy too!  #sqlbits #sql2012"
+30/03/2012,16:16,SQLSocialite,Your need facebook to DL :( RT @SQLServerMike: I posted my #sqlbits presentation about #SQLAzure #sqlfederation to http://t.co/3AFY97Kc
+30/03/2012,16:14,MikeDoesBigData,I posted my #sqlbits presentation about #SQLAzure #sqlfederation to http://t.co/UQieAmUr
+30/03/2012,16:13,MikeDoesBigData,#sqlbits training day deck links: #SQL2012 #SpatialIndex http://t.co/xurKQEgv
+30/03/2012,16:12,MikeDoesBigData,#sqlbits training day deck links: #SQL2012 #Spatial http://t.co/9MtP4S7S
+30/03/2012,16:11,MikeDoesBigData,#sqlbits training day deck links: #SQL2012 #FileTable #FullTextSearch #SemanticsSearch http://t.co/g0BpNQ23
+30/03/2012,16:10,MikeDoesBigData,#sqlbits training day deck links: #sql2012 #BeyondRelational Intro http://t.co/LdTsjrV0
+30/03/2012,16:08,MikeDoesBigData,"I posted my #sqlbits trainings day decks on #SQL2012 #FileTable, #FulltextSearch and #SemanticSearch at http://t.co/rO10IIhf"
+30/03/2012,09:07,MikeDoesBigData,RT @jenstirrup: #sqlbits I like that the demo is using the Odyssey as an example. Major ancient epic Greek poetry is underrated IMHO.
+30/03/2012,09:04,MikeDoesBigData,RT @troublewithdata: Some very cool semantic search stuff being shown at #sqlbits nice to see Homer the Greek instead of Homer the Simpson
+30/03/2012,09:04,MikeDoesBigData,RT @r5d4: Liking semantic search #sql2012 #sqlbits
+30/03/2012,09:04,MikeDoesBigData,RT @ekoner: Semantic search! Geekgasm!! #sqlbits #Sql12
+30/03/2012,09:03,MikeDoesBigData,RT @SQLjen: Oo the semantic search have gotten a lot prettier since i saw it last #sqlbits #sql2012
+30/03/2012,09:00,MikeDoesBigData,@datadude thanks for chasing the demo gremlins away at #sqlbits
+30/03/2012,08:54,A_Bansal,@SQLServerMike cool stuff semantic search #SQLBits
+30/03/2012,08:52,A_Bansal,@sqlservermike Presenting full text stuff at @SQLBits #SQLBits
+30/03/2012,08:48,jamiet,@SQLServerMike up on stage. Go Michael #sqlbits
+30/03/2012,08:21,MikeDoesBigData,Getting ready for the #semanticsearch demo at #sqlbits keynote in a bit
+30/03/2012,08:27,iC,"@SQLServerMike what are optiions, time based? http://t.co/EVZEfk1g #semanticsearch #sqlbits"
+30/03/2012,08:19,MikeDoesBigData,"RT @Factgasm: Interesting morning from @SQLServerMike. We'll be utilising new methodologies @EvolutionJobs; it's not what you've got, it ..."
+29/03/2012,21:04,kodyaz,"@jenstirrup @sqlservermike @pausempere @dataonwheels @javier_vill Hi Jen, I like The SQLServer2012 Daily news! Thanks 4 mentioning about me"
+29/03/2012,14:15,jenstirrup,The SQLServer2012 Daily is out! http://t.co/6SHu85Q5 ▸ Top stories today via @sqlservermike @kodyaz @pausempere @dataonwheels @javier_vill
+29/03/2012,12:02,Factgasm,"Interesting morning from @SQLServerMike. We'll be utilising new methodologies @EvolutionJobs; it's not what you've got, it's what you ask it"
+28/03/2012,14:50,MikeDoesBigData,@MSVirtAcademy videos on #SQLServer2012 #BeyondRelational up at http://t.co/Evhyd9pK #filetable #fts #semanticsearch #spatial w @spatial_ed
+28/03/2012,12:59,MikeDoesBigData,Busy #SQLBits ahead: Training day #BeyondRelational http://t.co/kDiGSNmb keynote demo http://t.co/Gjo0WE4q #federations http://t.co/itYTAIJE
+12/03/2012,18:00,AnupWarrier,"@SQLServerMike Thanks for your great session on File Table and Semantic search,it was wonderful #SQLServer"
+09/03/2012,23:14,PrimeObjects,"@SQLServerMike , Hello Mike SEMANTICKEYPHRASETABLE is super slow (a query never finished) to me. I have a table 88GB (It is not a FileTable)"
+09/03/2012,19:40,markginnebaugh,SQL Server 2012 with Microsoft's Michael Rys http://t.co/NW9EVx0v #sqlserver2012 #sqlpass @SQLServerMike
+08/03/2012,22:55,MikeDoesBigData,More price cuts on #Azure A 24x7 Extra Small Compute instance with a 100MB SQL Azure DB now less than $20 per month! http://t.co/loHq2ssY
+08/03/2012,17:30,sqlpass,RT @sqlservermike: @markginnebaugh uploaded video of me calling out some exciting capabilities of #sql12 at #sqlsat109 http://t.co/bW5ljOMq
+08/03/2012,11:50,NikoNeugebauer,You think that #Microsoft do not care about #UnstructuredData – check out @SQLServerMike works and his presentation on http://t.co/BzPTxH95
+08/03/2012,08:05,MikeDoesBigData,@markginnebaugh uploaded a short video of me calling out some of the exciting capabilities of #sql12 at #sqlsat109 http://t.co/Aq2CssAs
+08/03/2012,04:23,MikeDoesBigData,RT @andrewbrust: Pretty cool that Klout is using #SQLServer Analysis Services with Hive + #Hadoop. #BigData #MSBI
+07/03/2012,22:43,MikeDoesBigData,"I am online for the #SQL2012 Launch in the lounge for AppDev and #beyondrelational, as well as my presentation http://t.co/ZrY50YIN"
+07/03/2012,20:33,MikeDoesBigData,RT @drsql: Watching @SQLServerMike present on unstructured data in #sqlserver launch. Learned you can double click filetable to get Wind ...
+07/03/2012,19:26,drsql,Watching @SQLServerMike present on unstructured data in #sqlserver launch. Learned you can double click filetable to get Windows view. Cool.
+07/03/2012,17:59,MikeDoesBigData,"RT @SQLCindy: #sql2012 launch #sqlserver @sqlservermike http://t.co/dAGkVRu8 FileTables, Full-Text Search and Semantic Search...Across U ..."
+07/03/2012,17:57,SQLCindy,"#sql2012 launch #sqlserver @sqlservermike http://t.co/dAGkVRu8 FileTables, Full-Text Search and Semantic Search...Across Unstructured Data"
+07/03/2012,00:53,RossMistry,+ 1 RT @SQLServerMike: Let's show #apple that launching #sqlserver2012 is a more important event :) http://t.co/d9hAryAV
+07/03/2012,00:53,MikeDoesBigData,Let's show #apple that launching #sqlserver2012 is a more important event :) http://t.co/wC7Cumyg
+07/03/2012,00:54,DBArgenis,@SQLServerMike I like your optimism.
+06/03/2012,18:52,MikeDoesBigData,RT @maryjofoley: Microsoft RTMs SQL Server 2012: http://t.co/7voOd1Ra #sql2012
+05/03/2012,23:30,MikeDoesBigData,@sqlpete Is Tobias really wearing a tie? :)
+04/03/2012,04:55,MikeDoesBigData,@RossMistry yes. Also got Brit's Vis badge
+04/03/2012,03:55,antoniosponza,RT @SQLServerMike: I posted my #sqlsat109 presentation on #FileTable and #SemanticSearch in #SQLServer2012 to http://t.co/ZENBazlp
+04/03/2012,03:40,MikeDoesBigData,Thanks! @MarkTabNet: Excellent presentation on unstructured #semantic search from #sqlserver2012 #sqlsat109 http://t.co/g4i7Wvo2
+04/03/2012,03:37,MikeDoesBigData,Indeed! “@mknz: Thanks to @markginnebaugh and @RossMistry for putting on a great SQL Saturday #sqlsat109”
+05/03/2012,03:03,RossMistry,"@SQLServerMike Hey Mike, You can ship the badge back to me via internal email.   no worries.  Thanks for visiting and excellent job!!!"
+04/03/2012,01:02,MarkTabNet,Excellent presentation on unstructured #semantic search from #sqlserver 2012 #sqlsat109 @sqlservermike http://t.co/lYKNVwRQ
+03/03/2012,23:41,dennylee,"ROFL - wish I was there! “@SQLCindy: #sqlsat109 @SQLServerMike Federation, Data, Geeks.... is this #StarTrek or #sqlsat?”"
+03/03/2012,23:39,MikeDoesBigData,RT @markginnebaugh: Photo: Michael Rys - SQL and NoSQL in the context of SQL Server http://t.co/NWklTxnX
+03/03/2012,23:38,dennylee,"ROFL! “@SQLServerMike: Happens if u tweet during my PPT :) RT @SQLCindy: #sqlsat109 I have become part of the PPT, that's just weird”"
+03/03/2012,23:36,MikeDoesBigData,I posted my #sqlsat109 presentation on #FileTable and #SemanticSearch in #SQLServer2012 to http://t.co/g4i7Wvo2
+03/03/2012,23:30,MikeDoesBigData,Check out @SQLCindy's tweets on my #sqlsat109 presentation on NoSQL Paradigms in SQL Server context. Great summary with humor :)
+03/03/2012,23:28,MikeDoesBigData,"Happens if u tweet during my presentation :) RT @SQLCindy: #sqlsat109 I have become part of the presentation, that's just weird"
+03/03/2012,23:27,MikeDoesBigData,RT @SQLCindy: #sqlsat109 @SQLServerMike nosql = op and dev agility at low capex and opex
+03/03/2012,22:32,SQLCindy,#sqlsat109 @SQLServerMike call to action - take SQL Azure Federation Survey http://t.co/JDeDEYE6
+03/03/2012,22:26,DSFNet,@SQLCindy @SQLServerMike Only if you can write SQL in its original Klingon text.  #SQLSAT109 #SQLSTARTREK
+03/03/2012,22:22,SQLCindy,"#sqlsat109 @SQLServerMike Federation, Data, Geeks.... is this #StarTrek or #sqlsat?"
+03/03/2012,22:21,DSFNet,@SQLCindy @SQLServerMike What happens in NoSQL stays in NoSQL.  #sqlsat109 #sqlvegas
+03/03/2012,22:19,SQLCindy,@SQLGal @SQLServerMike It appears my first tweet of the session is now the canonical tweet for eventual consistency
+03/03/2012,22:16,SQLCindy,#sqlsat109 @SQLServerMike SQL Azure Federations for elastic db-managed sharding in the cloud
+03/03/2012,22:15,SQLCindy,#sqlsat109 @SQLServerMike what happens when dbas take over nosql? hmmmm.....
+03/03/2012,22:13,SQLCindy,#sqlsat109 @SQLServerMike one person in room has enabled CLR in SQL. One. #SQLCLR
+03/03/2012,22:09,SQLCindy,#sqlsat109 @SQLServerMike do you have your phd in service brokerology?
+03/03/2012,22:04,SQLCindy,#sqlsat109 @SQLServerMike MapReduce for massive scaleout - now on Windows! #Hadoop #MicrosoftBI
+03/03/2012,22:03,SQLCindy,#sqlsat109 @SQLServerMike remember when a TB was big? #bigdata
+03/03/2012,22:01,DSFNet,@SQLCindy @SQLServerMike I would say all DEVs enjoy having less structure :(
+03/03/2012,22:01,SQLCindy,"#sqlsat109 @SQLServerMike dev agility puts app model ahead of db with flexible data model and uncertain criteria - code 1st, revise quickly"
+03/03/2012,22:00,SQLCindy,#sqlsat109 @SQLServerMike nosql programmers don't want to interact with dba or admin
+03/03/2012,21:59,SQLGal,@SQLCindy @SQLServerMike Are you a demo monkey? #sqlsat109
+03/03/2012,21:58,SQLCindy,"#sqlsat109 @SQLServerMike I have become part of the presentation, that's just weird"
+03/03/2012,21:57,SQLCindy,"#sqlsat109 @SQLServerMike BASE = basic avl, soft state, eventual consistency for higher throughput and scalability"
+03/03/2012,21:56,SQLCindy,"#sqlsat109 @SQLServerMike ACID is immed consistency, BASE is eventual consistency"
+03/03/2012,21:56,SQLCindy,"#sqlsat109 @SQLServerMike ACID or BASE, what's your style?"
+03/03/2012,21:55,SQLCindy,#sqlsat109 @SQLServerMike not sure why it's unrealistic to expect to avoid work 50 weeks of the year and be paid $1mil....
+03/03/2012,21:54,SQLCindy,#sqlsat109 @SQLServerMike #SQLPDW for massive relational db scaleout
+03/03/2012,21:50,SQLCindy,#sqlsat109 @SQLServerMike nosql is about developer agility which means avoiding normalization
+03/03/2012,21:48,SQLCindy,"#sqlsat109 @SQLServerMike standing room only in here, that nosql #bigdata stuff must be interesting!"
+03/03/2012,21:47,SQLCindy,#sqlsat109 @SQLServerMike nosql = op and dev agility at low capex and opex
+03/03/2012,21:46,SQLCindy,"#sqlsat109 @SQLServerMike many apps need HA, scale out, fast grow/change, flexible open schema"
+03/03/2012,21:42,SQLCindy,#sqlsat109 @SQLServerMike eventual consistency can make async sharding performant
+03/03/2012,21:39,SQLCindy,"#sqlsat109 @SQLServerMike with sharded data you have to avoid global transactions if you want high perf, here comes async"
+03/03/2012,21:38,SQLCindy,#sqlsat109 @SQLServerMike biz needs require scaling to massive amounts of #bigdata
+03/03/2012,21:36,SQLCindy,#sqlsat109 @SQLServerMike web 2.0 monetize individualization and socialization
+03/03/2012,21:35,SQLCindy,#sqlsat109 @SQLServerMike learned not to have twitter notifications open during a presentation
+03/03/2012,21:33,SQLCindy,"#sqlsat109 @SQLServerMike is beyond reality.... uh, beyond relational!"
+03/03/2012,20:14,MikeDoesBigData,@SQLGal Have a save trip!
+03/03/2012,20:12,MikeDoesBigData,I uploaded my #sqlsat109 presentation on #nosql paradigms and #sqlserver to http://t.co/QcsVfnCc
+03/03/2012,18:15,MikeDoesBigData,Thanks @davekincaid: A refreshingly insightful presentation from MSFT by Michael rys. thinking right about this but still early #strataconf
+03/03/2012,17:51,MikeDoesBigData,Cool #powerpoint integration with #powerview at #sqlsat109
+03/03/2012,17:40,drsql,"@codingfreaks @SQLServerMike Yeah, I was very happy how easy I was able to produce a working example with FILETABLE."
+03/03/2012,17:35,MikeDoesBigData,"RT @codingfreaks: Just testet FILETABLE in SQL 2012! Wow!!! Not that bad, Microsoft!!! ;-)"
+03/03/2012,16:08,MikeDoesBigData,Outdoor checkin for #sqlsat109 http://t.co/5fvK0TDO
+03/03/2012,02:05,MikeDoesBigData,"RT @tlipcon: OH: 'We don't believe in data science, we got data FAITH'"
+03/03/2012,02:04,MikeDoesBigData,Hanging out with @SQLGal and @RossMistry doing slide and demo review for #sqlsat109
+03/03/2012,21:46,RossMistry,@SQLServerMike mikes noSQL session is jam packed.  #SQLSAT109
+02/03/2012,14:14,jenstirrup,The SQLServer2012 Daily is out! http://t.co/6SHu85Q5 ▸ Top stories today via @cand3la @sabotta @sqlservermike @rlsantucijr @consolidataltd
+02/03/2012,01:09,MikeDoesBigData,Abstract for #SqlSat109 presentation on #sqlserver2012 #filetable and #semanticsearch at http://t.co/QAOONdgn will also demo at keynote
+02/03/2012,01:05,MikeDoesBigData,#SQLSat109 #nosql  talk abstract at http://t.co/1ubHcjM9 based on http://t.co/KWYfbgaT
+02/03/2012,01:03,MikeDoesBigData,#strataconf is over. Good conference! Now getting ready for #SQLSat109 to speak on #nosql  and #sqlserver2012 http://t.co/qBIMlNMq
+01/03/2012,01:08,MikeDoesBigData,@Hugo_Kornelis What made your nose bleed? I hope my presentation was not causing it ;)
+01/03/2012,01:12,Hugo_Kornelis,"@SQLServerMike No idea, but not you. I had those nosebleeds all the time when I was teenager. Stopped when I started donating blood."
+01/03/2012,00:58,cihangirb,great work @sqlservermike on presenting #nosql and #sqlfederations today a the MVPsummit #sqlazure #azure
+29/02/2012,01:00,MikeDoesBigData,"RT @ginablaber: Delightful #strataconf data sci smackdown: machine learning v. domain expertise, w @medriscoll, @dpatil, @kiwitobes, @@p ..."
+29/02/2012,00:21,MikeDoesBigData,My stmt at the #StrataConf at Data-science deathmatch: Machine learning scales better than Domain experts and is cheaper. But it depends :)
+28/02/2012,23:55,MikeDoesBigData,#BigData for President: “@TomMLee: 60% of bankruptcies in the US are related to healthcare. #Strataconf”
+28/02/2012,23:54,MikeDoesBigData,@RossMistry Thanks Ross
+28/02/2012,23:49,RossMistry,Well Deserved! RT @SQLServerMike: Cool! I am on the featured speaker's list for #TechEdNA http://t.co/xWd3lChM\
+28/02/2012,23:37,MikeDoesBigData,Cool! I am on the featured speaker's list for #TechEdNA http://t.co/AWoigdQB
+28/02/2012,23:14,c3iq,Big Data is out! http://t.co/1eqd3QuL ▸ Top stories today via @olyerickson @elroysf @sqlservermike @ericaxel @prototypo
+28/02/2012,22:27,MikeDoesBigData,@AaronBertrand Nothing wrong with a #Mac :). Especially if you run #SQLServer2012 on it :)
+28/02/2012,22:18,MikeDoesBigData,@AaronBertrand Well he is running it on a Mac anyway. But I am sure even Apple allows you to increase fontsizes above 12pt.
+28/02/2012,22:25,AaronBertrand,@SQLServerMike yes and there is a nifty tool for the Mac called Zoom It (with a space).
+28/02/2012,22:26,AaronBertrand,@SQLServerMike and you say Mac like it's a bad thing. I'm running Denali on my Mac right now. :-)
+28/02/2012,22:15,MikeDoesBigData,"In #Cassandra tutorial at #strataconf in back of room (power outlet). Great idea to code directly, but screen is NOT readable. ZoomIt!"
+28/02/2012,22:16,AaronBertrand,@SQLServerMike they'll never use ZoomIt … too mainstream!
+28/02/2012,19:41,MikeDoesBigData,"After talking to BigData/NoSQL crowd about SQL, now preping talk about #NoSQL to #SQLServer #MVP for Wed. Love sitting between the chairs :)"
+28/02/2012,20:05,KostjaKlein,@SQLServerMike Looking forward to it :-)
+28/02/2012,19:02,MikeDoesBigData,"RT @MicrosoftBI: Don't miss Dave Campbell's keynote speech, tomrrow at 9:00 AM PST! http://t.co/AJuuXsW4 #MSBI #BigData #StrataConf"
+28/02/2012,18:37,lastzero,"@SQLServerMike Yes, that's true - I'm just not sure if Microsoft's abstraction of SQL/NoSQL is helpful... most Web apps are Linux based..."
+28/02/2012,18:27,MikeDoesBigData,"RT @xinu: SQL and NoSQL Are Two Sides of the Same Coin &lt; Great point of view, definitely agree with it #strataconf http://t.co/XG6Bdb97"
+28/02/2012,17:49,dberkholz,"Auto-sharding often kicks in exactly when you don't want it to, while your databases are busy. -@SQLServerMike #strataconf"
+28/02/2012,17:39,davidwihl,@sqlservermike #strataconf deepdata SQL Server will include scalability improvements incl sharding
+28/02/2012,17:17,davidwihl,@sqlservermike #strataconf deepdata: NoSQL is web friendly developer model? &lt; Really? Maybe with extra tools.
+28/02/2012,14:00,lanyrdalert,"SQL and NoSQL Are Two Sides Of The Same Coin in Ballroom AB, 9:00am @sqlservermike http://t.co/xlC7qVwS"
+28/02/2012,03:32,MikeDoesBigData,I posted my #strataconf 2012 presentation for http://t.co/H9kN4c22  at http://t.co/PQKhiZjj See you at 9am!
+24/02/2012,00:34,iC,@SQLServerMike double check on Azure / Heroku strategy by comparing on #SQLAzure http://t.co/PfAViCWB #strata #rogue #littlebigplanet
+23/02/2012,03:15,iC,"Swami laying out BigData NoSQL timeline, friendly heckling from @SQLServerMike #dynamoDB #SeaScale"
+09/02/2012,17:30,RossMistry,Conducting a #BigData Executive Briefing for a Health Care Customer at the #Microsoft Technology Center in Silicon Valley w\@SQLServerMike
+28/01/2012,19:50,adron,@jtaschek @iC @stevegillmor Wish I could have been there for the preso.  :)  thanks for presenting @SQLServerMike!
+28/01/2012,16:01,jtaschek,@iC @SQLServerMike @adron @graa1500 Nicely stated - Clive + @stevegillmor - http://t.co/4GhdblHY
+28/01/2012,15:42,iC,LittleBigPaaS from @SQLServerMike #sqlazure #in http://t.co/lzApt2BF / @adron @graa1500 @jtaschek
+28/01/2012,03:25,MikeDoesBigData,"RT @andrewbrust: Read this week's Redmond Roundup, covering Nokia earnings + Lumia/WP7, SQL 2012 Launch and Azure x-platform at http://t ..."
+28/01/2012,00:17,5h15h,via @SQLServerMike: Great audience .. at the #seattle #hadoop meetup for scaling #sqlazure with #nosql paradigms http://t.co/Ddxtr7C3
+28/01/2012,00:17,msretail,via @SQLServerMike: Great audience .. at the #seattle #hadoop meetup for scaling #sqlazure with #nosql paradigms http://t.co/bPYcSUKW
+26/01/2012,08:56,MikeDoesBigData,RT @christianbolton: Featured Training Day: Don't miss 'Beyond Relational in SQL Server 2012 and SQL Futures' with Michael Rys http://t. ...
+26/01/2012,08:55,MikeDoesBigData,Great audience and questions at the #seattle #hadoop meetup for scaling #sqlazure with #nosql paradigms:see http://t.co/KWYfbgaT #federation
+26/01/2012,04:38,WholeChainCom,MT @iC: SQL Azure live code wraps up with map reduce across 4 shards. #seattle #hadoop w/ @SQLServerMike http://t.co/8Q1sIeIk
+26/01/2012,04:36,iC,SQL Azure live code wraps up with map reduce across 4 shards. #NotAvailOnPremNow #seattle #hadoop w/ @SQLServerMike http://t.co/RzjU2HWC
+26/01/2012,03:29,iC,@SQLServerMike talking on sharded SQL Azure architecture patterns #seattle #hadoop http://t.co/FTMU2PKq
+26/01/2012,02:50,MikeDoesBigData,RT @iC: Pizza for 200 w/ @SQLServerMike #seattle #hadoop #scalability (@ Amazon - Van Vorst (SEA21)) http://t.co/kRaGm4hE
+26/01/2012,02:42,iC,Pizza for 200 w/ @SQLServerMike #seattle #hadoop #scalability (@ Amazon - Van Vorst (SEA21)) http://t.co/kRaGm4hE
+26/01/2012,01:29,cihangirb,RT @SQLServerMike: Michael is presenting at Seattle Hadoop/NoSQL meetup http://t.co/VbkI3xcm at http://t.co/zjF3F8Io
+26/01/2012,01:18,MikeDoesBigData,I have uploaded my presentation for my Seattle Hadoop/NoSQL meetup http://t.co/ekB1oQzR at http://t.co/KWYfbgaT . See you tonight!
+25/01/2012,19:18,iC,MT @graa1005: to move from on premise SQL server to SQL Azure in the cloud. http://t.co/vFwiTdne / @smarx @sqlservermike
+15/01/2012,04:04,iC,@smarx / @SQLServerMike to set the context http://t.co/ezInyKGi
+01/12/2011,23:09,MikeDoesBigData,Attending #mongoseattle and meeting lots of old and some new friends :)
+01/12/2011,22:57,MikeDoesBigData,"RT @davidmfoley: underwhelmed by many of the talks so far, but this one is awesome (sharding) #mongoseattle"
+25/11/2011,16:35,MikeDoesBigData,@GaryMcAllister Which ones are you looking for?
+25/11/2011,16:43,GaryMcAllister,@SQLServerMike just a generic object persistence api?
+19/11/2011,09:52,MikeDoesBigData,I uploaded Building Scalable SQL Applications Using NoSQL Paradigms that I presented at Portland State http://t.co/ZzMeggMK
+19/11/2011,18:13,GaryMcAllister,@SQLServerMike you building NoSQL (objects) into the engine soon?
+09/11/2011,22:44,cgroom,@sqlservermike I appreciate your enthusiasm for geo-spatial and look forward to the new features! Thanks for the presentation.
+09/11/2011,22:00,Kjonge,@cgroom @SQLServerMike  I am up next :)
+09/11/2011,21:56,cgroom,In a presentation by @sqlservermike on SQL 2012 Geometry & Geography capabilities. Curved arc segment support rocks!
+29/10/2011,00:04,MikeDoesBigData,"RT @BillGates: Spoke w CS, eng students @UW on their potential to help solve the world’s biggest problems. Video of yesterday's Q&A: htt ..."
+28/10/2011,17:17,DiegoNogare,"Thanks @SQLServerMike #sqlpass #spatialindexing // Congrats by the session, it melted my brain :)"
+28/10/2011,17:14,MikeDoesBigData,@DiegoNogare download the #sqlpass #spatialindexing presentation also at http://t.co/a1oyOoOm. Although you should have access on PASS too!
+28/10/2011,15:07,DiegoNogare,. @SQLServerMike I'm trying download the demo and pptx in #SQLPASS website but it's forbiden to me. Could you send to my e-mail? Thanks!
+28/10/2011,15:06,DiegoNogare,"Hi @SQLServerMike, I went in your session AD-404-M at #SQLPASS 2011"
+27/10/2011,17:54,SQLApprentice,RT @SQLServerMike: My slides and democode (no databases though) of my #sqlpass #sql2012 presentation are now at http://t.co/pvihlsNr
+27/10/2011,17:35,dominiquepere,Xml Techno nouvelle édition http://t.co/uKBUc9XK ▸ Aujourd'hui à la UNE: @james_clark @sqlservermike @xquery @aramanc @scheibo_
+27/10/2011,17:19,Doppeldenk,RT RT @SQLServerMike: My slides and democode (no databases though) of my #sqlpass #sqlserver2012 #spatialindexin... http://t.co/Do4H6fxp
+27/10/2011,17:01,MikeDoesBigData,Looks like my #sqlpass #sqlserver #xquery presentation link on #slideshare was broken. Let's try again http://t.co/bSn57vDQ
+27/10/2011,14:14,jenstirrup,Read SQLServer2012 ▸ today's top stories via @thinkcopperblue @sqlservermike ▸ http://t.co/zCBNpTg1
+27/10/2011,06:54,MikeDoesBigData,And my apologies for #slideshare not being able to show the overlaying animations right.
+27/10/2011,06:53,MikeDoesBigData,I also uploaded my #sqlpass #sqlserver #xquery presentation to http://t.co/HHtuVb2u  those that missed #sqlpass.
+27/10/2011,06:50,MikeDoesBigData,I also uploaded my #sqlpass #sqlserver #spatialindexing presentation to http://t.co/a1oyOoOm for those that missed #sqlpass.
+27/10/2011,06:37,MikeDoesBigData,My slides and democode (no databases though) of my #sqlpass #sqlserver2012 #spatialindexing presentation are now at http://t.co/zMzqKSmP
+28/10/2011,18:44,sqlmii,@SQLServerMike thx Mike. Will xk it out
+27/10/2011,06:36,MikeDoesBigData,@pkral @pwretmo My slides for the #sqlpass #sqlserver #xquery presentation and the TSQL scripts are now published at http://t.co/cLhO3b2Q
+27/10/2011,06:24,MikeDoesBigData,The #silverlight demo app I used in the #SQLPASS keynote to show #sql2012 FileTable and #semantic search is now on http://t.co/wifXdAOF
+18/10/2011,23:04,pkral,@SQLServerMike any chance of getting your slide deck for #sqlpass #xquery presentation? Can't see it on the PASS site http://t.co/U81UpRxF
+18/10/2011,09:13,pwretmo,@SQLServerMike I'm looking for the powerpoint doc you used for performance tuning of XML queries at PASS Summit. Will you upload it?
+15/10/2011,20:54,MikeDoesBigData,@DrHouseOfSQL @mdefehr It was a great dinner and great to see you all at #sqlpass and #sqlsushi.
+15/10/2011,19:25,MikeDoesBigData,@SQLGal Have a safe flight!
+15/10/2011,15:00,DrHouseOfSQL,@mdefehr @SQLServerMike Thanks for a great time last night at #sqlsushi. Hope to see you guys soon!
+15/10/2011,01:50,MikeDoesBigData,@SQLGal take a seat and eat something...
+15/10/2011,01:52,SQLGal,@SQLServerMike first part done
+15/10/2011,00:17,MikeDoesBigData,Uploading my final decks and demo scripts for my #sqlserver #spatial and #xquery #sqlpass presentations to the PASS site now. Enjoy!
+14/10/2011,23:27,MikeDoesBigData,You know when people dig your deepdive when they use a trick learned during the presentation to improve an XQuery by 10x! Very cool #sqlpass
+14/10/2011,23:24,MikeDoesBigData,@AdamMachanic You did and I agree.
+14/10/2011,23:12,MikeDoesBigData,"@AdamMachanic It may be only for the XML TVF Reader, where it may be better to be lower for the main use case (applying it on a variable)."
+14/10/2011,23:19,AdamMachanic,"@SQLServerMike yes, I see that. Did I mention the need for a knob or hint :-)"
+14/10/2011,23:06,MikeDoesBigData,@simon_sabin Have a safe flight home! Great to see you again.
+14/10/2011,22:43,MikeDoesBigData,"I think I saw Erland's ears smoke during my #XQuery talk... oops, it was his spilled coffee :) Thanks for attending! #sqlpass"
+14/10/2011,22:40,MikeDoesBigData,"RT @luticm: Sexta esta linda! Dewitt, 500 query workspace, 500 XML tuning e 400 IO com SQLCAT. NICE #sqlgeek #sqlpass"
+14/10/2011,22:40,MikeDoesBigData,@mrjohnmobley @AdamMachanic It looks like that #sql2012 is defaulting to 200 rows now for sTVF estimated rowcount instead of 10000 #sqlpass
+14/10/2011,22:45,AdamMachanic,@SQLServerMike @mrjohnmobley I was referring to multistatement TVF -- estimate of 1. We need a knob for this.
+14/10/2011,22:48,AdamMachanic,@SQLServerMike dropping the estimate is a bad idea IMO. Needs to go the other way. Much easier to fix overestimation.
+14/10/2011,22:26,MikeDoesBigData,RT @adamretter: RT @dmccreary: Standford puts XQuery training on line for free http://t.co/1VWEl6Kq #xquery
+14/10/2011,22:26,MikeDoesBigData,Decompressing from my 500 level #sql2012 #XQuery/#XML deep dive and eating a crepe.Thanks for the great attendance and questions! #sqlpass
+13/10/2011,21:07,MikeDoesBigData,I am at #sqlpass #tsql and #beyondrelational expert pod from 2 to 4! On a sidenote: I am looking for my Lenovo 90W poweradapter.
+13/10/2011,18:36,SQLintheWild,@DJBianco @MidnightDBA @SqlServerMike That's cause I stole that from Itzik originally.
+13/10/2011,18:28,MikeDoesBigData,"RT @MidnightDBA: If the speaker says it's a good question, he doesn't know the answer. If 'excellent question', it's on the next slide.  ..."
+13/10/2011,18:31,DJBianco,Hah! @SQLintheWild said the same thing in her execution plan session yesterday!  @SQLServerMike @MidnightDBA
+13/10/2011,18:26,MikeDoesBigData,@AlastairA Will see what I can do.
+13/10/2011,17:58,MikeDoesBigData,@KostjaKlein @BrentO @GFritchey Indeed I followed :)
+13/10/2011,17:57,zavaschi,It's awesome! RT @SQLServerMike: RT @AaronBertrand: I'm not a full-text guy but semantic search is pretty cool. #sqlpass
+13/10/2011,17:54,MikeDoesBigData,RT @AaronBertrand: I'm not a full-text guy but semantic search is pretty cool. #sqlpass
+13/10/2011,16:42,akarcher,+1 RT @SQLServerMike RT @SQLCindy: @sqlservermike  semantic search looks really interesting #sqlpass
+13/10/2011,16:40,MikeDoesBigData,RT @KaplanDBA: Semantic search has the potential to revolutionize the way we do portions of our business. #sqlpass #sql2012
+13/10/2011,16:39,MikeDoesBigData,RT @HansGeurtsen: Cool demo of semantic search. Will be available on Codeplex soon. #sqlpass
+13/10/2011,16:39,MikeDoesBigData,"@noelherrick I think you could find candidates for further investigations but remember, we are currently only keeping the top 100 keywords."
+13/10/2011,16:38,MikeDoesBigData,RT @SQLCindy: @sqlservermike  semantic search looks really interesting #sqlpass
+13/10/2011,16:38,MikeDoesBigData,RT @Neil_Hambly: Semantic Search - I've seen Michael Rys present on this and it redefines textual searching #sqlpass  definitely one for ...
+13/10/2011,16:35,MikeDoesBigData,@datachick @billinkc I agree. Tell that #sqlserver marketing :) #sqlpass
+13/10/2011,16:34,MikeDoesBigData,Looking forward to seeing @cihangirb demo #sqlazure federation for #sharding with a really cool management UI #sqlpass. Stay tuned!
+13/10/2011,16:33,datachick,@billinkc @SQLServerMike That demo was too short. #sqlpass
+13/10/2011,16:29,SQLCindy,@sqlservermike  semantic search looks really interesting #sqlpass
+13/10/2011,16:26,KostjaKlein,@SQLServerMike seems to have followed the #sqlpass twitter buzz around #Excel + #zoomit /cc @BrentO @GFritchey
+13/10/2011,16:22,bobbeauch,And here's @SQLServerMike... he's gonna find information in your documents. #sqlpass
+13/10/2011,16:19,MikeDoesBigData,"Getting on stage now for my #sqlpass keynote demo. No Excel, i promise but please be gentle with this #zoomit virgin ;)"
+13/10/2011,16:32,billinkc,"@SQLServerMike I enjoyed the demo, would love to use the tech to simplify finding docs on our filesys and sharepoint  #sqlpass"
+13/10/2011,15:53,MikeDoesBigData,Be patient padawans! Colstore demo is coming now #sqlpass
+13/10/2011,15:56,bobbeauch,"@SQLServerMike Yep, here comes columnstore, no fair, you know the script ;-) #sqlpass"
+13/10/2011,14:45,MikeDoesBigData,Getting ready to demo #Semanticsearch in #sql2012 in Quentin's keynote at #sqlpass. This will be an Excel free demo for developers :)
+13/10/2011,03:24,MikeDoesBigData,@ironpej let's practice CTRL-1 some more ;-)
+13/10/2011,00:38,MikeDoesBigData,@DiegoNogare thanks all for attending the spatial presentation. Great questions! I will upload the scripts and updated ppt tomorrow #sqlpass
+13/10/2011,00:29,MikeDoesBigData,RT @SQLintheWild: New in SQL Server 2012 -&gt; page and row compression of spatial indexes.  #sqlpass
+13/10/2011,00:12,MikeDoesBigData,@AlastairA Presentation and code is available from #SQLPASS. I will see if I can put it on slideshare or send it. Too large to tweet it :)
+13/10/2011,06:42,AlastairA,@SQLServerMike I saw it on PASS website but its only available for attendees :( Be great if you can share it publicly - thanks.
+12/10/2011,21:58,allanSQLIS,RT @SQLServerMike: Getting ready for #sqlserver #spatial indexing presentation at 3pm #sqlpass &lt;&lt; I'm here
+12/10/2011,20:26,MikeDoesBigData,Getting ready for #sqlserver #spatial indexing presentation at 3pm at #sqlpass. Covers both #sql2008 and #sql2012 (#denali). See you there!
+12/10/2011,22:29,AlastairA,@SQLServerMike Hi-is the slidedeck for your spatial index session publicly available anywhere? (or can you email it across the atlantic? :)
+12/10/2011,16:56,MikeDoesBigData,"Now @amirnetz is showing off #Powerview on #ipad, #WindowsPhone and #andriod devices. #sqlpass. Great response to mobile BI customer asks"
+12/10/2011,16:52,MikeDoesBigData,Newly minted technical fellow @amirnetz is showing off #Powerview with very entertaining movie industry analysis. #sqlpass very cool!
+12/10/2011,16:24,MikeDoesBigData,RT @andrewbrust: If you want to see how to do NoSQL with Azure today.  Read the white paper I wrote for the SQLAzure team. http://t.co/T ...
+12/10/2011,16:10,MikeDoesBigData,Danny Lee demos #hive #odbc driver by connecting #powerpivot to #hadoop at #sqlpass.
+12/10/2011,16:02,MikeDoesBigData,#hortonworks CEO Eric Baldeschwieler at #sqlpass.
+12/10/2011,15:59,MikeDoesBigData,#bigdata at #sqlpass by #msft: #hadoop distribution with ecosystem will be available on windows #azure. Including #apache contributions.
+12/10/2011,15:53,MikeDoesBigData,It's official. #SQLDenali is SQL Server 2012 and will be available in first half of 2012 #sqlserver2012. #sqlpass
+07/10/2011,18:35,SQLnaut,Read The #sqlpass Daily ▸ today's top stories via @sqlservermike @karlakay22 ▸ http://t.co/BXq2nqMv
+07/10/2011,01:51,SQLSoldier,"I'll be live blogging it RT @SQLServerMike: ...cool demo for Quentin's #sqlpass keynote...Thursday, Oct 13 at 8:15am! http://t.co/LUFfJBiz"
+07/10/2011,01:48,MikeDoesBigData,"Finished my cool demo for Quentin's #sqlpass keynote. Come and see on Thursday, October 13 at 8:15am! http://t.co/Avj1KLnV"
+07/10/2011,01:45,MikeDoesBigData,Finished my #sqlpass presentation deck for #sqlserver #spatial indexing in #2008 and #denali on Wednesday. http://t.co/zMzqKSmP
+06/10/2011,01:08,MikeDoesBigData,@BillGates said it well. A sad day for all who got inspired and empowered by Steve.
+06/10/2011,01:06,MikeDoesBigData,"RT @BillGates: For those of us lucky enough to get to work with Steve, it’s been an insanely great honor. I will miss Steve immensely. h ..."
+06/10/2011,01:06,MikeDoesBigData,RT @BillGates: Melinda and I extend our sincere condolences to Steve Jobs’ family & friends. The world rarely sees someone who made such ...
+05/10/2011,03:48,MikeDoesBigData,I am guest on Channel 9 in DataBound Episode 2 chatting about #SQLServer #Denali #Semantic Search  http://t.co/0LoPwocW via @ch9
+29/09/2011,06:50,MikeDoesBigData,RT @LeslieSistla: AWS launches SQL Server 'Denali' CTP3 AMI  http://t.co/t3vtzBlu
+29/09/2011,03:05,MikeDoesBigData,"RT @adron: OH 'Dryad, probably the most awesome thing none of us will use.'  :(   #Seattle #Hadoop"
+29/09/2011,02:44,MikeDoesBigData,At the #seattle #hadoop #nosql meetup. Listening to @mlmilleratmit talking what's next after Hadoop. Let's see what he predicts :)
+21/09/2011,02:47,MikeDoesBigData,Slide decks (including mine) and videos from the #NoSQLNow conference are appearing at http://t.co/OrE6a2MA. #nosql (repeat post for fb)
+21/09/2011,01:50,MikeDoesBigData,Slide decks (including mine) and videos from the #NoSQLNow conference are appearing at http://t.co/OrE6a2MA. #nosql
+12/09/2011,23:50,MikeDoesBigData,Put a computer together with my wife (other geek in the family) over the weekend. SSD drive as primary drive rocks. Pics to follow later.
+12/09/2011,23:48,MikeDoesBigData,Listening to @buckwoody. Great presentation on Hybrid #sqlazure and on premise #sqlserver.
+06/09/2011,21:24,MikeDoesBigData,@DrHouseOfSQL I used 1.6 as MOD PPO. And support diver? Some serious tech diving then ;)
+06/09/2011,22:22,DrHouseOfSQL,"@SQLServerMike Yes, some serious folks. My buddy was also a support diver (@180m, no less) during Nuno Gomes' 318m dive, so good company."
+02/09/2011,06:35,MikeDoesBigData,@DrHouseOfSQL sounds great. Trimix sounds like overkill though. Did some wrecks in Cavailaire at 40m with 30% Nitrox. Did you take pictures?
+04/09/2011,11:20,DrHouseOfSQL,"@SQLServerMike No pictures on that dive, just memories. :)"
+04/09/2011,11:23,DrHouseOfSQL,@SQLServerMike I agree on the overkill part but my buddy was a divemaster and he was also supporting someone who went solo for 15' @ 50m.
+04/09/2011,13:53,DrHouseOfSQL,"@SQLServerMike correct me if I am wrong, but isn't 40m exceeding the MOD for EAN30 assuming 1.4 ppO2? Or do you use 1.6 as reference?"
+01/09/2011,21:33,MikeDoesBigData,#Google presented Tenzing (a #SQL on #MapReduce implementation). Will MR become a query scale-out imp strategy for the 80% case? #vldb2011
+01/09/2011,21:21,MikeDoesBigData,@DrHouseOfSQL Nice. Where did you dive? How long and what airmix?
+02/09/2011,06:07,DrHouseOfSQL,@SQLServerMike that was an air dive so really short bottom time. My partner was on trimix 25/25. Total runtime was about 30 min.
+02/09/2011,06:08,DrHouseOfSQL,"@SQLServerMike and it was a wreck right outside Portofino, Italy. Going back there right now for another 40 m today."
+01/09/2011,20:02,MikeDoesBigData,Going to attend the large-scale dist system industrial session at #vldb2011.
+30/08/2011,00:06,MikeDoesBigData,"RT @AdamMachanic: Just received my best-ever reply to a #sqlserver Connect item. It's NDA, but keep filing items and have faith. Sometim ..."
+29/08/2011,21:50,MikeDoesBigData,@AdamMachanic #SQLServer #Denali and #SQLAzure #Federations :)
+29/08/2011,18:48,MikeDoesBigData,"Back in the office, building and shipping stuff"
+29/08/2011,19:06,AdamMachanic,@SQLServerMike anything good? :-)
+28/08/2011,04:09,silverdata,@SQLServerMike: @silverdata @merv #NoSQLNow  Stonebreaker suggestion...academia provide... contribution + collaboration w/practitioners!
+27/08/2011,23:02,MikeDoesBigData,"@michaelhkay Apple design is great, the software less so. form over function?"
+26/08/2011,14:58,williammcknight,#ff #nosqlnow @nagoodman @merv @robinbloor @neilraden @tonyshaw @dmccreary @datagrrl @infinidb @sqlservermike @10gen @dataversity @mongodb
+26/08/2011,09:14,MikeDoesBigData,@mschireson Sorry about the broken link... here is the CACM version: http://t.co/dde81kg
+25/08/2011,23:04,MikeDoesBigData,@mschireson .... Relational database systems can scale. See for example http://t.co/wIsR4zL. Interested to hear your thoughts. #NoSQLNow
+26/08/2011,07:33,mschireson,"@SQLServerMike agree they can, but usually with a combo of hard work and turning off important features. (link didn't work)"
+25/08/2011,23:01,MikeDoesBigData,"@mschireson Great presentation at #NoSQLNow. agreed that non-rel models will be in the high conf list, not because of scale but ease of use"
+25/08/2011,22:45,nagoodman,RT @SQLServerMike: I wonder ... will be a ... (#NoNoSQL) once #NoSQL gets deeper into e-prises and DBAs put constraints ... #NoSQLNow
+25/08/2011,22:44,MikeDoesBigData,I wonder if there will be a No^2SQL (#NoNoSQL) once #NoSQL gets deeper into e-prises and DBAs put constraints and manage infra #NoSQLNow
+25/08/2011,22:39,MikeDoesBigData,@eonwhite Thanks for the practical information in your talk #NoSQLNow
+25/08/2011,22:19,MikeDoesBigData,"Sitting in Max Schireson of @10gen's talk, who tells us what he thinks on how database mgmt systems should change. Good stuff #NoSqlNow"
+25/08/2011,21:38,MikeDoesBigData,RT @Dataversity: Check out the videos of Wednesday's #NoSQLNow keynotes by Dr. Michael Stonebraker and Dwight Merriman http://ow.ly/6cDPO
+25/08/2011,21:32,MikeDoesBigData,RT @Tagged_Tech: .Tagged debuting @Stig_DB at #NoSQLNow  http://t.co/q7W7cDU
+25/08/2011,02:31,MikeDoesBigData,Why do only a few presentations show running code? One disappointment in an otherwise great conference. #NoSQLNow
+25/08/2011,02:25,MikeDoesBigData,@PaulRandal What area is burning? :O
+25/08/2011,02:26,PaulRandal,"@SQLServerMike Stopped now. House almost on the ridge line, but just below facing west."
+24/08/2011,22:19,MikeDoesBigData,#hadoop panel #NoSQLNow: Hadoop allows to send code to data instead of data to code. Cool! Databases have been doing that for 20+ years :).
+24/08/2011,21:11,MikeDoesBigData,My #NoSQLNow presentation is now online at http://t.co/DwkuTxM
+24/08/2011,20:30,MikeDoesBigData,"@silverdata @merv #NoSQLNow He didn't provide a serious suggestion, but agreed after the talk that academia can provide initial contribution"
+24/08/2011,18:04,MikeDoesBigData,Presenting at 4:50pm today at #NoSQLNow on #sqlazure #federations and building scalable solutions. http://t.co/yFPs9sF
+24/08/2011,17:35,MikeDoesBigData,"TPCC is an Old OLTP benchmark. We need scale-out bms to assess OldSQL vs NewSQL vs NoSQL. Should TPC, vendors or academia lead? #NoSQLNow"
+24/08/2011,16:56,MikeDoesBigData,"@williammcknight Not XML per se, but XML Schema (which I agree) and XQuery (which I only partially agree) #nosqlnow."
+24/08/2011,16:42,MikeDoesBigData,"Intelligent DB design is needed to make things go fast (Stonebraker #NoSQLNow): Amen to that. You can do that with 'OldSQL', NoSQL or NewSQL"
+24/08/2011,16:23,MikeDoesBigData,VoltDB 5-7x faster than Cassandra on Volt k/v store layer. Huh? Cassandra is not a k/v store... #NoSQLNow
+24/08/2011,16:20,MikeDoesBigData,"Stonebraker: High-scalable RDBMS must combine transparent dist, built-in durability, and blazing node speed. NewSQL provides this #NoSQLNow"
+24/08/2011,16:16,MikeDoesBigData,Stonebraker: NoSQL needs standard languages to go anywhere: Use SQL or XQuery to get there. #NoSQLNow
+24/08/2011,15:55,MikeDoesBigData,"@dmerr #NoSQLNow: Hard to do dist TAs in service-oriented archs, since most of these svcs do not support rollbk and can't be used in TP Mons"
+24/08/2011,15:44,MikeDoesBigData,@AaronBertrand They did :) and it is just a rumor that I have to change my handle to @NoSQLMike :P
+24/08/2011,15:40,MikeDoesBigData,Listening to Merriman and Stonebraker keynotes at #NoSQLNow
+24/08/2011,15:41,AaronBertrand,@SQLServerMike they let you in? :-) #NoSQLNow
+24/08/2011,02:44,MikeDoesBigData,Enjoying great #Sushi at Fuji Sushi in SJC after interesting discussions at #Nosqlnow. Interesting trends. But now I need to prepare my demo
+24/08/2011,02:39,MikeDoesBigData,@buckwoody shame on you to use select *... Next time you do your joins in Python or Perl? ;)
+22/08/2011,21:36,MikeDoesBigData,@SQLCraftsman I guess it is more the req for immediate availability ;)
+22/08/2011,19:27,MikeDoesBigData,Flying to #SJC for #NoSQLNow http://t.co/TCTokNT
+22/08/2011,19:28,SQLCraftsman,"@SQLServerMike I thought the whole point of NoSQL was eventual consistency, not NOW consistency."
+16/08/2011,18:31,mrboolteam,@SQLServerMike For you have a good performance it’s important to know good tips for every application like SQL Server: http://t.co/kbxy2CR
+12/08/2011,12:55,GermanAraujo73,RT @SQLServer: RT @SQLServerMike: Blogged a link to a video where I give an overview on #beyondrelational in #sqlserv... http://t.co/ujo2LI1
+12/08/2011,06:19,MikeDoesBigData,Blogged a link to a video where I give an overview on #beyondrelational in #sqlserver #denali: http://t.co/ujo2LI1 first blog post in years
+12/08/2011,11:33,greglow,@SQLServerMike Great Michael - please keep them coming - don't make it years till the next one :-)
+22/07/2011,19:11,KoprowskiT,Interesting article about Scalable SQL by @SQLServerMike on June 2011 Communications of the ACM http://bit.ly/… (cont) http://deck.ly/~yDN9B
+13/06/2011,20:51,GaryMcAllister,@SQLServerMike thanks for presentation tonight... Looking good Mike.. Can't wait for JSON data-type :-)
+13/06/2011,17:47,PurpleFrogSys,2nd #SQLSocial in 2 weeks! With @SQLServerMike on sharding in #SQL Azure  http://twitpic.com/5b40ej
+13/06/2011,15:53,MichelleFlynn,Did you get the beers? RT @simon_sabin: Off to #sqlsocial with @sqlservermike federating SQL azure. HTTP://sqlsocial.com
+13/06/2011,15:50,simon_sabin,Off to #sqlsocial with @sqlservermike federating SQL azure. HTTP://sqlsocial.com
+13/06/2011,15:36,westleyl,"Still a few tickets left for Michael Rys (@SQLServerMike) at #sqlsocial tonight. EMC offices near London Bridge, http://tinyurl.com/5t56pqu"
+11/06/2011,16:56,davebally,Who's going to #sqlsocial on Monday with @SqlServerMike ? Should be good
+10/06/2011,16:20,KostjaKlein,Last great session is over: #Spatial with @SQLServerMike - enjoyed it a lot! Now heading home. #devconnections #SQLServer
+02/06/2011,15:32,MikeDoesBigData,@SQLRockstar sorry to hear about the catastrophic events. Hope all are well.
+02/06/2011,05:44,MikeDoesBigData,@Werner thanks for the compliment. Today you almost have to compare against some #NoSQL paradigms if you write about scaling out data proc.
+02/06/2011,05:40,MikeDoesBigData,RT @greglow: Worth spending 4 minutes looking at Windows 8 UI plan: http://youtu.be/p92QfWOw88I All HTML5 and Javascript - interesting
+02/06/2011,03:29,HeadOfTheBored,A great read on the problems (and solutions) of scaling (SQL) RDBMSs by @SQLServerMike. A must read for SQL freaks. http://bit.ly/jDDrZI
+01/06/2011,20:21,MikeDoesBigData,@Werner thanks for tweeting about my CACM article. Do you disagree with the discussed architectural principles?  ;)
+01/06/2011,22:00,Werner,@SQLServerMike the article was powerful and interesting. I felt it was weakened by contrasting it with nosql; it was just great by itself
+31/05/2011,23:10,MikeDoesBigData,@SQLChap #sqlhelp. You probably want to use FOR XML PATH to create XML from relational data. See http://bit.ly/3TsAfM
+31/05/2011,21:26,banerjeeamit,Great read... RT @rusanu: How do large-scale sites and applications remain SQL-based? http://bit.ly/jNJS2H by @SQLServerMike
+31/05/2011,20:23,SQLGal,Looks like a great read!  RT @SQLServerMike: My Scalable SQL/#NoSQL article is in the Jun Edition of #CACM and online http://bit.ly/iySZRx
+31/05/2011,20:20,MikeDoesBigData,My Scalable SQL/#NoSQL article is now in the June Edition of #CACM and online also at http://portal.acm.org/citation.cfm?id=1953141.
+31/05/2011,19:40,MikeDoesBigData,"Back from beautiful Switzerland, sitting at the ATL airport catching up on some work..."
+27/05/2011,15:44,chez_e,Scalable SQL: how do sql shops do it? http://queue.acm.org/detail.cfm?id=1971597 #in via @SQLServerMike
+23/05/2011,04:56,MikeDoesBigData,Arrived at SeaTac ... Let's see if the luggage made the 10 min connection.
+21/05/2011,21:19,MikeDoesBigData,At the #allstar #NASCAR race in Charlotte NC with my brother from Switzerland getting our southern education ;) http://twitpic.com/50qk3n
+20/05/2011,23:42,MikeDoesBigData,@maryjofoley at #zdnet posted one of my #sqldenali #beyondrelational slides in her top 10 slides of #msteched: http://zd.net/iWWbhH
+20/05/2011,23:36,MikeDoesBigData,Great #msteched party last week. Now I am spending the weekend with my brother and then back to work.
+18/05/2011,23:04,MikeDoesBigData,Attending the @Solidq reception at the W. Lots of SQL brain power having a good time #msteched
+17/05/2011,22:10,MikeDoesBigData,RT @VictorIsakov: If you work with SQL Server you should be at Kevin Farlee's I/O session in Room B305. Will be best SQL talk of TechEd! ...
+17/05/2011,20:05,MikeDoesBigData,@darkhawk1126 thanks!
+17/05/2011,00:03,MikeDoesBigData,Presentation on #sqlserver #beyondrelational at #msteched done. Great questions! Hope ppl enjoyed it. Note to self: plug in demo laptop :)
+17/05/2011,03:11,darkhawk1126,@SQLServerMike great demo! I enjoyed the walk through of filetable and filestream.
+16/05/2011,16:13,MikeDoesBigData,Checked in at #msteched... Got the backpack with builtin bottleopener :)
+14/05/2011,02:26,MikeDoesBigData,Ready to head to #msteched in Atlanta for a week. Come to my presentation on #sqlserver #beyondrelational in 2008 and #denali on Monday! :)
+13/05/2011,06:26,mknz,"RT @SQLServerMike: My article on #ACMQueue on how to #scale #SQL/#RDBMS (#NoSQL, #CAP): http://queue.acm.org/detail.cfm?id=1971597."
+13/05/2011,05:29,MikeDoesBigData,#SQLAzure #Federations Product Evaluation Program Now Open for Nominations! http://bit.ly/mz8hJF #NoSQL #SQLServer
+13/05/2011,01:53,MikeDoesBigData,@buckwoody Is that per year or visit? Per visit is very steep! State parks will be empty if history of the last fee period is any indication
+12/05/2011,08:26,MikeDoesBigData,@dsfnet Thanks for the questions and playing Guinea Pigs :)
+12/05/2011,13:13,DSFNet,"@SQLServerMike Thank you Sir.  The information on Spatial data type, although not existing to me, maybe used by my company."
+12/05/2011,08:26,MikeDoesBigData,@SQL_Kiwi Thanks :)
+12/05/2011,08:26,MikeDoesBigData,Thanks for attending my #BeyondRelational talk at #PNWSQL tonight and for being Guinea Pigs for my #msTechED presentation! Great questions!
+12/05/2011,08:21,MikeDoesBigData,@AdamMachanic I know I know... I promise I will blog more... but tweeting is taking less time ;)
+12/05/2011,05:40,SQL_Kiwi,Now following @SQLServerMike (Michael Rys)
+12/05/2011,05:10,DSFNet,We were guinea pigs for @SQLServerMike this evening at #PNWSQL.  Interesting topic discussion.  Thanks Mike Rys.
+10/05/2011,00:37,MikeDoesBigData,"@TheSQLGuru @AdamMachanic I wish I had more time :) I will try to tweet more about #SQLServer, #beyondrelational, #xml, and other cool stuff"
+10/05/2011,13:44,AdamMachanic,@SQLServerMike Tweet? Nah! BLOG!
+10/05/2011,00:34,MikeDoesBigData,Preping my Beyond Relational Today and Futures talk for #TechEd. Would you like to hear more about today or futures? Demos will be Denali.
+10/05/2011,00:32,MikeDoesBigData,RT @SQLServer: The new #SQLServer Compression Estimator will estimate both ROW and PAGE compression for all objects! http://bit.ly/koNupZ
+09/05/2011,14:21,TheSQLGuru,@AdamMachanic: @SQLServerMike has been on twitter for quite a few months now. sure wish he would tweet more about SQL Stuff!
+09/05/2011,05:22,MikeDoesBigData,@AdamMachanic let's take a cab then.. And Atlanta is not New Orleans :(
+09/05/2011,14:10,AdamMachanic,@SQLServerMike Sounds great to me. When did you sneak onto Twitter??
+05/05/2011,23:10,MikeDoesBigData,RT @billramo: #sqlazure Whitepaper on NoSQL and the Windows Azure Platform: I wanted to bring to your attention a great whitep... http:/ ...
+05/05/2011,23:00,MikeDoesBigData,"My article on #ACMQueue on how to #scale #SQL/#RDBMS (#NoSQL, #CAP): http://queue.acm.org/detail.cfm?id=1971597."
+01/04/2011,01:39,MikeDoesBigData,That looks like the wrong place to save: Data.gov & 7 Other Sites to Shut Down After Budgets Cut by @marshallk http://t.co/7g1ITiD via @RWW
+01/04/2011,00:06,MikeDoesBigData,@markjbrown I am planning to tweet and blog more...  But I hope you prefer me building stuff :-)
+31/03/2011,22:20,MikeDoesBigData,Nice that my #w2e $25 donation via DonorsChoose.org's classroom projects is now helping hatch chickens and get kids interested in science.
+29/03/2011,22:41,MikeDoesBigData,"Ran into @markjbrown at the Microsoft booth at #w2e. Good presence with #Azure, #Bizspark, #Webmatrix"
+30/03/2011,08:05,markjbrown,@SQLServerMike awesome seeing you today. You should blog and Tweet more. Lots of good geeky stuff in that head of yours :)
+29/03/2011,20:29,MikeDoesBigData,Providing moderated subnet infrastructure and calling it democratizing the web... Newspeak is alive ... #w2e
+29/03/2011,18:27,MikeDoesBigData,Sitting in @Scobleizer's session at Web 2.0 Expo #w2e listening to him and Alex Polvi chat about the improving startup scene.
+13/11/2010,10:20,MikeDoesBigData,@pinaldave Thanks for the kudos...
+13/11/2010,09:53,MikeDoesBigData,RT @aspiringgeek: Kudos to Quest for hosting #SQLMVP dinner! #sqlpass
+12/11/2010,23:33,pinaldave,Very good presentation by @SQLServerMike . He is new at Twitter but extremely experienced with Microsoft. #SQLPASS
+11/11/2010,22:07,MikeDoesBigData,I like the attendees' interest in Dejan's #sqlserver #XQuery presentation at #sqlpass. :)
+11/11/2010,21:53,MikeDoesBigData,"Done with my #sqlpass presentations. beyond relational in #sqlserver #Denali (Filetable, semantic&full text search, Spatial) was fun :)"
+10/11/2010,21:59,MikeDoesBigData,@KevinCoxSQL Re spatial features: Come and check out my presentation AD388M tomorrow at #sqlpass for new #denali #spatial features as well.
+10/11/2010,21:52,MikeDoesBigData,"Getting ready to present chalk talk @2:15pm on #Spatial indexing and performance in #sqlserver. If you are at #sqlpass, stop by!"
+10/11/2010,18:52,MikeDoesBigData,@parkerjohn44 #filetable is not in CTP1. It will be in CTP2. Sorry about that. (#denali #sqlpass)
+10/11/2010,18:27,MikeDoesBigData,@SQLDBA #filetable uses FileStream but adds NTFS file properties into table and provides SMB compatible file system driver #sqlpass
+10/11/2010,18:22,MikeDoesBigData,@pinaldave Come to my #sqlpass presentation AD388M on Thu for details on #filetable
+11/11/2010,02:33,pinaldave,"@SQLServerMike absolutely sir, after talking to few others I understood so many things."
+10/11/2010,18:12,MikeDoesBigData,Just a caveat: FileTable will be in CTP2 and not CTP1 #sqlpass
+10/11/2010,18:09,MikeDoesBigData,@merv we have semantic search & fulltext search to unlock the value in the files :) just wait for the deep dives and upcoming demos #sqlpass
+10/11/2010,18:21,merv,"@SQLServerMike Thanks - I could see that, of course, but the message is not yet baked. Wish I was there for the sessions! Congrats. #sqlpass"
+10/11/2010,18:07,MikeDoesBigData,RT @merv: #SQLPASS FileTable begs for a business value-based demo - finding the value in unstructured data combined with database.  This ...
+10/11/2010,18:02,MikeDoesBigData,"Finally I can talk about new things in Denali :). More about FileTable, Semantic Search (both CTP2) and Spatial in AD388M on Thu at #sqlpass"
+10/11/2010,18:00,MikeDoesBigData,Finished being FileTable 'demo monkey 2nd grade' :) (doing backup for Rohan). Come to my BR presentation tomorrow to find out more #sqlpass

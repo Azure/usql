@@ -1,0 +1,25 @@
+﻿// Analyzes a Tweetdownload.net tweet file
+// 
+// 1. Show general EXTRACT-Transform-OUTPUT format
+// 2. simple GROUP BY/COUNT
+// 3. Shows quoted identifier
+// 4. ORDER BY on OUTPUT
+
+@t =
+    EXTRACT date string,
+            time string,
+            author string,
+            tweet string
+    FROM "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
+    USING Extractors.Csv();
+
+@res =
+    SELECT author,
+           COUNT( * ) AS [tweet count]
+    FROM @t
+    GROUP BY author;
+
+OUTPUT @res
+TO "/Output/TweetAnalysis/MyTwitterAnalysis1.csv"
+ORDER BY [tweet count] DESC
+USING Outputters.Csv();

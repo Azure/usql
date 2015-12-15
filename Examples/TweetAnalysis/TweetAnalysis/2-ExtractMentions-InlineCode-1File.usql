@@ -1,0 +1,47 @@
+﻿// Analyzes a Tweetdownload.net tweet file
+//
+// Cook file into counts of tweet per author and mentioned
+// 
+// 1. Show inline C# expression with string ops and LINQ with lambda
+// 2. Show U-SQL ARRAY type
+// 2. CROSS APPLY and EXPLODE
+// 3. UNION ALL
+// 4. GROUP BY with expression
+
+@t = EXTRACT date string
+           , time string
+           , author string
+           , tweet string
+      FROM "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
+    USING Extractors.Csv();
+
+// Extract mentions
+@m = SELECT new SQL.ARRAY<string>(
+                tweet.Split(new char[]{' ', ',', '.', ':', '!', ';', '"', '“'}).Where(x => x.StartsWith("@"))
+            ) AS mentions
+     FROM @t;
+
+@m = SELECT m.Substring(1) AS m
+          , "mention" AS category
+     FROM @m CROSS APPLY EXPLODE(mentions) AS t(m)
+     WHERE m != "@";
+
+// Combine mentions and authors
+@t =
+    SELECT author, "author" AS category
+    FROM @t
+    UNION ALL
+    SELECT *
+    FROM @m;
+
+// Count mentions and authors
+@res = SELECT author.ToLowerInvariant() AS author
+            ,  category
+            , COUNT( * ) AS tweetcount
+       FROM @t
+       GROUP BY author.ToLowerInvariant(), category;
+
+OUTPUT @res
+TO "/Output/TweetAnalysis/MyTwitterAnalysis2.csv"
+ORDER BY tweetcount DESC
+USING Outputters.Csv();
