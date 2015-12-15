@@ -4,7 +4,7 @@ This directory contains U-SQL sample solutions and sample data.
 
 Unless otherwise noted, they are provided as VisualStudio solutions. 
 
-- [***Sample Data***](Samples) : Contains sample data sets.
+- [***Sample Data***](Samples/Data) : Contains sample data sets.
 
 The individual projects are:
 
