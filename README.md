@@ -10,6 +10,7 @@ This site is the front door to the repo are where you can find libraries, tools 
 
 Here are a few links with a lot more information:
 
+* [U-SQL FAQ](FAQ.md)
 * [U-SQL reference documentation](http://aka.ms/usql_reference)
 * [About Azure Data Lake Analytics](https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-overview/)
 * [Get Started with U-SQL](https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-u-sql-get-started/)
