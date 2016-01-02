@@ -15,3 +15,5 @@ The individual projects are:
 - [***U-SQL Hands-On Lab Samples***](IntroHOL-USQL) : Contains the scripts from the [U-SQL Hands-On Lab](http://aka.ms/usql-hol).
 
 - [***Tweet Analysis Samples***](TweetAnalysis) : Contains scripts doing tweet analysis (see also VS Blog entries [U-SQL Introduction](http://blogs.msdn.com/b/visualstudio/archive/2015/09/28/introducing-u-sql.aspx) and [U-SQL UDF](http://blogs.msdn.com/b/visualstudio/archive/2015/10/28/writing-and-using-custom-code-in-u-sql-user-defined-functions.aspx)).
+
+- [***Outputting Column Names***](HeaderOutputter) : Contains custom outputter that writes the column names and optionally their type of a rowset into a file.
