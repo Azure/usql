@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // Sample Outputter that just outputs the rowset schema as "header". It always writes the names of the columns and provides the option to write the types in a second row.
-// It does not output the content of the file (That is left as an exercise to the reader)
+// It does not output the content of the rowset (That is left as an exercise to the reader)
 //
 // At this point, the outputter requires atomic file processing (ie, the file is not split into parallel extends). 
 // Once the Output model provides a way to identify the beginning of the file, this restriction can be removed.
