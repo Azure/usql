@@ -1,0 +1,51 @@
+﻿// Some samples/test cases for the HeaderOutputter
+// Assumes that the HeaderOutputter assembly has been registered at master.HeaderOutputter
+
+REFERENCE ASSEMBLY master.HeaderOutputter;
+
+// Create some interesting rowsets
+@simple_rs = 
+SELECT  * FROM (VALUES(1, "string", (int?) 2, DateTime.Parse("2015-12-15"))
+                   , (2, "string2", (int?) 3, DateTime.Parse("2015-12-18"))
+               ) AS T(i, str, ni, dt);
+
+@quoted_rs =
+    SELECT *
+    FROM(
+        VALUES
+        (
+            1,
+            "string",
+            (int?) 2,
+            DateTime.Parse("2015-12-15")
+        )) AS T([i], [string], [nullable int], [^] );// BUGBUG [个]);
+
+// Still to do, user-defined types
+@complex_rs =
+    SELECT * FROM (VALUES( (new SQL.ARRAY<int>{1,2}) 
+                         , (new SQL.MAP<string, int?>{{"key", 42}})
+                         , (new SQL.MAP<string, SQL.ARRAY<string>>{{"key", new SQL.ARRAY<string>{"a","b"}}})
+                         , new SQL.ARRAY<SQL.MAP<int,int?>>{new SQL.MAP<int,int?>{{1,2},{2,3}}}
+  )
+) AS T(a_int, m_s_i, m_s_as, a_mii);
+
+OUTPUT @simple_rs
+TO "/output/simple.txt"
+USING new HeaderOutputter.HeaderOutputter(quoting:false, with_types:true);
+
+OUTPUT @quoted_rs
+TO "/output/quoted.txt"
+USING new HeaderOutputter.HeaderOutputter(quoting:true, with_types:true, encoding:Encoding.Unicode);
+
+OUTPUT @quoted_rs
+TO "/output/quoted_notypes_factory.txt"
+USING HeaderOutputter.Factory.Columns(quoting:true, encoding:Encoding.Unicode);
+
+OUTPUT @quoted_rs
+TO "/output/quoted_types_factory.txt"
+USING HeaderOutputter.Factory.ColumnsAndTypes(quoting:true, encoding:Encoding.Unicode);
+
+OUTPUT @complex_rs
+TO "/output/complex.txt"
+USING new HeaderOutputter.HeaderOutputter(quoting:true, with_types:true);
+
