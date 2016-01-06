@@ -6,46 +6,47 @@ REFERENCE ASSEMBLY ext;
 
 
 DECLARE @INPUTDIR string =  "/movies/ml-1m/";
-DECLARE @USERS string = @INPUTDIR + "users.dat";
-DECLARE @MOVIES string = @INPUTDIR + "movies.dat";
-DECLARE @RATINGS string = @INPUTDIR + "ratings.dat";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+DECLARE @MOVIESInp string = @INPUTDIR + "movies.dat";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
 
-@UsersTemp =
+@Users =
     EXTRACT UserID string,
             Gender string,
             Age string,
             Occupation string,
             Zip string
 
-    FROM @USERS
+    FROM @USERSInp
     USING new MovieLensExtractor.UserExtractor();
 
 
-@MoviesTemp =
+@Movies =
     EXTRACT MovieID string,
             MovieName string,
             Genres string
-    FROM @MOVIES
+    FROM @MOVIESInp
     USING new MovieLensExtractor.MovieExtractor();
 
 @m = SELECT *,new SQL.ARRAY<string>(
                 Genres.Split('|')) AS Genre
-     FROM @MoviesTemp;
+     FROM @Movies;
 
-@t = SELECT MovieID,MovieName,g AS Genre
+@MovieGenre = SELECT MovieID,MovieName,g AS Genre
      FROM @m CROSS APPLY EXPLODE(Genre) AS Genre(g);
 
-@RatingsTemp = 
+@Ratings = 
    EXTRACT UserID string,
            MovieID string,
            Rating string,
            TimeStamp string
-      FROM @RATINGS
+      FROM @RATINGSInp
     USING new MovieLensExtractor.RatingsExtractor();
    
-@j = 
+   // Top100 with movie than 75 ratings
+@Top100 = 
     SELECT MovieID,AVG(float.Parse(Rating)) AS AvgRating,COUNT(*) AS RatingCount
-    FROM @RatingsTemp AS r
+    FROM @Ratings AS r
     GROUP BY MovieID
     HAVING COUNT(*) > 75
     ORDER BY AvgRating DESC
@@ -58,29 +59,26 @@ DECLARE @RATINGS string = @INPUTDIR + "ratings.dat";
            AvgRating,
            RatingCount
            
-    FROM @j AS j
+    FROM @Top100 AS j
          JOIN
-             @MoviesTemp AS M
+             @Movies AS M
          ON j.MovieID == M.MovieID;
 
 
 OUTPUT @y
-TO "foo4.out"
+TO "Top100.csv"
 ORDER BY AvgRating DESC
 USING Outputters.Csv()
 ;
 
     
-OUTPUT @UsersTemp
-TO "foo.out" USING Outputters.Csv();
+// Outputs below not really useful but prevent the DEAD CODE error being thrown 
+// which is good in a production env but this is a simple demo.
+OUTPUT @Users
+TO "Users.csv" USING Outputters.Csv();
 
 
-OUTPUT @t
-TO "foo2.out"
+OUTPUT @MovieGenre
+TO "Movies.csv"
 USING Outputters.Csv();
-
-OUTPUT @RatingsTemp
-TO "foo3.out"
-USING Outputters.Csv();
-
       
