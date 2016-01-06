@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MovieLensExtractor
 {
 
-    [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
+  [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
     public class MovieLensExtractor : IExtractor
     {
         public const string NEWLINE = "\r\n";
@@ -34,19 +34,7 @@ namespace MovieLensExtractor
             return false;
 
         }
-        public bool hasEndedEOL(ref StringBuilder str)
-        {
-            if (str.Length == 0)
-            {
-                return false;
-            }
-            if (str[str.Length - 1] == 0x10)
-            {
-                return true;
-            }
-            return false;
-
-        }
+        
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
             StringBuilder[] strings = new StringBuilder[colCount];
@@ -93,14 +81,21 @@ namespace MovieLensExtractor
                     if (v != 0)
                     {
                         v = 0;
+                        // For an extractor this is the pertinant code :
+                        // Set column values and yield return 
                         for (int x = 0; x < colCount; x++)
                         {
-                            output.Set<string>(x,strings[colCount].ToString());
-                            strings[colCount].Clear();
+                            output.Set<String>(x, strings[x].ToString());
                         }
                         
-                        yield return output.AsReadOnly();
                         
+                        yield return output.AsReadOnly();
+
+                        for (int x = 0; x < colCount; x++)
+                        {
+                            strings[x].Clear();
+                        }
+
                     }
                     EndOfLine = false;
                     if (c == -1) break;
@@ -111,26 +106,5 @@ namespace MovieLensExtractor
 
         }
     }
-    [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
-    public class UserExtractor : MovieLensExtractor    {
-
-        UserExtractor() :base(5)
-        {
-             
-        }
-       
-    }
-    [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
-    public class MovieExtractor : MovieLensExtractor
-    {
-        MovieExtractor() : base(3) { }
-       
-    }
-    [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
-    public class RatingsExtractor : MovieLensExtractor
-    {
-        RatingsExtractor() : base(4){}
-
-       
-    }
+    
 }

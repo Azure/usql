@@ -16,17 +16,15 @@ DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
             Age string,
             Occupation string,
             Zip string
-
     FROM @USERSInp
-    USING new MovieLensExtractor.UserExtractor();
-
+    USING new MovieLensExtractor.MovieLensExtractor(5);
 
 @Movies =
     EXTRACT MovieID string,
             MovieName string,
             Genres string
     FROM @MOVIESInp
-    USING new MovieLensExtractor.MovieExtractor();
+    USING new MovieLensExtractor.MovieLensExtractor(3);
 
 @m = SELECT *,new SQL.ARRAY<string>(
                 Genres.Split('|')) AS Genre
@@ -35,15 +33,15 @@ DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
 @MovieGenre = SELECT MovieID,MovieName,g AS Genre
      FROM @m CROSS APPLY EXPLODE(Genre) AS Genre(g);
 
-@Ratings = 
-   EXTRACT UserID string,
-           MovieID string,
-           Rating string,
-           TimeStamp string
-      FROM @RATINGSInp
-    USING new MovieLensExtractor.RatingsExtractor();
+@Ratings =
+    EXTRACT UserID string,
+            MovieID string,
+            Rating string,
+            TimeStamp string
+    FROM @RATINGSInp
+    USING new MovieLensExtractor.MovieLensExtractor(4);
    
-   // Top100 with movie than 75 ratings
+   // Top100 with more than 75 ratings
 @Top100 = 
     SELECT MovieID,AVG(float.Parse(Rating)) AS AvgRating,COUNT(*) AS RatingCount
     FROM @Ratings AS r
