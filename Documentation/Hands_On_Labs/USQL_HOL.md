@@ -266,7 +266,7 @@ The following script creates a function RegionalSearchlog() in the default datab
 	  )
 	AS BEGIN 
 	  @searchlog =
-	    SELECT * FROM SearchLogView
+	    SELECT * FROM SearchlogView
 	    WHERE Region == @region;
 	END;
 
@@ -274,7 +274,7 @@ The first statement drops an already existing definition of the function and the
 
 	@rs1 =
 	    SELECT Start, Region, Duration
-	    FROM RegionSearchlog(DEFAULT) AS S;
+	    FROM RegionalSearchlog(DEFAULT) AS S;
 
 	OUTPUT @rs1   
 	TO "/output/<replace_this_with_your_output_name>.csv"
