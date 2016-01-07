@@ -1,0 +1,27 @@
+﻿// Load data from ADL file into tables. 
+USE master;
+
+// Uncomment the below for local running
+//CREATE ASSEMBLY ext FROM "MovieLensExtractor.dll";
+//REFERENCE ASSEMBLY ext;
+
+// Use for ADL running - You must register the assembley first -> View->Server Explorer -> Data Lake Analytics....
+REFERENCE ASSEMBLY [MovieLensExtractor];
+
+
+DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+
+// MovieLensExtractor only provides string mapping ( to keep demo code as simple as possible) and needs to know column count upfront
+@Users =
+    EXTRACT UserID string,
+            Gender string,
+            Age string,
+            Occupation string,
+            Zip string
+    FROM @USERSInp
+    USING new MovieLensExtractor.MovieLensExtractor(5);
+
+OUTPUT @Users
+TO "Users.csv" USING Outputters.Csv();
+

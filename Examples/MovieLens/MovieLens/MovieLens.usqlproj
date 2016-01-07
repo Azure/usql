@@ -27,11 +27,23 @@
     <Folder Include="MovieLens" />
   </ItemGroup>
   <ItemGroup>
-    <Script Include="MovieLens\MovieLens01-LoadMovies.usql" />
+    <Script Include="MovieLens\MovieLens02-LoadRatings.usql" />
+    <Script Include="MovieLens\MovieLens01-LoadUsers.usql" />
+    <Script Include="MovieLens\MovieLens03-LoadRatings.usql" />
+    <Script Include="MovieLens\MovieLens99-LoadMovies.usql" />
   </ItemGroup>
   <ItemGroup>
-    <ScriptCode Include="MovieLens\MovieLens01-LoadMovies.usql.cs">
-      <DependentUpon>MovieLens\MovieLens01-LoadMovies.usql</DependentUpon>
+    <ScriptCode Include="MovieLens\MovieLens02-LoadRatings.usql.cs">
+      <DependentUpon>MovieLens\MovieLens02-LoadRatings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens01-LoadUsers.usql.cs">
+      <DependentUpon>MovieLens\MovieLens01-LoadUsers.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens03-LoadRatings.usql.cs">
+      <DependentUpon>MovieLens\MovieLens03-LoadRatings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens99-LoadMovies.usql.cs">
+      <DependentUpon>MovieLens\MovieLens99-LoadMovies.usql</DependentUpon>
     </ScriptCode>
   </ItemGroup>
   <ItemGroup>

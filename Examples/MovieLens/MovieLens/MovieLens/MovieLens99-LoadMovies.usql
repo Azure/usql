@@ -1,8 +1,13 @@
 ﻿// Load data from ADL file into tables. 
 USE master;
 
-CREATE ASSEMBLY ext FROM "MovieLensExtractor.dll";
-REFERENCE ASSEMBLY ext;
+// Uncomment the below for local running
+//CREATE ASSEMBLY ext FROM "MovieLensExtractor.dll";
+//REFERENCE ASSEMBLY ext;
+
+// Use for ADL running - You must register the assembley first -> View->Server Explorer -> Data Lake Analytics....
+REFERENCE ASSEMBLY [MovieLensExtractor];
+
 
 
 DECLARE @INPUTDIR string =  "/movies/ml-1m/";
@@ -10,21 +15,22 @@ DECLARE @USERSInp string = @INPUTDIR + "users.dat";
 DECLARE @MOVIESInp string = @INPUTDIR + "movies.dat";
 DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
 
+// MovieLensExtractorMeta will use the outputrow meta data fo work from , presently ints and strings are supported.
 @Users =
-    EXTRACT UserID string,
+    EXTRACT UserID int,
             Gender string,
-            Age string,
-            Occupation string,
+            Age int,
+            Occupation int,
             Zip string
     FROM @USERSInp
-    USING new MovieLensExtractor.MovieLensExtractor(5);
+    USING new MovieLensExtractor.MovieLensExtractorMeta();
 
 @Movies =
-    EXTRACT MovieID string,
+    EXTRACT MovieID int,
             MovieName string,
             Genres string
     FROM @MOVIESInp
-    USING new MovieLensExtractor.MovieLensExtractor(3);
+    USING new MovieLensExtractor.MovieLensExtractorMeta();
 
 @m = SELECT *,new SQL.ARRAY<string>(
                 Genres.Split('|')) AS Genre
@@ -34,22 +40,24 @@ DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
      FROM @m CROSS APPLY EXPLODE(Genre) AS Genre(g);
 
 @Ratings =
-    EXTRACT UserID string,
-            MovieID string,
-            Rating string,
-            TimeStamp string
+    EXTRACT UserID int,
+            MovieID int,
+            Rating int,
+            TimeStamp int
     FROM @RATINGSInp
-    USING new MovieLensExtractor.MovieLensExtractor(4);
-   
-   // Top100 with more than 75 ratings
-@Top100 = 
-    SELECT MovieID,AVG(float.Parse(Rating)) AS AvgRating,COUNT(*) AS RatingCount
+    USING new MovieLensExtractor.MovieLensExtractorMeta();
+
+// Top100 with more than 75 ratings , note inline cast to float; 
+
+@Top100 =
+    SELECT MovieID,
+           AVG((float) Rating) AS AvgRating,
+           COUNT( * ) AS RatingCount
     FROM @Ratings AS r
     GROUP BY MovieID
-    HAVING COUNT(*) > 75
+    HAVING COUNT( * ) > 75
     ORDER BY AvgRating DESC
-    FETCH 100 ROWS         
-;
+    FETCH 100 ROWS;
 
 @y =
     SELECT M.MovieID,
