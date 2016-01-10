@@ -1,0 +1,24 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+
+@Ratings =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@RatingsSplit =
+    SELECT RatingLine,new SQL.ARRAY<string>(
+           RatingLine.Split(':')) AS Ratings // Note Split is only on a char, the delimiter in the file is '::'
+    FROM @Ratings;
+
+
+// Note Split is only on a char, so skip every other array elem;
+@x =
+    SELECT Ratings[0]AS MovieID,
+           Ratings[2]AS UserID,
+           Ratings[4]AS Ratings,
+           Ratings[6]AS Timestamp
+    FROM @RatingsSplit;
+
+OUTPUT @x
+TO "Ratings.csv" USING Outputters.Csv();
