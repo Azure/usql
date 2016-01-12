@@ -27,33 +27,37 @@
     <Folder Include="MovieLens" />
   </ItemGroup>
   <ItemGroup>
-    <Script Include="MovieLens\MovieLens03-LoadRatingsAsString.usql" />
-    <Script Include="MovieLens\MovieLens02-LoadRatings.usql" />
+    <Script Include="MovieLens\MovieLens04-LoadRatingsAsString.usql" />
+    <Script Include="MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql" />
     <Script Include="MovieLens\MovieLens01-LoadUsers.usql" />
-    <Script Include="MovieLens\MovieLens03-LoadRatings.usql" />
-    <Script Include="MovieLens\MovieLens04-LoadRatingUSQLSplit.usql" />
-    <Script Include="MovieLens\MovieLens05-LoadRatingsUSQLSplitDD.usql" />
+    <Script Include="MovieLens\MovieLens03-LoadRatingsWithStringExtractor.usql" />
+    <Script Include="MovieLens\MovieLens05-LoadRatingUSQLSplit.usql" />
+    <Script Include="MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql" />
+    <Script Include="MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql" />
     <Script Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql" />
     <Script Include="MovieLens\MovieLens99-LoadMovies.usql" />
   </ItemGroup>
   <ItemGroup>
-    <ScriptCode Include="MovieLens\MovieLens03-LoadRatingsAsString.usql.cs">
-      <DependentUpon>MovieLens\MovieLens03-LoadRatingsAsString.usql</DependentUpon>
+    <ScriptCode Include="MovieLens\MovieLens04-LoadRatingsAsString.usql.cs">
+      <DependentUpon>MovieLens\MovieLens04-LoadRatingsAsString.usql</DependentUpon>
     </ScriptCode>
-    <ScriptCode Include="MovieLens\MovieLens02-LoadRatings.usql.cs">
-      <DependentUpon>MovieLens\MovieLens02-LoadRatings.usql</DependentUpon>
+    <ScriptCode Include="MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql.cs">
+      <DependentUpon>MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql</DependentUpon>
     </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens01-LoadUsers.usql.cs">
       <DependentUpon>MovieLens\MovieLens01-LoadUsers.usql</DependentUpon>
     </ScriptCode>
-    <ScriptCode Include="MovieLens\MovieLens03-LoadRatings.usql.cs">
-      <DependentUpon>MovieLens\MovieLens03-LoadRatings.usql</DependentUpon>
+    <ScriptCode Include="MovieLens\MovieLens03-LoadRatingsWithStringExtractor.usql.cs">
+      <DependentUpon>MovieLens\MovieLens03-LoadRatingsWithStringExtractor.usql</DependentUpon>
     </ScriptCode>
-    <ScriptCode Include="MovieLens\MovieLens04-LoadRatingUSQLSplit.usql.cs">
-      <DependentUpon>MovieLens\MovieLens04-LoadRatingUSQLSplit.usql</DependentUpon>
+    <ScriptCode Include="MovieLens\MovieLens05-LoadRatingUSQLSplit.usql.cs">
+      <DependentUpon>MovieLens\MovieLens05-LoadRatingUSQLSplit.usql</DependentUpon>
     </ScriptCode>
-    <ScriptCode Include="MovieLens\MovieLens05-LoadRatingsUSQLSplitDD.usql.cs">
-      <DependentUpon>MovieLens\MovieLens05-LoadRatingsUSQLSplitDD.usql</DependentUpon>
+    <ScriptCode Include="MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql.cs">
+      <DependentUpon>MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql.cs">
+      <DependentUpon>MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql</DependentUpon>
     </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql.cs">
       <DependentUpon>MovieLens\MovieLens98-MostWatchedOfHighestRated.usql</DependentUpon>

@@ -19,5 +19,7 @@ DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
            Ratings[3] AS Timestamp
 FROM @RatingsSplit;
 
-OUTPUT @x
-TO "Ratings.csv" USING Outputters.Csv();
+@c = SELECT COUNT(*) AS c FROM @x;
+
+OUTPUT @c
+TO "RatingCount.csv" USING Outputters.Csv();

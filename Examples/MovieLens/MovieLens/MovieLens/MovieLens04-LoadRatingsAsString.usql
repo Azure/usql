@@ -7,7 +7,9 @@ DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
     USING Extractors.Tsv( rowDelimiter: "\n");
 
 
-@x 
 
-OUTPUT @Ratings
-TO "Ratings.csv" USING Outputters.Csv();
+@c = SELECT COUNT(*) AS c FROM @Ratings;
+
+OUTPUT @c
+TO "RatingCount.csv" USING Outputters.Csv();
+
