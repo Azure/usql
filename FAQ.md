@@ -50,7 +50,7 @@ Use Windowing Functions.
 
 ### Q: Can I have a different schema for each row in a a U-SQL rowset?
 
-No. A U-SQL RowSet must contains rows and each rwo must have the same schema: same column names, with the same types, in the same order
+No. A U-SQL RowSet must contains rows and each row must have the same schema: same column names, with the same types, in the same order
 
 
 # U-SQL Catalog
