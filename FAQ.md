@@ -1,6 +1,16 @@
 
 # U-SQL
 
+### Using the built-in U-SQL Extractors is there any way to record the input lines that are invalid so that they can be analyzed later?
+
+You cannot capture errors with the built-in extractors. 
+
+As a workaround, you can build your own extractor that uses a try catch and other checks and then add a column that stores the error and the input.*
+
+NOTE: because you may have a large amount in information in the debug column, you can use byte[] or string. Note that strings havea maximum size of 128KB.
+
+No. This is disallowed.
+
 ### Can I read/write files using code that is running within a U-SQL User-defined Operator (UDO)?
 
 No. This is disallowed.
