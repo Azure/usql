@@ -53,10 +53,12 @@ Most scenarios for correlated subquery can be expressed via a JOIN. Use that tec
 
 ### Q: How can I Assign Unique IDs to rows?
 
-Use Windowing Functions.
+Use Window Functions.
 
     @rs1 = SELECT *, ROW_NUMBER() OVER ( ) AS UID 
          FROM @rs0;  
+
+Do not use Guid.NewGuid() to create unique ids for rows.
 
 ### Q: Can I have a different schema for each row in a a U-SQL rowset?
 
