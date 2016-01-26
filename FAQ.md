@@ -55,10 +55,25 @@ Most scenarios for correlated subquery can be expressed via a JOIN. Use that tec
 
 Use Window Functions.
 
-    @rs1 = SELECT *, ROW_NUMBER() OVER ( ) AS UID 
-         FROM @rs0;  
+    @rs1 = SELECT *, ROW_NUMBER() OVER ( ) AS unique_id 
+         FROM @unique_id;  
 
 Do not use Guid.NewGuid() to create unique ids for rows.
+
+### Q: How can get a random sampling of rows from a rowset?
+
+U-SQL doesn't have a real random sampling method.
+
+However if you only care about getting a subset of rows and don't really care about
+truwe random sampling then you can use the ROW_NUMBER Window Function as shown below where only ever 
+one out of thousand rows are returned.
+
+    @rs1 = SELECT *, ROW_NUMBER() OVER ( ) AS rownum 
+         FROM @rs0
+         WHERE ( (rownum % 1000) == 0 );  
+
+Do not use Guid.NewGuid() to create unique ids for rows.
+
 
 ### Q: Can I have a different schema for each row in a a U-SQL rowset?
 
