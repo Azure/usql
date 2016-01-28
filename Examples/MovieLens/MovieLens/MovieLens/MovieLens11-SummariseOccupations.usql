@@ -1,0 +1,37 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+
+@UserLine =
+    EXTRACT UserLine string
+    FROM @USERSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@UserSplit =
+    SELECT new SQL.ARRAY<string>(
+           UserLine.Split(new string[]{"::"},StringSplitOptions.None)) AS UserArr
+    FROM @UserLine;
+
+
+@Users =
+    SELECT int.Parse(UserArr[0]) AS UserID,
+           UserArr[1] AS Gender,
+           int.Parse(UserArr[2])  AS Age,
+           int.Parse(UserArr[3]) AS Occupation,
+           UserArr[4] AS Zip
+FROM @UserSplit;
+
+
+@Output =
+    SELECT o.Occupation,
+           COUNT( * ) AS c
+    FROM MovieLens.dbo.Occupation AS o
+         JOIN
+             @Users AS u
+         ON o.OccupationId == u.Occupation
+    GROUP BY o.Occupation
+    ;
+
+OUTPUT @Output
+TO "UsersOccCount.csv" 
+ORDER BY c DESC
+USING Outputters.Csv();

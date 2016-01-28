@@ -34,6 +34,10 @@
     <Script Include="MovieLens\MovieLens05-LoadRatingUSQLSplit.usql" />
     <Script Include="MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql" />
     <Script Include="MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql" />
+    <Script Include="MovieLens\MovieLens08-SplitRatings.usql" />
+    <Script Include="MovieLens\MovieLens09-UnionRatings.usql" />
+    <Script Include="MovieLens\MovieLens10-OccupationsTable.usql" />
+    <Script Include="MovieLens\MovieLens11-SummariseOccupations.usql" />
     <Script Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql" />
     <Script Include="MovieLens\MovieLens99-LoadMovies.usql" />
   </ItemGroup>
@@ -58,6 +62,18 @@
     </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql.cs">
       <DependentUpon>MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens08-SplitRatings.usql.cs">
+      <DependentUpon>MovieLens\MovieLens08-SplitRatings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens09-UnionRatings.usql.cs">
+      <DependentUpon>MovieLens\MovieLens09-UnionRatings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens10-OccupationsTable.usql.cs">
+      <DependentUpon>MovieLens\MovieLens10-OccupationsTable.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens11-SummariseOccupations.usql.cs">
+      <DependentUpon>MovieLens\MovieLens11-SummariseOccupations.usql</DependentUpon>
     </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql.cs">
       <DependentUpon>MovieLens\MovieLens98-MostWatchedOfHighestRated.usql</DependentUpon>

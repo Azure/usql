@@ -1,0 +1,58 @@
+﻿// Load data from ADL file into tables. 
+USE master;
+
+
+DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+
+@Base =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@RatingsSplit =
+    SELECT RatingLine,new SQL.ARRAY<string>(
+           RatingLine.Split(new string[]{"::"},StringSplitOptions.None)) AS Ratings
+    FROM @Base;
+
+
+@Ratings =
+    SELECT int.Parse(Ratings[0]) AS MovieID,
+           int.Parse(Ratings[1]) AS UserID,
+           int.Parse(Ratings[2]) AS Rating,
+           int.Parse(Ratings[3]) AS Timestamp
+FROM @RatingsSplit;
+
+
+
+@R1 =
+    SELECT * FROM @Ratings WHERE Rating == 1;
+
+@R2 =
+    SELECT * FROM @Ratings WHERE Rating == 2;
+@R3 =
+    SELECT * FROM @Ratings WHERE Rating == 3;
+@R4 =
+    SELECT * FROM @Ratings WHERE Rating == 4;
+
+@R5 =
+    SELECT * FROM @Ratings WHERE Rating == 5;
+
+OUTPUT @R1
+TO "R1.csv"
+USING Outputters.Csv();
+
+OUTPUT @R2
+TO "R2.csv"
+USING Outputters.Csv();
+
+OUTPUT @R3
+TO "R3.csv"
+USING Outputters.Csv();
+
+OUTPUT @R4
+TO "R4.csv"
+USING Outputters.Csv();
+
+OUTPUT @R5
+TO "R5.csv" USING Outputters.Csv();
