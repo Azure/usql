@@ -62,7 +62,7 @@ REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
 	abst string
 	FROM @"wasb://sampledata@mwinklehdi/wiki/enwiki-latest-abstract.xml" 
 	USING new Microsoft.Analytics.Samples.Formats.Xml.XmlExtractor("doc",
-		new MAP<string,string> { 
+		new SQL.MAP<string,string> { 
 			 {"title","title" },
 			 {"link","link" },
 			 {"abstract","abst"}//,
@@ -74,7 +74,7 @@ REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
 
 @words = SELECT Ar.word, COUNT(*) AS count 
 		FROM @wiki
-		CROSS APPLY EXPLODE (new ARRAY<string>(abst.Split(' '))) AS Ar(word)
+		CROSS APPLY EXPLODE (new SQL.ARRAY<string>(abst.Split(' '))) AS Ar(word)
 		GROUP BY Ar.word
 		ORDER BY count DESC 
 		FETCH FIRST 25 ROWS ; 
