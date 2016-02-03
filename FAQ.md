@@ -1,6 +1,9 @@
 
 # U-SQL
 
+[http://aka.ms/usqlfaq](http://aka.ms/usqlfaq)
+
+
 ### Using the built-in U-SQL Extractors is there any way to record the input lines that are invalid so that they can be analyzed later?
 
 You cannot capture errors with the built-in extractors. 
