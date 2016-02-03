@@ -80,6 +80,17 @@ Do not use Guid.NewGuid() to create unique ids for rows.
 No. A U-SQL RowSet must contains rows and each row must have the same schema: same column names, with the same types, in the same order
 
 
+### Q: How can I Extract all the files in a folder?
+
+You can do this by using the FileSet syntax.
+
+
+    @rows =
+        EXTRACT Name string, ID int
+        FROM "/dimensiondata/carrier/{*}"
+        USING Extractors.Csv();
+
+
 # U-SQL Catalog
 
 ### Q: Is there an API to read or write a U-SQL table locally?
@@ -87,5 +98,6 @@ No. A U-SQL RowSet must contains rows and each row must have the same schema: sa
 If you are looking for an API like "CreateTable(name)"... no.
 
 The only supported way of creating a table is to run a U-SQL script in ADL Tools for Visual Studio.
+
 
 
