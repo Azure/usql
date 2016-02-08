@@ -1,0 +1,12 @@
+﻿
+DROP TABLE IF EXISTS Users;
+CREATE TABLE Users(
+       UserID     int,
+       Gender    string,
+       Age int,
+       Occupation int,
+       Zip string,
+       INDEX [idx Users] CLUSTERED(UserID ASC)
+       PARTITIONED BY HASH(UserID)
+);
+

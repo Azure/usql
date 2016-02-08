@@ -27,6 +27,13 @@
     <Folder Include="MovieLens" />
   </ItemGroup>
   <ItemGroup>
+    <Script Include="MovieLens\MovieLens14-CreateTables.usql" />
+    <Script Include="MovieLens\MovieLens15-LoadTables.usql" />
+    <Script Include="MovieLens\MovieLens16-LoadUsers.usql" />
+    <Script Include="MovieLens\MovieLens17-ConvertRatingsToCSV.usql" />
+    <Script Include="MovieLens\MovieLens92-SimilarityWithMin.usql" />
+    <Script Include="MovieLens\MovieLens93-CosineSimilarityFromTables.usql" />
+    <Script Include="MovieLens\MovieLens94-CosineSimilarityWithNotWatchedSuggestionEarlyExclusion.usql" />
     <Script Include="MovieLens\MovieLens04-LoadRatingsAsString.usql" />
     <Script Include="MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql" />
     <Script Include="MovieLens\MovieLens01-LoadUsers.usql" />
@@ -38,10 +45,36 @@
     <Script Include="MovieLens\MovieLens09-UnionRatings.usql" />
     <Script Include="MovieLens\MovieLens10-OccupationsTable.usql" />
     <Script Include="MovieLens\MovieLens11-SummariseOccupations.usql" />
+    <Script Include="MovieLens\MovieLens12-CreateViews.usql" />
+    <Script Include="MovieLens\MovieLens13-FormArrayOfMovies.usql" />
+    <Script Include="MovieLens\MovieLens95-CosineSimilarityWithNotWatchedSuggestion.usql" />
+    <Script Include="MovieLens\MovieLens96-CosineSimilarityWithSuggestion.usql" />
+    <Script Include="MovieLens\MovieLens97-CosineSimilarity.usql" />
     <Script Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql" />
     <Script Include="MovieLens\MovieLens99-LoadMovies.usql" />
   </ItemGroup>
   <ItemGroup>
+    <ScriptCode Include="MovieLens\MovieLens14-CreateTables.usql.cs">
+      <DependentUpon>MovieLens\MovieLens14-CreateTables.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens15-LoadTables.usql.cs">
+      <DependentUpon>MovieLens\MovieLens15-LoadTables.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens16-LoadUsers.usql.cs">
+      <DependentUpon>MovieLens\MovieLens16-LoadUsers.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens17-ConvertRatingsToCSV.usql.cs">
+      <DependentUpon>MovieLens\MovieLens17-ConvertRatingsToCSV.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens92-SimilarityWithMin.usql.cs">
+      <DependentUpon>MovieLens\MovieLens92-SimilarityWithMin.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens93-CosineSimilarityFromTables.usql.cs">
+      <DependentUpon>MovieLens\MovieLens93-CosineSimilarityFromTables.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens94-CosineSimilarityWithNotWatchedSuggestionEarlyExclusion.usql.cs">
+      <DependentUpon>MovieLens\MovieLens94-CosineSimilarityWithNotWatchedSuggestionEarlyExclusion.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens04-LoadRatingsAsString.usql.cs">
       <DependentUpon>MovieLens\MovieLens04-LoadRatingsAsString.usql</DependentUpon>
     </ScriptCode>
@@ -74,6 +107,21 @@
     </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens11-SummariseOccupations.usql.cs">
       <DependentUpon>MovieLens\MovieLens11-SummariseOccupations.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens12-CreateViews.usql.cs">
+      <DependentUpon>MovieLens\MovieLens12-CreateViews.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens13-FormArrayOfMovies.usql.cs">
+      <DependentUpon>MovieLens\MovieLens13-FormArrayOfMovies.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens95-CosineSimilarityWithNotWatchedSuggestion.usql.cs">
+      <DependentUpon>MovieLens\MovieLens95-CosineSimilarityWithNotWatchedSuggestion.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens96-CosineSimilarityWithSuggestion.usql.cs">
+      <DependentUpon>MovieLens\MovieLens96-CosineSimilarityWithSuggestion.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens97-CosineSimilarity.usql.cs">
+      <DependentUpon>MovieLens\MovieLens97-CosineSimilarity.usql</DependentUpon>
     </ScriptCode>
     <ScriptCode Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql.cs">
       <DependentUpon>MovieLens\MovieLens98-MostWatchedOfHighestRated.usql</DependentUpon>

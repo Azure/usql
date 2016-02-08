@@ -1,0 +1,143 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+
+@RatingsRaw =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@RatingsSplit =
+    SELECT RatingLine,new SQL.ARRAY<string>(
+           RatingLine.Split(new string[]{"::"},StringSplitOptions.None)) AS Ratings
+    FROM @RatingsRaw;
+
+@Ratings =
+    SELECT int.Parse(Ratings[0]) AS MovieID,
+           int.Parse(Ratings[1]) AS UserID,
+           int.Parse(Ratings[2]) AS Rating,
+           Ratings[3] AS Timestamp
+FROM @RatingsSplit;
+
+@AvgRating =
+    SELECT MovieID,
+           AVG(Rating) AS AvgRating
+    FROM @Ratings
+    GROUP BY MovieID;
+
+
+@UsersRaw =
+    EXTRACT UserLine string
+    FROM @USERSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@UsersSplit =
+    SELECT UserLine,new SQL.ARRAY<string>(
+           UserLine.Split(new string[]{"::"},StringSplitOptions.None)) AS UserArr
+    FROM @UsersRaw;
+
+
+@Users =
+    SELECT int.Parse(UserArr[0]) AS UserID,
+           UserArr[1] AS Gender,
+           int.Parse(UserArr[2])  AS Age,
+           int.Parse(UserArr[3]) AS Occupation,
+           UserArr[4] AS Zip
+FROM @UsersSplit;
+
+
+@CrossJoin =
+    SELECT a.UserID AS aUserID,
+           b.UserID AS bUserID
+    FROM @Users AS a
+         JOIN
+             @Users AS b
+         ON a.Age == b.Age
+         AND a.Occupation == b.Occupation  // New Filter
+WHERE a.UserID != b.UserID;
+
+
+@CrossJoinWithMovies =
+    SELECT aUserID,
+           bUserID,
+           Ratings.MovieID AS UnseenMovieID
+    FROM @CrossJoin AS cj
+         JOIN
+             @Ratings AS Ratings
+         ON cj.bUserID == Ratings.UserID
+         LEFT JOIN
+             @Ratings AS aUserRatings
+         ON cj.aUserID == aUserRatings.UserID
+            AND aUserRatings.MovieID == Ratings.MovieID
+    WHERE aUserRatings.UserID == NULL;
+
+
+OUTPUT @CrossJoinWithMovies
+TO "cjm.csv" 
+//ORDER BY c DESC
+USING Outputters.Csv();
+
+@CrossJoinRatings1 =
+    SELECT aUserID,
+           bUserID,
+           r1.MovieID,
+           r1.Rating AS aRating,
+           r2.Rating AS bRating,
+           Math.Pow(r1.Rating, 2) AS aRatingSQ,
+           Math.Pow(r2.Rating, 2) AS bRatingSQ
+    FROM @CrossJoin AS cj
+         JOIN
+             @Ratings AS r1
+         ON cj.aUserID == r1.UserID
+         JOIN
+             @Ratings AS r2
+         ON cj.bUserID == r2.UserID
+            AND r1.MovieID == r2.MovieID;
+
+
+@cj1 =
+    SELECT aUserID,
+           bUserID,
+           SUM(aRating * bRating) AS r1,
+           SUM(aRatingSQ) AS SumASquared,
+           SUM(bRatingSQ) AS SumBSquared
+    FROM @CrossJoinRatings1
+    GROUP BY aUserID,
+             bUserID;
+
+@Similarity =
+    SELECT aUserID,
+           bUserID,
+           (double) r1 / (Math.Sqrt((double) SumASquared) * Math.Sqrt((double) SumBSquared)) AS Similarity
+    FROM @cj1 AS cj;
+
+
+@suj =
+    SELECT Similarity.*,
+           ROW_NUMBER() OVER(PARTITION BY Similarity.aUserID ORDER BY Similarity.Similarity DESC, ar.AvgRating DESC) AS RowN,
+           ar.MovieID AS RecommendedMovieID
+    FROM @Similarity AS Similarity
+         JOIN
+             @Ratings AS r
+         ON r.UserID == Similarity.bUserID
+         JOIN
+             @AvgRating AS ar
+         ON ar.MovieID == r.MovieID
+         JOIN
+             @CrossJoinWithMovies AS crjMovies
+         ON crjMovies.aUserID == Similarity.aUserID
+            AND crjMovies.bUserID == Similarity.bUserID
+            AND ar.MovieID == crjMovies.UnseenMovieID
+    WHERE Similarity < 1
+          AND Similarity >= .95;
+
+@res =
+    SELECT suj.aUserID AS UserID,
+           suj.RecommendedMovieID
+    FROM @suj AS suj
+    WHERE RowN == 1;
+
+OUTPUT @res
+TO "Recommend.csv" 
+USING Outputters.Csv();
+
