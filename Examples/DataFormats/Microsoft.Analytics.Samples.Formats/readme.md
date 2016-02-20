@@ -102,7 +102,7 @@ REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
  @myRecords =
     EXTRACT
         _id string,
-		Revision string, 	
+	Revision string 	
     FROM @"sampledata/json/{*}.json"
     USING new Microsoft.Analytics.Samples.Formats.Json.JsonExtractor();
 
