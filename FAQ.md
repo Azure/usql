@@ -10,11 +10,9 @@ You cannot capture errors with the built-in extractors.
 
 As a workaround, you can build your own extractor that uses a try catch and other checks and then add a column that stores the error and the input.*
 
-NOTE: because you may have a large amount in information in the debug column, you can use byte[] or string. Note that strings havea maximum size of 128KB.
+NOTE: because you may have a large amount in information in the debug column, you can use byte[] or string. Note that strings have a maximum size of 128KB.
 
-No. This is disallowed.
-
-### Can I read/write files using code that is running within a U-SQL User-defined Operator (UDO)?
+### Can I read/write files stored in ADLS or WASB using code that is running within a U-SQL User-defined Operator (UDO)?
 
 No. This is disallowed.
 
@@ -36,12 +34,31 @@ Use C# expression syntax, for example if the column you want (called foo) is of 
 
 ### Q: How can a create an "empty" rowset - a rowset with zero rows?
 
-   // Pending an Answer from the U-SQL team 
+You have several options:
+
+_Option 1_: Create an empty table that you refer to when you need it in subsequent scripts. Note that since you are not inserting any data, you will not need to specify an index:
+
+    CREATE TABLE Empty(a int, b int, c int); // Note: you still need to provide a schema
+    
+Then you can say:
+
+    @empty = SELECT * FROM Empty;
+
+_Option 2_: Create an empty rowset by reading from an empty file set:
+
+    @empty = EXTRACT a int, b int, c int 
+             FROM "{*}.doesnotexist"
+             USING Extractors.Csv();
+             
+_Option 3_: Create an empty rowset by an always false predicate:
+
+    @empty = SELECT * FROM (VALUES(1,2,3)) AS T(a,b,c) WHERE a != 1;
 
 ### Q: Can my U-SQL script make a network call to some other machine?
 
 No. This is explicitly disallowed and unsupported. 
 
+For a specific scenario, please file a request at http://aka.ms/adlfeedback.
 
 ### Q: How can I test if a stream exists in a U-SQL script?
 
@@ -53,7 +70,6 @@ U-SQL  doesn't have correlated subqueries.
 
 Most scenarios for correlated subquery can be expressed via a JOIN. Use that technique instead.
 
-
 ### Q: How can I Assign Unique IDs to rows?
 
 Use Window Functions.
@@ -61,7 +77,7 @@ Use Window Functions.
     @rs1 = SELECT *, ROW_NUMBER() OVER ( ) AS unique_id 
          FROM @unique_id;  
 
-Do not use Guid.NewGuid() to create unique ids for rows.
+Do not use Guid.NewGuid() to create unique ids for rows since the Guid creation is not deterministic and can lead to job aborts if a node is getting retried.
 
 ### Q: How can get a random sampling of rows from a rowset?
 
@@ -72,35 +88,33 @@ truwe random sampling then you can use the ROW_NUMBER Window Function as shown b
 one out of thousand rows are returned.
 
     @rs1 = SELECT *, ROW_NUMBER() OVER ( ) AS rownum 
-         FROM @rs0
+         FROM @rs0;
+         
+    @rs1 = SELECT * FROM @rs1
          WHERE ( (rownum % 1000) == 0 );  
-
-Do not use Guid.NewGuid() to create unique ids for rows.
-
 
 ### Q: Can I have a different schema for each row in a a U-SQL rowset?
 
-No. A U-SQL RowSet must contains rows and each row must have the same schema: same column names, with the same types, in the same order
+No. A U-SQL RowSet must contains rows and each row must have the same schema: same column names, with the same types, in the same order. Consider using a SQL.MAP typed column for semistructured data.
 
+If you want to union two rowsets with different schemas, null padd the missing columns in the SELECT clauses.
 
 ### Q: How can I Extract all the files in a folder?
 
 You can do this by using the FileSet syntax.
-
 
     @rows =
         EXTRACT Name string, ID int
         FROM "/dimensiondata/carrier/{*}"
         USING Extractors.Csv();
 
-
 # U-SQL Catalog
 
 ### Q: Is there an API to read or write a U-SQL table locally?
 
-If you are looking for an API like "CreateTable(name)"... no.
+There is an API to read meta data object description that is being exposed in the REST APIs, the SDKs, the Portal and the ADL Tools in VisualStudio. 
 
-The only supported way of creating a table is to run a U-SQL script in ADL Tools for Visual Studio.
+The only supported way of creating a catalog object such as a table is to run a U-SQL script. The ADL Tools provide a UI to help you create the script.
 
-
+There is currently no API to preview a table. Please submit a script that extracts the requested data, write it to a file and preview the file.
 
