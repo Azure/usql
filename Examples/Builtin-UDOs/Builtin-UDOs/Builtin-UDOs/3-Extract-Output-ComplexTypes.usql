@@ -1,0 +1,70 @@
+﻿// Built-in UDO Sample
+//
+// 1. Shows Extractors.Tsv(), Extractors.Csv(), Outputter.Csv()
+// 2. Different Encodings (Unicode, ASCII)
+// 3. ORDER BY on Outputter
+// 4. Handling of Maps and Arrays
+//
+
+DECLARE @ADL_INPUTDIR string =  "/Samples/Data/AmbulanceData/";
+DECLARE @ADL_DRIVERS string = @ADL_INPUTDIR + "Drivers.txt"; // TAB Separated Unicode file
+DECLARE @ADL_TRIPS string = @ADL_INPUTDIR + "DriverShiftTrips.csv"; // Excel CSV (ANSI with ASCII only)
+
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street   string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string // Map
+ FROM @ADL_DRIVERS
+ USING Extractors.Tsv(encoding:Encoding.Unicode);
+
+// Convert into SQL.MAP
+@Drivers =
+ SELECT driver_id, name, street, city, region, zipcode, country
+     , phone_numbers == "" ? null :
+          new SQL.MAP<string,string> (from p in phone_numbers.Split(',') select new KeyValuePair<string, string>(p.Split(':')[0],p.Split(':')[1])) AS phone_numbers
+FROM @Drivers;
+
+// Can use SQL.MAP now. And insert into U-SQL Table
+
+// Serialize SQL.MAP into string (or byte[]) for serialization
+@OutDrivers = 
+ SELECT driver_id, name, street, city, region, zipcode, country
+     , String.Join(",", phone_numbers.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS phone_numbers
+FROM @Drivers;
+
+OUTPUT @OutDrivers TO "/output/builtinUDO/Drivers.csv" USING Outputters.Csv();
+
+// You need to quote ASCII with [] to make sure it is not read as a reserved U-SQL keyword
+@Trips =
+ EXTRACT date DateTime
+       , driver_id int
+	   , vehicle_id int
+       , trips  string // Array
+ FROM @ADL_TRIPS
+ USING Extractors.Csv(encoding: Encoding.[ASCII]); 
+
+@Trips =
+SELECT date
+     , driver_id
+     , vehicle_id
+     , trips == null ? null : new SQL.ARRAY<int>(trips.Split(',').Select(x => Convert.ToInt32(x))) AS trip_ids
+FROM @Trips;
+
+// Can use SQL.ARRAY now. And insert into U-SQL Table
+
+// Serialize SQL.ARRAY into string (or byte[]) for serialization
+@OutTrips =   
+SELECT date, driver_id, vehicle_id
+     , String.Join(",", trips) AS trips
+FROM @Trips;
+
+
+OUTPUT @OutTrips 
+TO "/output/builtinUDO/Trips.csv" 
+ORDER BY date DESC, driver_id
+USING Outputters.Csv();

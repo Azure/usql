@@ -1,0 +1,38 @@
+﻿// Built-in UDO Sample
+//
+// 1. Shows Extractors.Tsv(), Extractors.Csv(), Outputter.Csv()
+// 2. Different Encodings (Unicode, ASCII)
+// 3. ORDER BY on Outputter
+//
+
+DECLARE @ADL_INPUTDIR string =  "/Samples/Data/AmbulanceData/";
+DECLARE @ADL_DRIVERS string = @ADL_INPUTDIR + "Drivers.txt"; // TAB Separated Unicode file
+DECLARE @ADL_TRIPS string = @ADL_INPUTDIR + "DriverShiftTrips.csv"; // Excel CSV (ANSI with ASCII only)
+
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street   string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string // Map
+ FROM @ADL_DRIVERS
+ USING Extractors.Tsv(encoding:Encoding.Unicode);
+
+OUTPUT @Drivers TO "/output/builtinUDO/Drivers.csv" USING Outputters.Csv();
+
+// You need to quote ASCII with [] to make sure it is not read as a reserved U-SQL keyword
+@Trips =
+ EXTRACT date DateTime
+       , driver_id int
+	   , vehicle_id int
+       , trips  string // Array
+ FROM @ADL_TRIPS
+ USING Extractors.Csv(encoding: Encoding.[ASCII]); 
+
+OUTPUT @Trips 
+TO "/output/builtinUDO/Trips.csv" 
+ORDER BY date DESC, driver_id
+USING Outputters.Csv();

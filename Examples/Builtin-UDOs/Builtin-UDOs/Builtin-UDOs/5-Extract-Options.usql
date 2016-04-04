@@ -1,0 +1,37 @@
+﻿// Built-in UDO Sample
+//
+// 1. Shows Options on Extractors
+// 
+// Needs the result of 4-Output-Options.usql
+
+@SampleRows = 
+SELECT * 
+FROM (VALUES 
+      ("This is a string with the chosen delimiter \"%\"", (double?) 164.45234565, DateTime.Parse("2016/05/04"))
+   ,  ("This row contains null value", (double?) null, DateTime.Parse("2016-04-05T12:12:12.918"))
+   ,  ("This row contains CR LF \r\n", (double?) 2342, DateTime.Parse("2016-04-05T12:12:12.918"))
+   )  AS T(s_col, d_col, dt_col);
+
+@QuotedSampleRows = 
+    EXTRACT  s_col string,
+             d_col double?,
+             dt_col DateTime
+FROM "/output/builtinUDO/QuotedOptions.csv" 
+USING Extractors.Text(delimiter:'&', quoting: true, escapeCharacter: '$', nullEscape: "\\N");
+
+@CheckResult = 
+    SELECT * FROM @SampleRows EXCEPT SELECT * FROM @QuotedSampleRows;
+
+OUTPUT @CheckResult TO "/output/builtinUDO/checkresult1.csv" USING Outputters.Csv();
+
+@UnQuotedSampleRows = 
+    EXTRACT  s_col string,
+             d_col double?,
+             dt_col DateTime
+FROM "/output/builtinUDO/UnQuotedOptions.csv" 
+USING Extractors.Text(delimiter:'&', quoting: false, escapeCharacter: '$', nullEscape: "\\N");
+
+@CheckResult = 
+    SELECT * FROM @SampleRows EXCEPT SELECT * FROM @UnQuotedSampleRows;
+
+OUTPUT @CheckResult TO "/output/builtinUDO/checkresult2.csv" USING Outputters.Csv();

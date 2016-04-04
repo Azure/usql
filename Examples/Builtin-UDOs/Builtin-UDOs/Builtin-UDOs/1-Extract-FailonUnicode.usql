@@ -1,0 +1,24 @@
+﻿// Built-in UDO Sample
+//
+// 1. Shows Extractors.Text()
+// 2. Shows failure when parsing Unicode with UTF-8 default
+//
+// IT IS EXPECTED THAT THIS SCRIPT WILL FAIL!
+//
+
+DECLARE @ADL_INPUTDIR string =  "/Samples/Data/AmbulanceData/";
+DECLARE @ADL_DRIVERS string = @ADL_INPUTDIR + "Drivers.txt"; // TAB Separated Unicode file
+
+@Drivers =
+ EXTRACT driver_id int
+       , name string
+       , street   string
+	   , city string
+       , region string
+       , zipcode  string
+       , country  string
+       , phone_numbers  string // Map
+ FROM @ADL_DRIVERS
+ USING Extractors.Tsv();
+
+OUTPUT @Drivers TO "/output/builtinUDO/Drivers.csv" USING Outputters.Csv();
