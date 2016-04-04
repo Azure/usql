@@ -2,7 +2,6 @@
 //
 // 1. Shows 2 ways on how to deal with header/comment rows with built-in Extractors
 //
-// Currently needs local data.
 
 @r1 =
     EXTRACT id string,

@@ -5,7 +5,7 @@
 @SampleRows = 
 SELECT * 
 FROM (VALUES 
-      ("This is a string with the chosen delimiter \"%\"", (double?) 164.45234565, DateTime.Parse("2016/05/04"))
+      ("This is a string with the chosen delimiter \"&\"", (double?) 164.45234565, DateTime.Parse("2016/05/04"))
    ,  ("This row contains null value", (double?) null, DateTime.Parse("2016-04-05T12:12:12.918"))
    ,  ("This row contains CR LF \r\n", (double?) 2342, DateTime.Parse("2016-04-05T12:12:12.918"))
    )  AS T(s_col, d_col, dt_col);
