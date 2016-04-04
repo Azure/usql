@@ -20,7 +20,7 @@ namespace TweetAnalysis
         public static SqlArray<string> get_mentions(string tweet)
         {
             return new SqlArray<string>(
-                tweet.Split(new char[] { ' ', ',', '.', ':', '!', ';' }).Where(x => x.StartsWith("@"))
+                tweet.Split(new char[] { ' ', ',', '.', ':', '!', ';', '"', '“' }).Where(x => x.StartsWith("@"))
                 );
         }
     }

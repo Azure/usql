@@ -1,0 +1,3 @@
+﻿INSERT INTO TweetAuthorsAndMentions 
+VALUES("nobody", "author", (long?) 1L, (SQL.ARRAY<string>) null, (SQL.ARRAY<string>) null)
+     ,("nobody", "mention", (long?) 1L, (SQL.ARRAY<string>) null, new SQL.ARRAY<string>{"nobody"});

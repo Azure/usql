@@ -18,7 +18,7 @@
        , ROW_NUMBER() OVER 
          (PARTITION BY category ORDER BY tweetcount DESC) AS absolute_rank
 FROM TweetAuthorsAndMentions
-WHERE tweetcount > 50;
+WHERE tweetcount >= 50;
 
 OUTPUT @res
 TO "/Output/TweetAnalysis/MyTwitterAnalysis6.csv"

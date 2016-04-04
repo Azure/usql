@@ -16,7 +16,7 @@
     USING Extractors.Csv();
 
 // Extract mentions
-@m = SELECT new SQL.ARRAY<string>(
+@m = SELECT new SqlArray<string>(
                 tweet.Split(new char[]{' ', ',', '.', ':', '!', ';', '"', '“'}).Where(x => x.StartsWith("@"))
             ) AS mentions
      FROM @t;

@@ -1,0 +1,18 @@
+﻿// Analyzes several Tweetdownload.net tweet files
+//
+// Cook file into counts of tweet per author and mentions from many files without duplicate retweets/mentions due duplicate authors
+// and store it in a table for later querying.
+// 
+// 1. Show CREATE TABLE AS query
+// 2. Show use of Table-Valued Function
+
+
+// Create table
+DROP TABLE IF EXISTS TweetAuthorsAndMentions;
+CREATE TABLE TweetAuthorsAndMentions
+(
+    INDEX idx
+    CLUSTERED(author ASC)
+    PARTITIONED BY
+    HASH(author)
+) AS master.dbo.TweetAndMentionsTVF("/Samples/Data/Tweets/{origin:*}Tweets.csv");

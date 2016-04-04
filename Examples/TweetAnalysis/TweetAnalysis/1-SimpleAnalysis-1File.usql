@@ -5,7 +5,7 @@
 // 3. Shows quoted identifier
 // 4. ORDER BY on OUTPUT
 
-@t =
+@t = 
     EXTRACT date string,
             time string,
             author string,

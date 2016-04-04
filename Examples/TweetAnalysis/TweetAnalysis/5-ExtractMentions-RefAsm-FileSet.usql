@@ -11,7 +11,7 @@
 // 5. UNION ALL
 // 6. GROUP BY with expression
 
-REFERENCE ASSEMBLY TweetAnalysis;
+REFERENCE ASSEMBLY master.TweetAnalysis;
 
 @t =
     EXTRACT date string,

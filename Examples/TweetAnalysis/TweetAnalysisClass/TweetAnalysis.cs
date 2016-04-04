@@ -9,7 +9,7 @@ using System.Linq;
 // TweetAnalysis Assembly
 // Show the use of a U-SQL user-defined function (UDF)
 //
-// Register this assembly at master.TweetAnalysis either using Register Assembly on TweetAnalysisClass project in Visual Studio
+// Register this assembly at master.TweetAnalysis e`ither using Register Assembly on TweetAnalysisClass project in Visual Studio
 // or by compiling the assembly, uploading it (if you want to run it in Azure), and registering it with REGISTER ASSEMBLY U-SQL script.
 //
 namespace TweetAnalysis

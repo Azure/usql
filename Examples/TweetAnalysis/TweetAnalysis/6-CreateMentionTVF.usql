@@ -1,0 +1,73 @@
+﻿// Analyzes several Tweetdownload.net tweet files
+//
+// Cook file into counts of tweet per author and mentions from many files without duplicate retweets/mentions due duplicate authors
+// and store it in a table for later querying.
+// 
+// 1. Show parameterized Table-Valued Function (TVF)
+
+DROP FUNCTION IF EXISTS TweetAndMentionsTVF;
+
+CREATE FUNCTION TweetAndMentionsTVF(@path string ="default")
+RETURNS @res TABLE(author string, category string, tweetcount long?, file_origin SQL.ARRAY<string>, mentioned_by SQL.ARRAY<string>)
+AS
+BEGIN
+
+REFERENCE ASSEMBLY TweetAnalysis;
+
+@t =
+    EXTRACT date string,
+            time string,
+            author string,
+            tweet string,
+            origin string // virtual column of tweet handle of tweet "universe" provider
+    FROM @path
+    USING Extractors.Csv();
+
+// Deduplicate based on date, time, author and tweet content
+@t =
+    SELECT date,
+           time,
+           author,
+           tweet,
+           ARRAY_AGG(origin.ToLowerInvariant()) AS origin
+    FROM @t
+    GROUP BY date,
+             time,
+             author,
+             tweet;
+
+// Extract mentions
+@m =
+    SELECT origin,
+           TweetAnalysis.Udfs.get_mentions(tweet) AS mentions,
+           author AS mentioned_by
+    FROM @t;
+
+// Combine authors and mentions
+@t =
+    SELECT origin,
+           author,
+           "author" AS category,
+           "" AS mentioned_by
+    FROM @t
+    UNION ALL
+    SELECT origin,
+           m.Substring(1) AS m,
+           "mention" AS category,
+           mentioned_by
+    FROM @m
+         CROSS APPLY
+             EXPLODE(mentions) AS t(m)
+    WHERE m != "@";
+
+// Count authors and mentions
+@res =
+    SELECT author.ToLowerInvariant() AS author,
+           category,
+           COUNT( * ) AS tweetcount,
+           new SQL.ARRAY<string>(ARRAY_AGG(origin).SelectMany(x => x).Distinct()) AS file_origin,
+           ARRAY_AGG(DISTINCT mentioned_by) AS mentioned_by
+    FROM @t
+    GROUP BY author.ToLowerInvariant(),
+             category;
+END;
