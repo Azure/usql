@@ -15,10 +15,10 @@ AS
     , direction string
     , trip_id int?
     FROM 
-    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle1_09142014.csv",
-    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle2_09142014.csv",
-    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle3_09142014.csv",
-    "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09172014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09162014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09152014.csv", "/PrivatePreview/sqlip-demos/Data/Ambulance/vehicle4_09142014.csv"
+    "/Samples/Data/AmbulanceDemo/vehicle1_09172014.csv", "/Samples/Data/AmbulanceDemo/vehicle1_09162014.csv", "/Samples/Data/AmbulanceDemo/vehicle1_09152014.csv", "/Samples/Data/AmbulanceDemo/vehicle1_09142014.csv",
+    "/Samples/Data/AmbulanceDemo/vehicle2_09172014.csv", "/Samples/Data/AmbulanceDemo/vehicle2_09162014.csv", "/Samples/Data/AmbulanceDemo/vehicle2_09152014.csv", "/Samples/Data/AmbulanceDemo/vehicle2_09142014.csv",
+    "/Samples/Data/AmbulanceDemo/vehicle3_09172014.csv", "/Samples/Data/AmbulanceDemo/vehicle3_09162014.csv", "/Samples/Data/AmbulanceDemo/vehicle3_09152014.csv", "/Samples/Data/AmbulanceDemo/vehicle3_09142014.csv",
+    "/Samples/Data/AmbulanceDemo/vehicle4_09172014.csv", "/Samples/Data/AmbulanceDemo/vehicle4_09162014.csv", "/Samples/Data/AmbulanceDemo/vehicle4_09152014.csv", "/Samples/Data/AmbulanceDemo/vehicle4_09142014.csv"
     USING Extractors.Csv();
 
 // Create and load table from CSV files

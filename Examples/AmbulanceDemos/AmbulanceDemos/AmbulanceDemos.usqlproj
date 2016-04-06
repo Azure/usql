@@ -120,8 +120,18 @@
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
     </Script>
-    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.2-Ambulance-Streamsets-Filenames.usql" />
-    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.3-Ambulance-Streamsets-TVF.usql" />
+    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.2-Ambulance-Streamsets-Filenames.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
+    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.3-Ambulance-Streamsets-TVF.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
     <Script Include="6-Ambulance-FederatedQuery\6.1-Ambulance-CreateDataSource.usql">
       <UseLocalComputeAccount>true</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>

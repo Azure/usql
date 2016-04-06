@@ -25,7 +25,7 @@ AS BEGIN
 
     // Define paths
     DECLARE @INPUT_FILE_PFX string = "vehicle";
-    DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/Data/Ambulance/";
+    DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceDemo/";
     DECLARE @ADL_DATA string = @ADL_DIR + @INPUT_FILE_PFX;
     DECLARE @ADL_FILESET string = @ADL_DATA + "{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
 
