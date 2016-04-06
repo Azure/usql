@@ -10,7 +10,7 @@ DECLARE @TRIPFILE string = "DriverShiftTrips.csv"; // Excel CSV (ANSI)
 DECLARE @WASB_INPUTDIR string = @WASB_BASEURI + "DemoData/";
 DECLARE @WASB_DRIVER string = @WASB_INPUTDIR + @DRIVERFILE;
 
-DECLARE @ADL_INPUTDIR string = "/DemoData/Ambulance/";
+DECLARE @ADL_INPUTDIR string = "/Samples/Data/AmbulanceData/";
 DECLARE @ADL_TRIPS string = @ADL_INPUTDIR + @TRIPFILE;
 
 //Provide "second" WASB account as output
@@ -30,6 +30,7 @@ DECLARE @OUTPUT string = @OUTPUTDIR + "trips.txt";
        , phone_numbers  string // Map
  FROM @WASB_DRIVER
  USING Extractors.Text(delimiter: '\t', quoting: true, encoding:Encoding.Unicode );
+ //alternative version with Tsv() and using defaults: USING Extractors.Tsv(encoding: Encoding.Unicode );
 
 //2. Extract from ADL Store
 @TripsRAW =
@@ -47,6 +48,7 @@ DECLARE @OUTPUT string = @OUTPUTDIR + "trips.txt";
  // Alternative:
  //  , new SQL.MAP<string,string> (phone_numbers.Split(',').Select(p => new KeyValuePair<string, string>(p.Split(':')[0],p.Split(':')[1])) AS phone_numbers
  FROM @DriversRAW;
+
 
 @Trips =
     SELECT date

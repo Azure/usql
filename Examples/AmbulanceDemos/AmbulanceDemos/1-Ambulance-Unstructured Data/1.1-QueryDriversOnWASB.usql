@@ -28,7 +28,7 @@ SELECT country, city, COUNT(*) AS NumberOfDrivers
 FROM @Drivers
 GROUP BY country, city
 ORDER BY NumberOfDrivers DESC, country, city
-FETCH FIRST 10 ROWS; 
+FETCH 10 ROWS; 
 //OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY;
 
 //3. Output

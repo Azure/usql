@@ -1,10 +1,10 @@
-﻿// Incrementally add to a table
+﻿// Incrementally add to a table (option 2)
 //
-// Note at the moment one can only insert once into a table/partition. 
-// In order to incrementally append to an existing table you have to use one of the following approaches:
-// 1. Use TRUNCATE, and INSERT WITH UNION (shown below)
-// 2. Use delta tables and then provide a view that unions them together
-// 3. Use partitioned tables and add new partitions (shown in the partition scripts)
+// In order to incrementally append to an existing table you can use one of the following approaches:
+// 1. Use INSERT statement (note each INSERT generates a physical file, use ALTER TABLE REBUILD to rebuild a table partition into a single file)
+// 2. Use TRUNCATE, and INSERT WITH UNION (shown below)
+// 3. Use delta tables and then provide a view that unions them together
+// 4. Use partitioned tables and add new partitions (shown in the partition scripts)
 
 // The Union of the original table with the incremental append needs to be done in a separate script from the first loading of the tables!
 

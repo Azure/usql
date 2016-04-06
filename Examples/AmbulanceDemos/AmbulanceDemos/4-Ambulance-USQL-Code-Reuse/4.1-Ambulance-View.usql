@@ -1,7 +1,7 @@
 // Creating a View and a table from the view with CTAS
 // Assumes that vehicle CSV data has been already loaded to specified ADL store location
 
-// Currently View definitions cannot see variables, so we have to inline the paths explicitly
+// View definitions cannot see variables, so we have to inline the paths explicitly
 
 DROP VIEW IF EXISTS VehicleData_View;
 CREATE VIEW VehicleData_View

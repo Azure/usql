@@ -8,6 +8,7 @@ TRUNCATE TABLE DriverDB.[Driver Schema].Drivers;
 DROP TABLE IF EXISTS Trips;
 
 // Copy data from other tables (and other database)
+// CREATE TABLE AS still needs to defined the Clustered index
 INSERT INTO Drivers SELECT * FROM master.dbo.Drivers;
-CREATE TABLE DriverDB.[Driver Schema].Trips(INDEX [idx_Trips] CLUSTERED (driver_id ASC, date, vehicle_id)  PARTITIONED BY HASH (driver_id)) 
+CREATE TABLE DriverDB.[Driver Schema].Trips(INDEX [idx_Trips] CLUSTERED (driver_id ASC, date, vehicle_id)  PARTITIONED BY HASH (driver_id) INTO 2) 
        AS SELECT * FROM master.dbo.Trips;

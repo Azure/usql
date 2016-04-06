@@ -2,15 +2,15 @@
 
 //0. Initialize some parameters/constants
 DECLARE @CONTAINER string = "ambulancedemo";
-DECLARE @ACCT string = "mryskona2"; 
-// BUG BUG: DECLARE @ACCT string = "mryskona2.blob.core.windows.net"; // use fully qualified name
+//DECLARE @ACCT string = "mryskona2"; 
+DECLARE @ACCT string = "mryskona2.blob.core.windows.net"; // use fully qualified name
 
 DECLARE @BASEURI string = "wasb://"+@CONTAINER+"@"+@ACCT+"/";
 DECLARE @INPUTDIR string = @BASEURI + "DemoData/";
 DECLARE @INPUT_DRIVERS string = @INPUTDIR + "Drivers.txt";
 
 // ADL target relative to the default ADL storage account
-DECLARE @OUTPUTDIR string = "/DemoData/Ambulance/";
+DECLARE @OUTPUTDIR string = "/Samples/Data/AmbulanceData/";
 DECLARE @OUTPUT string = @OUTPUTDIR + "Drivers.txt";
 
 //1. Extract from WASB

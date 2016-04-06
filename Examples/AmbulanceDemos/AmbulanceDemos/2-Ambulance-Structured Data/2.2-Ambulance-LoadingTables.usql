@@ -1,6 +1,6 @@
-﻿// Load data from ADL file into tables. 
+﻿// Load data from ADL file into previously created tables. 
 
-DECLARE @ADL_INPUTDIR string =  "/DemoData/Ambulance/";
+DECLARE @ADL_INPUTDIR string =  "/Samples/Data/AmbulanceData/";
 DECLARE @ADL_DRIVERS string = @ADL_INPUTDIR + "Drivers.txt"; // TAB Separated Unicode file
 DECLARE @ADL_TRIPS string = @ADL_INPUTDIR + "DriverShiftTrips.csv"; // Excel CSV (ANSI)
 

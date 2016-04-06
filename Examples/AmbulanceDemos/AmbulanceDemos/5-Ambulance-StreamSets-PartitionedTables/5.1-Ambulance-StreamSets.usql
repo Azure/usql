@@ -2,7 +2,7 @@
 // Assumes that vehicle CSV data has been already loaded to specified ADL store location
 
 // Define paths
-DECLARE @ADL_DIR string = "/PrivatePreview/sqlip-demos/Data/Ambulance/";
+DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/";
 
 DECLARE @ADL_FILESET_REQVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
 

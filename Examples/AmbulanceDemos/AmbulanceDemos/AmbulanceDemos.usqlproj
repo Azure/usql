@@ -10,6 +10,9 @@
     <Name>AmbulanceDemos</Name>
     <RootNamespace>AmbulanceDemos</RootNamespace>
     <RuntimeVersion>default</RuntimeVersion>
+    <ScopePath>%24(SCRIPT_DIR);%24(CLUSTER_ROOT);%24(SCOPE_DIR);%24(PROJECT_DIR)</ScopePath>
+    <InputStreamSearchPath>%24(PROJECT_DIR);%24(SCRIPT_DIR);%24(CLUSTER_ROOT)</InputStreamSearchPath>
+    <OutputStreamPath>C:\LocalRunDataRoot</OutputStreamPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,27 +27,128 @@
     <Script Include="1-Ambulance-Unstructured Data\1.2-CopyDriversFromWASBToADL.usql" />
     <Script Include="1-Ambulance-Unstructured Data\1.3-QueryDriversOnADL.usql" />
     <Script Include="1-Ambulance-Unstructured Data\1.4-JoinDriverAndShiftsOnWASBandADL.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.1-Ambulance-CreateObjects.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.2-Ambulance-LoadingTables.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.3-Ambulance-CopyTable.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.4-Ambulance-InsertConstantValues.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.5-Ambulance-IncrementalInsert1.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.6-Ambulance-IncrementalInsert.usql" />
-    <Script Include="2-Ambulance-Structured Data\2.7-Ambulance-ShowResults.usql" />
-    <Script Include="3-Ambulance-User Code\3.1-Ambulance-RegisterAssembly.usql" />
-    <Script Include="3-Ambulance-User Code\3.2-Ambulance-UseUDOs.usql" />
-    <Script Include="4-Ambulance-USQL-Code-Reuse\4.1-Ambulance-View.usql" />
-    <Script Include="4-Ambulance-USQL-Code-Reuse\4.2-Ambulance-TVF.usql" />
+    <Script Include="2-Ambulance-Structured Data\2.1-Ambulance-CreateObjects.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="2-Ambulance-Structured Data\2.2-Ambulance-LoadingTables.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="2-Ambulance-Structured Data\2.3-Ambulance-CopyTable.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="2-Ambulance-Structured Data\2.4-Ambulance-InsertConstantValues.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="2-Ambulance-Structured Data\2.5-Ambulance-IncrementalInsert.usql" />
+    <Script Include="2-Ambulance-Structured Data\2.6-Ambulance-ShowResults.usql" />
+    <Script Include="3-Ambulance-User Code\3.1-Ambulance-RegisterAssembly.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
+    <Script Include="3-Ambulance-User Code\3.2-Ambulance-UseUDOs.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="4-Ambulance-USQL-Code-Reuse\4.1-Ambulance-View.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="4-Ambulance-USQL-Code-Reuse\4.2-Ambulance-TVF.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
     <Script Include="4-Ambulance-USQL-Code-Reuse\4.3-Ambulance-Proc.usql" />
-    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.4-Ambulance-CreatePartitionedTable.usql" />
-    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.5-Ambulance-PartitionTable-Query.usql" />
-    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.1-Ambulance-StreamSets.usql" />
+    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.4-Ambulance-CreatePartitionedTable.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.5-Ambulance-PartitionTable-Query.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
+    <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.1-Ambulance-StreamSets.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
     <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.2-Ambulance-Streamsets-Filenames.usql" />
     <Script Include="5-Ambulance-StreamSets-PartitionedTables\5.3-Ambulance-Streamsets-TVF.usql" />
-    <Script Include="6-Ambulance-FederatedQuery\6.1-Ambulance-CreateDataSource.usql" />
-    <Script Include="6-Ambulance-FederatedQuery\6.2-Ambulance-FederatedQueries.usql" />
-    <Script Include="6-Ambulance-FederatedQuery\6.3-Ambulance-SimpleFederatedQueries.usql" />
-    <Script Include="6-Ambulance-FederatedQuery\6.4-Ambulance_FedQueries-3wayJoin.usql" />
+    <Script Include="6-Ambulance-FederatedQuery\6.1-Ambulance-CreateDataSource.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
+    <Script Include="6-Ambulance-FederatedQuery\6.2-Ambulance-FederatedQueries.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
+    <Script Include="6-Ambulance-FederatedQuery\6.3-Ambulance-SimpleFederatedQueries.usql">
+      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+    </Script>
+    <Script Include="6-Ambulance-FederatedQuery\6.4-Ambulance_FedQueries-3wayJoin.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+    </Script>
     <Script Include="7-Ambulance-Analytics\7.1-Ambulance-Analytics.usql" />
   </ItemGroup>
   <ItemGroup>

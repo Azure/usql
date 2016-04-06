@@ -1,10 +1,12 @@
 ﻿// This script registers a DDL as an assembly. Note that the DDL has to be uploaded into an ADL store or a WASB container.
-// Alternatively, you can register your assembly directly from within the U-SQL solution/project
+// Alternatively, you can register your assembly directly from within the U-SQL solution/project by:
+// 1. Create the UdoDemo database
+// 2. Right-click on AmbulanceDemoCode Project and select "Register Assembly"
+// 3. Set the ADLA account and select UdoDemo as the target database and AmbulanceDemo as the assembly name.
 
 // Define some paths
-DECLARE @ADL_BASEURI string = "mafs://accounts/mryskona/fs/"; 
-DECLARE @ADL_INPUTDIR string = @ADL_BASEURI + "PrivatePreview/sqlip-demos/assembly/";
-DECLARE @ADL_Assembly string = @ADL_INPUTDIR + "SqlipUdoDemo.dll";
+DECLARE @ADL_INPUTDIR string = "/Samples/Data/AmbulanceData/assembly/";
+DECLARE @ADL_Assembly string = @ADL_INPUTDIR + "AmbulanceDemoCode.dll";
 
 // Create the database
 DROP DATABASE IF EXISTS UdoDemo;
@@ -12,5 +14,5 @@ CREATE DATABASE UdoDemo;
 USE UdoDemo;
 
 // Register the assembly
-CREATE ASSEMBLY AmbulanceDriverAsm
+CREATE ASSEMBLY AmbulanceDemo
 FROM @ADL_Assembly;

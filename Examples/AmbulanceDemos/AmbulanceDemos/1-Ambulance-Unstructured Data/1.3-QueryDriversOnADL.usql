@@ -1,5 +1,5 @@
 ﻿//0. Initialize some parameters/constants
-DECLARE @INPUTDIR string = "/DemoData/Ambulance/";
+DECLARE @INPUTDIR string = "/Samples/Data/AmbulanceData/";
 DECLARE @INPUT_DRIVERS string = @INPUTDIR + "Drivers.txt";
 
 DECLARE @OUTPUTDIR string = "/output/";

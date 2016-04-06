@@ -3,8 +3,12 @@
 USE DATABASE master;
 
 // now insert some constant data into master.dbo.USDrivers and USTrips first and then append data to it. 
-//  show how incrementally insert with just insert and with truncate table union 
-// in seperate script.
+// There are two ways to do incremental insertions:
+// 1. use INSERT to incrementally insert 
+//    Each INSERT statement is adding a physical file. To re-compact the table, use ALTER TABLE REBUILD statement.
+// 2. TRUNCATE the old table, UNION the data from the old table with the new data, INSERT all data into the table
+//    This will keep all data in one physical file but reads a lot of data everytime.
+// The secomd option has to be shown in separate script.
 TRUNCATE TABLE USDrivers;
 TRUNCATE TABLE USTrips;
 
@@ -19,6 +23,26 @@ VALUES (
      , "WA"
      , "USA"
      , new SQL.MAP<string,string> {{"cellphone", "(425) 555-1212"}, {"office","(206) 555-1212"}, {"home","(425) 555-1234"}}
+);
+
+// Incrementally insert into table (option 1)
+INSERT INTO USDrivers(driver_id, name, street, city, region, country, phone_numbers)
+VALUES (
+       101
+     , "John Doe"
+     , "100 Main Street West"
+     , "Redmond"
+     , "WA"
+     , "USA"
+     , new SQL.MAP<string,string> {{"cellphone", "(425) 555-1313"}, {"office","(800) 555-1212"}, {"home","(425) 555-1234"}}
+), (
+       102
+     , "John Ford"
+     , "101 Main Street West"
+     , "Bellevue"
+     , "WA"
+     , "USA"
+     , new SQL.MAP<string,string> {{"cellphone", "(425) 555-1414"}, {"office","(800) 555-1313"}, {"home","(425) 555-1235"}}
 );
 
 INSERT INTO USTrips

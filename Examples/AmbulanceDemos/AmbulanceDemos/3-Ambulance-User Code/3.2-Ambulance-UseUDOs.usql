@@ -11,7 +11,7 @@
 // Declare path constants
 DECLARE @DRIVERFILE string = "Drivers.txt"; // TAB Separated Unicode file
 
-DECLARE @AMBULANCEDIR string = "/DemoData/Ambulance/";
+DECLARE @AMBULANCEDIR string = "/Samples/Data/AmbulanceData/";
 DECLARE @DRIVER string = @AMBULANCEDIR + @DRIVERFILE;
 DECLARE @OUTPUTDIR string = "/output/";
 
@@ -24,7 +24,7 @@ DECLARE @OUTPUT string = @OUTPUTDIR + "udodemo_output.txt";
 USE UdoDemo;                    
        
 // REFERENCE Assembly to use user defined CLR function and UDOs 
-REFERENCE ASSEMBLY AmbulanceDriverAsm;
+REFERENCE ASSEMBLY AmbulanceDemo;
 
 // Use custom extractor with parameters
 @Drivers =
@@ -37,7 +37,7 @@ REFERENCE ASSEMBLY AmbulanceDriverAsm;
        , country  string
        , phone_numbers  SQL.MAP<string, string>
  FROM @DRIVER
- USING new AmbulanceDriver.DriverExtractor(col_delim: "\t", encoding: Encoding.Unicode);
+ USING new AmbulanceDemoCode.DriverExtractor(col_delim: "\t", encoding: Encoding.Unicode);
 
 /* 
 Alternative with built-in extractor:
@@ -56,7 +56,7 @@ Alternative with built-in extractor:
 
 @Drivers =
  SELECT driver_id, name, street, city, region, zipcode, country
-     , phone_numbers == null ? null : AmbulanceDriver.DriverFunctions.ReadStringMap(phone_numbers) AS phone_numbers
+     , phone_numbers == null ? null : AmbulanceDemoCode.DriverFunctions.ReadStringMap(phone_numbers) AS phone_numbers
 FROM @Drivers;
 */
 
@@ -68,12 +68,12 @@ FROM @Drivers;
        , city string
        , cell string
        , phone_numbers  SQL.MAP<string, string>
- USING new AmbulanceDriver.MapPivoter();
+ USING new AmbulanceDemoCode.MapPivoter();
 
 // Output using the UDF using the DefaultTextOutputter
 OUTPUT 
   (SELECT driver_id, name, city, cell
-        , phone_numbers == null ? null : AmbulanceDriver.DriverFunctions.WriteQuotedStringMap(phone_numbers) AS phones
+        , phone_numbers == null ? null : AmbulanceDemoCode.DriverFunctions.WriteQuotedStringMap(phone_numbers) AS phones
    FROM @DriverCells
   ) 
 TO @PIVOTCELL
@@ -89,12 +89,12 @@ USING Outputters.Csv(encoding: Encoding.Unicode);
        , office string
        , cell string
        , phone_numbers SQL.MAP<string, string>
- USING new AmbulanceDriver.MapPivoter();
+ USING new AmbulanceDemoCode.MapPivoter();
 
 // Output using the custom outputter
 OUTPUT @DriverCellOffices
 TO @PIVOTCELLOFFICE
-USING new AmbulanceDriver.DriverOutputter(encoding: Encoding.Unicode);
+USING new AmbulanceDemoCode.DriverOutputter(encoding: Encoding.Unicode);
 
 // Pivot home phone numbers (which do not exist in the original data set)
 @DriverHomes =
@@ -104,12 +104,12 @@ USING new AmbulanceDriver.DriverOutputter(encoding: Encoding.Unicode);
        , name string
        , home string
        , phone_numbers SQL.MAP<string, string>
- USING new AmbulanceDriver.MapPivoter();
+ USING new AmbulanceDemoCode.MapPivoter();
 
 // The home column is expected to be empty with the given test data
 OUTPUT @DriverHomes
 TO @PIVOTHOME
-USING new AmbulanceDriver.DriverOutputter();
+USING new AmbulanceDemoCode.DriverOutputter();
 
 // Show the Processor that only updates existing columns based on a local (in memory in this case) resource
 @DriverTranslated =
@@ -120,9 +120,9 @@ USING new AmbulanceDriver.DriverOutputter();
        , country string
        , phone_numbers SQL.MAP<string, string>
  READONLY driver_id, name, city, phone_numbers
- USING new AmbulanceDriver.EnglishCountryNames();
+ USING new AmbulanceDemoCode.EnglishCountryNames();
 
 OUTPUT @DriverTranslated
 TO @PIVOTENGLISH
-USING new AmbulanceDriver.DriverOutputter();
+USING new AmbulanceDemoCode.DriverOutputter();
 
