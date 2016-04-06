@@ -1,0 +1,70 @@
+﻿// Built-in UDOs
+//
+// Shows 3 ways on how to deal with header/comment rows with built-in Extractors:
+// 1. Filter out rows with known "incorrect values" (e.g., header value or comment start)
+// 2. Filter out rows that do not parse to the expected data type
+// 3. Use the silent option. Only use if you really trust your data.
+//
+// 1. and 2. expect that header rows and comment rows have same number of columns as data rows.
+// 3. only skips rows that have invalid number of columns. If correct number but wrong values, it will replace value with null.
+// 
+// In the near future, we should have the ability to skip the first n rows in a file.
+
+@r1 =
+    EXTRACT id string,
+            name string,
+            street string,
+            city string,
+            zip string,
+            age string
+    FROM "/Samples/Data/CsvWithHdr.csv"
+    USING Extractors.Csv();
+
+@option1_knownheader =
+    SELECT Int32.Parse(id) AS id,
+           name,
+           street,
+           city,
+           zip,
+           string.IsNullOrEmpty(age) ? (Int16?) null: (Int16?) Int16.Parse(age) AS age
+    FROM @r1
+    WHERE id != "Id";
+
+OUTPUT @option1_knownheader
+TO "/temp/opt1.csv"
+USING Outputters.Csv();
+
+@option2_tryparse =
+    SELECT Int32.Parse(id) AS id,
+           name,
+           street,
+           city,
+           zip,
+           String.IsNullOrEmpty(age) ? (Int16?) null : (Int16?) Int16.Parse(age) AS age
+    FROM @r1
+    WHERE ((Func<string, bool>)(p => { Int32 dummy; return Int32.TryParse(p, out dummy); }))(id);
+
+OUTPUT @option2_tryparse
+TO "/temp/opt2.csv"
+USING Outputters.Csv();
+
+// silent:true will skip incorrect number of rows or replaces invalid invalid casts to nullable types. It will not skip encoding errors, allow invalid casts to not-nullable types, or skip a row where a cast error occurs.
+@silent_r =
+    EXTRACT id long?,
+            name string,
+            street string,
+            city string,
+            zip string,
+            age int?
+    FROM "/Samples/Data/CsvWithHdr.csv"
+    USING Extractors.Csv(silent:true);
+
+OUTPUT @silent_r
+TO "/temp/opt3.csv"
+USING Outputters.Csv();
+
+
+
+
+                                                                                            
+
