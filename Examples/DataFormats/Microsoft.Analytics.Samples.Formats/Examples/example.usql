@@ -11,5 +11,5 @@ REFERENCE ASSEMBLY asm;
                                  "row",
                                  new SQL.MAP<string,string> { {"qux", "c"} })
                  AS t(c string);
-OUTPUT @q TO "foo.xml" USING new Microsoft.Analytics.Samples.Xml.XmlOutputter("foo");
+OUTPUT @q TO "foo.xml" USING new Microsoft.Analytics.Samples.Formats.Xml.XmlOutputter("foo");
 
