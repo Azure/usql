@@ -1,0 +1,38 @@
+﻿CREATE ASSEMBLY IF NOT EXISTS [Newtonsoft.Json] FROM "assemblies/Newtonsoft.Json.dll";
+CREATE ASSEMBLY IF NOT EXISTS [Microsoft.Analytics.Samples.Formats] FROM "assemblies/Microsoft.Analytics.Samples.Formats.dll";
+
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats]; 
+
+//Extract the Json string using a default Text extractor. This is ideal if you file size is <128 KB.
+@json = 
+    EXTRACT jsonString string FROM @"Samples/Data/json/radiowebsite/{*}.json" USING Extractors.Text(delimiter:'\b', quoting:false);
+
+//Use the JsonTuple function to get the Json Token of the string so it can be parsed later with Json .NET functions
+@jsonify = SELECT Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(jsonString) AS rec FROM @json;
+
+//Extract the fields you want from the Json object.
+@columnized = SELECT 
+            rec["ts"] AS ts,
+            rec["userId"] AS userId,
+            rec["sessionid"] AS sessionId,
+            rec["page"] AS page,
+            rec["auth"] AS auth,
+            rec["method"] AS method, 
+            rec["status"] AS status, 
+            rec["level"] AS level,
+            rec["itemInSession"] AS itemInSession,
+            rec["location"] AS location,
+            rec["lastName"] AS lastName,
+            rec["firstName"] AS firstName,
+            rec["registration"] AS registration,
+            rec["gender"] AS gender,
+            rec["artist"] AS artist,
+            rec["song"] AS song, 
+            Double.Parse((rec["length"] ?? "0")) AS length 
+    FROM @jsonify;
+
+//Output the file to a tool of your choice.
+OUTPUT @columnized
+TO "/Samples/Output/columnized.txt"
+USING Outputters.Text();
