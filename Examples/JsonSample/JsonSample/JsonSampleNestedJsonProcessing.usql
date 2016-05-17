@@ -1,0 +1,100 @@
+﻿/* 
+This example illustrates processing a Json file containing nested nodes using the Json extractors and UDFs from Microsoft.Analytics.Samples.Formats.Json libraries.
+Download the Json extractors and UDFs from https://github.com/Azure/usql/tree/master/Examples/DataFormats
+
+JSON file used in this example
+{
+	"_comment": "Source - http://adobe.github.io/Spry/samples/data_region/JSONDataSetSample.html",
+	"id": "0001",
+	"type": "donut",
+	"name": "Cake",
+	"ppu": 0.55,
+	"batters":
+		{
+			"batter":
+				[
+					{ "id": "1001", "type": "Regular" },
+					{ "id": "1002", "type": "Chocolate" },
+					{ "id": "1003", "type": "Blueberry" },
+					{ "id": "1004", "type": "Devil's Food" }
+				]
+		},
+	"topping":
+		[
+			{ "id": "5001", "type": "None" },
+			{ "id": "5002", "type": "Glazed" },
+			{ "id": "5005", "type": "Sugar" },
+			{ "id": "5007", "type": "Powdered Sugar" },
+			{ "id": "5006", "type": "Chocolate with Sprinkles" },
+			{ "id": "5003", "type": "Chocolate" },
+			{ "id": "5004", "type": "Maple" }
+		]
+}
+*/
+
+CREATE ASSEMBLY IF NOT EXISTS [Newtonsoft.Json] FROM "assemblies/Newtonsoft.Json.dll";
+CREATE ASSEMBLY IF NOT EXISTS [Microsoft.Analytics.Samples.Formats] FROM "assemblies/Microsoft.Analytics.Samples.Formats.dll";
+
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+
+DECLARE @INPUT_FILE string = @"/Samples/Data/json/donut.json";
+
+//Extract the batters property from the Json file as a string.
+@json =
+    EXTRACT batters string
+    FROM @INPUT_FILE
+    USING new Microsoft.Analytics.Samples.Formats.Json.JsonExtractor();
+
+@json =
+    SELECT batters.Replace("\r\n", "") AS batters
+    FROM @json;
+
+
+/*
+Parse the batters property to extract the id and name values as a SQL.MAP
+*/
+@batters_json = 
+    SELECT Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "$..id") AS batter_id_map, 
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "$..type") AS batter_type_map
+    FROM @json;
+
+/*
+Explode the id and type maps to get the values of the Id and type as individual rowsets
+*/
+
+@batters_id_property =
+    SELECT id_name.Split('.')[0] AS id_name,
+           id_value
+    FROM @batters_json
+         CROSS APPLY
+             EXPLODE(batter_id_map) AS T(id_name, id_value);
+@batters_type_property =
+    SELECT type_name.Split('.')[0] AS type_name,
+           type_value
+    FROM @batters_json
+         CROSS APPLY
+             EXPLODE(batter_type_map) AS T(type_name, type_value);
+
+/*
+JOIN the Id and Value maps to return the properties as a rowset
+
+Output of the following JOIN statement
+1001,Regular
+1002,Chocolate
+1003,Blueberry
+1004,Devil's Food
+*/
+@batters = SELECT [id].id_value AS id, [type].type_value AS type
+                                  FROM @batters_id_property AS [id]
+                                  INNER JOIN @batters_type_property AS [type]
+ON id.id_name == type.type_name;
+
+/* 
+Output the file.
+*/
+
+OUTPUT @batters
+TO "/rukmanig/output/batters.csv"
+USING Outputters.Csv(quoting : false);
+
