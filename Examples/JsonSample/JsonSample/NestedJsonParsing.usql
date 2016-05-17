@@ -1,0 +1,156 @@
+﻿/* 
+This example illustrates processing a Json file containing nested nodes using the Json extractors and UDFs from Microsoft.Analytics.Samples.Formats.Json libraries.
+Download the Json extractors and UDFs from https://github.com/Azure/usql/tree/master/Examples/DataFormats
+
+JSON file used in this example
+{
+	"_comment": "Source - http://adobe.github.io/Spry/samples/data_region/JSONDataSetSample.html",
+	"id": "0001",
+	"type": "donut",
+	"name": "Cake",
+	"ppu": 0.55,
+	"batters":
+		{
+			"batter":
+				[
+					{ "id": "1001", "type": "Regular" },
+					{ "id": "1002", "type": "Chocolate" },
+					{ "id": "1003", "type": "Blueberry" },
+					{ "id": "1004", "type": "Devil's Food" }
+				]
+		},
+	"topping":
+		[
+			{ "id": "5001", "type": "None" },
+			{ "id": "5002", "type": "Glazed" },
+			{ "id": "5005", "type": "Sugar" },
+			{ "id": "5007", "type": "Powdered Sugar" },
+			{ "id": "5006", "type": "Chocolate with Sprinkles" },
+			{ "id": "5003", "type": "Chocolate" },
+			{ "id": "5004", "type": "Maple" }
+		]
+}
+
+The U-SQL code parses the Json and generates a list of all possible combinations for donuts - with the possible batter and topping used in the donut.
+*/
+
+CREATE ASSEMBLY IF NOT EXISTS [Newtonsoft.Json] FROM "assemblies/Newtonsoft.Json.dll";
+CREATE ASSEMBLY IF NOT EXISTS [Microsoft.Analytics.Samples.Formats] FROM "assemblies/Microsoft.Analytics.Samples.Formats.dll";
+
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+
+DECLARE @INPUT_FILE string = @"/Samples/Data/json/donut.json";
+
+
+//Extract the different properties from the Json file using a JsonExtractor
+@json =
+    EXTRACT id string, type string, name string, ppu string, batters string, topping string
+    FROM @INPUT_FILE
+    USING new Microsoft.Analytics.Samples.Formats.Json.JsonExtractor();
+
+/*
+Batters and Toppings have nested Json in them, this script extracts the nested Json as SQL.MAPs
+*/
+@parsebatterandtopping =
+    SELECT id,
+           type ,
+           name ,
+           ppu ,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "$..id") AS batter_id_map,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "$..type") AS batter_type_map,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(topping, "$..id") AS topping_id_map,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(topping, "$..type") AS topping_type_map
+    FROM @json;
+
+/*
+Explode the batter map - this will result in a Cartesian product of the types and ids
+Result:
+batters.batter[0], 1001, batters.batter[0],Regular
+batters.batter[0], 1001, batters.batter[1],Chocolate
+...
+batters.batter[3], 1004, batters.batter[3], Devil's Food
+*/
+@batters =
+    SELECT batter_id_name.Replace(".id", "") AS batter_id_name,
+           batter_id_value,
+           batter_type_name.Replace(".type", "") AS batter_type_name,
+           batter_type_value
+    FROM @parsebatterandtopping
+         CROSS APPLY
+             EXPLODE(batter_id_map) AS B(batter_id_name, batter_id_value)
+         CROSS APPLY
+             EXPLODE(batter_type_map) AS T(batter_type_name, batter_type_value);
+
+/*
+Filter the complete Cartesian product to get the reduced map of the id and type values.
+Result:
+1001,Regular
+1002,Chocolate
+1003,Blueberry
+1004,Devil's Food
+*/
+@batters =
+    SELECT batter_id_value,
+           batter_type_value
+    FROM @batters
+    WHERE batter_id_name == batter_type_name;
+
+OUTPUT @batters
+TO "/Samples/Output/batters.csv"
+USING Outputters.Csv(quoting:false);
+
+/*
+Explode the topping map - this will result in a Cartesian product of the types and ids
+Result:
+toppings.topping[0], 5001, toppings.topping[0],None
+toppings.topping[0], 5001, toppings.topping[1],Glazed
+...
+toppings.topping[6], 5004, toppings.topping[6], Maple
+*/
+@toppings =
+    SELECT topping_id_name.Replace(".id", "") AS topping_id_name,
+           topping_id_value,
+           topping_type_name.Replace(".type", "") AS topping_type_name,
+           topping_type_value
+    FROM @parsebatterandtopping
+         CROSS APPLY
+             EXPLODE(topping_id_map) AS B(topping_id_name, topping_id_value)
+         CROSS APPLY
+             EXPLODE(topping_type_map) AS T(topping_type_name, topping_type_value);
+/*
+Filter the complete Cartesian product to get the reduced map of the id and type values.
+Result:
+5001,None
+5002,Glazed
+5005,Sugar
+5007,Powdered Sugar
+5006,Chocolate with Sprinkles
+5003,Chocolate
+5004,Maple
+*/
+@toppings =
+    SELECT topping_id_value,
+           topping_type_value
+    FROM @toppings
+    WHERE topping_id_name == topping_type_name;
+
+OUTPUT @toppings
+TO "/Samples/Output/toppings.csv"
+USING Outputters.Csv(quoting:false);
+
+
+/*
+Combine the batter and the topping types with the cake Id to generate the list of all the combinations available for donut.
+Result:
+5001,None
+5002,Glazed
+5005,Sugar
+5007,Powdered Sugar
+5006,Chocolate with Sprinkles
+5003,Chocolate
+5004,Maple
+*/
+@cake_types = SELECT id, type, name, batter_type_value, topping_type_value FROM @json CROSS JOIN @toppings CROSS JOIN @batters;
+
+OUTPUT @cake_types TO "/Samples/Output/caketypes.csv" USING Outputters.Csv(quoting:false);
