@@ -7,11 +7,14 @@
 
 DROP FUNCTION IF EXISTS TweetAndMentionsTVF;
 
+// CREATE FUNCTION can either infer result type or require the result to adhere to the specified result type
 CREATE FUNCTION TweetAndMentionsTVF(@path string ="default")
-RETURNS @res TABLE(author string, category string, tweetcount long?, file_origin SQL.ARRAY<string>, mentioned_by SQL.ARRAY<string>)
+RETURNS @res 
+//RETURNS @res TABLE(author string, category string, tweetcount long?, file_origin SQL.ARRAY<string>, mentioned_by SQL.ARRAY<string>)
 AS
 BEGIN
 
+// In order to see the user-code inside the TVF, you have to reference the assembly inside the TVF body.
 REFERENCE ASSEMBLY TweetAnalysis;
 
 @t =

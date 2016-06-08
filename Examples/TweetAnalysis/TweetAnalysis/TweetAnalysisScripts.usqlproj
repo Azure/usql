@@ -25,10 +25,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Script Include="1-SimpleAnalysis-1File.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="2-ExtractMentions-InlineCode-1File.usql">
       <UseLocalComputeAccount>false</UseLocalComputeAccount>
@@ -40,19 +43,25 @@
       <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="3-ExtractMentions-CodeBehind-1File.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="4-ExtractMentions-RefAsm-1File.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="5-ExtractMentions-RefAsm-FileSet.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
@@ -61,7 +70,7 @@
       <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="6-CreateMentionTVF.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
@@ -70,7 +79,7 @@
       <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="7-CreateMentionTables.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
@@ -79,16 +88,22 @@
       <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="8-TweetAnalysis-WindowingExpr.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="9-AddNewTweets.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>mryskona</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
     </Script>
   </ItemGroup>
   <ItemGroup>
