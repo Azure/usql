@@ -1,0 +1,13 @@
+﻿@in = EXTRACT begin DateTime, end DateTime, user string
+      FROM "/Samples/Blogs/MRys/Ranges/ranges.txt"
+      USING Extractors.Text(delimiter:'-');
+
+@r = REDUCE @in PRESORT begin
+     ON user 
+     PRODUCE begin DateTime, end DateTime, user string 
+     READONLY user
+     USING new ReduceSample.RangeReducer();
+
+OUTPUT @r
+TO "/temp/result.csv"
+USING Outputters.Csv();
