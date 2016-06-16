@@ -1,0 +1,31 @@
+﻿CREATE ASSEMBLY IF NOT EXISTS Images
+FROM @"/rukmanig/assemblies/Images.dll";
+
+REFERENCE ASSEMBLY Images;
+
+@image_data =
+    EXTRACT image_data byte[]
+    FROM @"/rukmanig/images/guard.jpg"
+    USING new Images.ImageExtractor();
+
+@image_properties =
+    SELECT Images.ImageOps.getImageProperty(image_data, 0x8298) AS image_copyright,
+		   Images.ImageOps.getImageProperty(image_data, 0x010F) AS image_equipment_make,
+		   Images.ImageOps.getImageProperty(image_data, 0x0110) AS image_equipment_model,
+		   Images.ImageOps.getImageProperty(image_data, 0x010E) AS image_description
+    FROM @image_data;
+
+OUTPUT @image_properties
+TO @"/rukmanig/output/images/imageproperties.csv"
+USING Outputters.Csv();
+
+@scaled_image =
+    SELECT Images.ImageOps.scaleImageTo(image_data, 150, 150) AS thumbnail_image
+    FROM @image_data;
+
+OUTPUT @scaled_image
+TO "/rukmanig/output/images/guard_thumbnail.jpg"
+USING new Images.ImageOutputter();
+
+
+
