@@ -1,0 +1,57 @@
+﻿/*
+This script uses user defined operators and aggregates 
+*/
+
+DECLARE @INPUT_FILE string = @"/Samples/Data/AmbulanceData/Drivers_shorter.txt";
+
+//Extract first and last names as separate columns using a custom extractor
+@drivers =
+    EXTRACT id string,
+            first_name string,
+            last_name string,
+            address string,
+            city string,
+            region string,
+            zipcode string,
+            country string,
+            phone_numbers string
+    FROM @INPUT_FILE
+    USING new Samples.SampleExtractor(Encoding.UTF8);
+
+OUTPUT @drivers
+TO @"/Samples/Output/drivers.txt"
+USING Outputters.Csv(quoting:false);
+
+//Use a user defined function to see if the user has an office phone, use inline C# to generate the full name of the user
+@has_office_phone =
+    SELECT first_name + " " + last_name AS name,
+           Samples.SampleFunction.HasOfficePhone(phone_numbers) AS has_office_phone
+    FROM @drivers;
+
+OUTPUT @has_office_phone
+TO @"/Samples/Output/has_office_phone.txt"
+USING Outputters.Csv();
+
+//Use a processor to get a reduced set of columns and also have the name of the form FirstInitial. Last Name
+@drivers_processed =
+    PROCESS @drivers
+    PRODUCE name string,
+            id int,
+            zipcode string,
+            country string
+    USING new Samples.NameProcessor();
+
+OUTPUT @drivers_processed
+TO @"/Samples/Output/drivers_processed.txt"
+USING Outputters.Csv(quoting:false);
+
+//Use a user defined aggregator to count the drivers from countries that you want to specify
+@driver_count =
+    SELECT country,
+           AGG<Samples.SampleAggregate>(country) AS count
+    FROM @drivers
+    GROUP BY country;
+
+OUTPUT @driver_count
+TO @"/Samples/Output/driver_count.txt"
+USING Outputters.Csv();
