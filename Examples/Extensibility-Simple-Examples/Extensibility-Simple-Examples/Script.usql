@@ -2,7 +2,7 @@
 This script uses user defined operators and aggregates 
 */
 
-DECLARE @INPUT_FILE string = @"/Samples/Data/AmbulanceData/Drivers_shorter.txt";
+DECLARE @INPUT_FILE string = @"/Samples/Data/AmbulanceData/Drivers.txt";
 
 //Extract first and last names as separate columns using a custom extractor
 @drivers =
@@ -45,13 +45,18 @@ OUTPUT @drivers_processed
 TO @"/Samples/Output/drivers_processed.txt"
 USING Outputters.Csv(quoting:false);
 
-//Use a user defined aggregator to count the drivers from countries that you want to specify
-@driver_count =
-    SELECT country,
-           AGG<Samples.SampleAggregate>(country) AS count
-    FROM @drivers
-    GROUP BY country;
+//Use a user defined aggregator to calculate balance
+//If the transaction type is "Debit", subtract from the balance, if the transaction type is "Credit", add to the balance
+@transactions =
+    EXTRACT transaction string,
+            amount int
+    FROM @"/Samples/Data/transactions.txt"
+    USING Extractors.Csv();
 
-OUTPUT @driver_count
-TO @"/Samples/Output/driver_count.txt"
+@balance =
+    SELECT AGG<Samples.SampleAggregate>(transaction, amount) AS balance
+    FROM @transactions;
+
+OUTPUT @balance
+TO @"/Samples/Output/balance.txt"
 USING Outputters.Csv();
