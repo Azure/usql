@@ -1,0 +1,10 @@
+Debit,100
+Credit,500
+Credit,200
+Credit,700
+Debit,50
+Debit,40
+Credit,670
+Debit,500
+Credit,1000
+Debit,100

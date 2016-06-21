@@ -86,29 +86,31 @@ namespace Samples
         }
     }
 
-    //User defined aggregate to calculate count of drivers from each region (North America, South America, Europe)
-    public class SampleAggregate : IAggregate<string, int>
+    //User defined aggregate to calculate the total balance by adding or subtracting based on whether its credit or debit
+    public class SampleAggregate : IAggregate<string, int, int>
     {
-        int count;
-        List<string> countries;
-
+        int balance;
+        
         public override void Init()
         {
-            count = 0;
-            countries = new List<string>() { "Germany", "Mexico", "Argentina", "Spain", "UK" };
+            balance = 0;
         }
         
-        public override void Accumulate(string country)
+        public override void Accumulate(string transaction, int amount)
         {
-            if (countries.Contains(country))
+            if(transaction == "Credit")
             {
-                count += 1;
+                balance += amount;
+            }
+            if(transaction == "Debit")
+            {
+                balance -= amount;
             }
         }
 
         public override int Terminate()
         {
-            return count;
+            return balance;
         }
 
     }
