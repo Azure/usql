@@ -15,3 +15,6 @@ Here are a few links with a lot more information:
 * [About Azure Data Lake Analytics](https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-overview/)
 * [Get Started with U-SQL](https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-u-sql-get-started/)
 
+
+## Code of Conduct
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
