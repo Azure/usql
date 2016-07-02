@@ -121,7 +121,7 @@ REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
    
 
 @trial2 = 
-	EXTRACT jsonString string FROM @"mafs://accounts/mwinkleadl/fs/sampledata/radiowebsite/{*}.json" USING Extractors.Csv(delimiter:'\b', quoting:false);
+	EXTRACT jsonString string FROM @"mafs://accounts/mwinkleadl/fs/sampledata/radiowebsite/{*}.json" USING Extractors.Text(delimiter:'\b', rowDelimiter:"\n" quoting:false);
 	
 @cleanUp = SELECT jsonString FROM @trial2 WHERE (!jsonString.Contains("Part: h" ) AND jsonString!= "465}");
 
