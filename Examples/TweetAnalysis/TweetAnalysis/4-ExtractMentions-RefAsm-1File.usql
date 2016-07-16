@@ -12,6 +12,8 @@
 
 REFERENCE ASSEMBLY master.TweetAnalysis;
 
+USING x = TweetAnalysis.Udfs;
+
 @t = EXTRACT date string
            , time string
            , author string
@@ -19,7 +21,7 @@ REFERENCE ASSEMBLY master.TweetAnalysis;
       FROM "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
     USING Extractors.Csv();
 
-@m = SELECT TweetAnalysis.Udfs.get_mentions(tweet) AS mentions
+@m = SELECT x.get_mentions(tweet) AS mentions
      FROM @t;
 
 @m = SELECT m.Substring(1) AS m
