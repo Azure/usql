@@ -49,108 +49,35 @@ DECLARE @INPUT_FILE string = @"/Samples/Data/json/donut.json";
     FROM @INPUT_FILE
     USING new Microsoft.Analytics.Samples.Formats.Json.JsonExtractor();
 
+
 /*
-Batters and Toppings have nested Json in them, this script extracts the nested Json as SQL.MAPs
+Batters and Toppings have nested Json in them, this script extracts the nested Json as SQL.MAPs and then gets their values in a SQL.ARRAY
 */
 @parsebatterandtopping =
     SELECT id,
            type ,
            name ,
            ppu ,
-           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "$..id") AS batter_id_map,
-           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "$..type") AS batter_type_map,
-           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(topping, "$..id") AS topping_id_map,
-           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(topping, "$..type") AS topping_type_map
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(batters, "batter[*]").Values AS batter_arr,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(topping).Values AS topping_arr
     FROM @json;
 
 /*
-Explode the batter map - this will result in a Cartesian product of the types and ids
-Result:
-batters.batter[0], 1001, batters.batter[0],Regular
-batters.batter[0], 1001, batters.batter[1],Chocolate
-...
-batters.batter[3], 1004, batters.batter[3], Devil's Food
+Use CROSS APPLY to generate a cartesian product of the various batters and toppings
 */
-@batters =
-    SELECT batter_id_name.Replace(".id", "") AS batter_id_name,
-           batter_id_value,
-           batter_type_name.Replace(".type", "") AS batter_type_name,
-           batter_type_value
+@cake_types =
+    SELECT id,
+           type,
+           name,
+           ppu,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(b_value) ["type"]AS batter,
+           Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(t_value) ["type"]AS topping
     FROM @parsebatterandtopping
          CROSS APPLY
-             EXPLODE(batter_id_map) AS B(batter_id_name, batter_id_value)
+             EXPLODE(batter_arr) AS t(b_value)
          CROSS APPLY
-             EXPLODE(batter_type_map) AS T(batter_type_name, batter_type_value);
+             EXPLODE(topping_arr) AS T(t_value);
 
-/*
-Filter the complete Cartesian product to get the reduced map of the id and type values.
-Result:
-1001,Regular
-1002,Chocolate
-1003,Blueberry
-1004,Devil's Food
-*/
-@batters =
-    SELECT batter_id_value,
-           batter_type_value
-    FROM @batters
-    WHERE batter_id_name == batter_type_name;
-
-OUTPUT @batters
-TO "/Samples/Output/batters.csv"
-USING Outputters.Csv(quoting:false);
-
-/*
-Explode the topping map - this will result in a Cartesian product of the types and ids
-Result:
-toppings.topping[0], 5001, toppings.topping[0],None
-toppings.topping[0], 5001, toppings.topping[1],Glazed
-...
-toppings.topping[6], 5004, toppings.topping[6], Maple
-*/
-@toppings =
-    SELECT topping_id_name.Replace(".id", "") AS topping_id_name,
-           topping_id_value,
-           topping_type_name.Replace(".type", "") AS topping_type_name,
-           topping_type_value
-    FROM @parsebatterandtopping
-         CROSS APPLY
-             EXPLODE(topping_id_map) AS B(topping_id_name, topping_id_value)
-         CROSS APPLY
-             EXPLODE(topping_type_map) AS T(topping_type_name, topping_type_value);
-/*
-Filter the complete Cartesian product to get the reduced map of the id and type values.
-Result:
-5001,None
-5002,Glazed
-5005,Sugar
-5007,Powdered Sugar
-5006,Chocolate with Sprinkles
-5003,Chocolate
-5004,Maple
-*/
-@toppings =
-    SELECT topping_id_value,
-           topping_type_value
-    FROM @toppings
-    WHERE topping_id_name == topping_type_name;
-
-OUTPUT @toppings
-TO "/Samples/Output/toppings.csv"
-USING Outputters.Csv(quoting:false);
-
-
-/*
-Combine the batter and the topping types with the cake Id to generate the list of all the combinations available for donut.
-Result:
-5001,None
-5002,Glazed
-5005,Sugar
-5007,Powdered Sugar
-5006,Chocolate with Sprinkles
-5003,Chocolate
-5004,Maple
-*/
-@cake_types = SELECT id, type, name, batter_type_value, topping_type_value FROM @json CROSS JOIN @toppings CROSS JOIN @batters;
-
-OUTPUT @cake_types TO "/Samples/Output/caketypes.csv" USING Outputters.Csv(quoting:false);
+OUTPUT @cake_types
+TO "/Samples/Output/caketypes.csv"
+USING Outputters.Csv(quoting : false);
