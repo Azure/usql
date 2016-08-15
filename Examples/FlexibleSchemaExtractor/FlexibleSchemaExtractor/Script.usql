@@ -1,0 +1,102 @@
+﻿// Generic Flexible Schema Extractor Sample
+// 
+// Author: mrys, Microsoft Corp.
+//
+// Assumptions: 
+// The fixed part of the schema is orderid int, producttype string, orderamount int, itemprice decimal, ...
+// The extract statement either specifies all columns (or more) of type string after the fixed columns and fills them with null if no value is found on the row, 
+// or the last column has a SqlMap<int, string> to contain missed columns, where the int typed key is the column number and string is the value.
+
+DECLARE @input string = "/Samples/Blogs/MRys/FlexExtractor/OrderData.csv";
+
+// Usage with all columns known
+@data = EXTRACT orderid int, producttype string, orderamount int, itemprice decimal,
+              c1 string, c2 string, c3 string, c4 string
+        FROM @input
+        USING new FlexibleSchemaExtractor.FlexExtractor();
+
+// product type Camera
+@cameras =
+    SELECT orderid,
+           orderamount,
+           itemprice,
+           c1 AS make,
+           c2 AS model
+    FROM @data
+    WHERE producttype == "Camera";
+
+OUTPUT @cameras
+TO "/output/cameras.csv"
+USING Outputters.Csv();
+
+// product type Lens
+@lenses =
+    SELECT orderid,
+           orderamount,
+           itemprice,
+           c1 AS make,
+           c2 AS focallength,
+           c3 AS lenstype,
+           c4 == null ? (decimal?) null : Decimal.Parse(c4) AS aperture
+    FROM @data
+    WHERE producttype == "Lens";
+
+OUTPUT @lenses
+TO "/output/lenses.csv"
+USING Outputters.Csv();
+
+/////////////////////////////
+// Usage with only a few known columns and a map for the rest
+
+@data = EXTRACT orderid int, producttype string, orderamount int, itemprice decimal,
+                c1 string, map SqlMap<int, string>
+        FROM @input
+        USING new FlexibleSchemaExtractor.FlexExtractor();
+
+// product type Camera
+@cameras =
+    SELECT orderid,
+           orderamount,
+           itemprice,
+           c1 AS make,
+           map[0] AS model
+    FROM @data
+    WHERE producttype == "Camera";
+
+OUTPUT @cameras
+TO "/output/cameras2.csv"
+USING Outputters.Csv();
+
+// product type Lens
+@lenses =
+    SELECT orderid,
+           orderamount,
+           itemprice,
+           c1 AS make,
+           map[0] AS focallength,
+           map[1] AS lenstype,
+           map[2] == null ? (decimal?) null : Decimal.Parse(map[2]) AS aperture
+    FROM @data
+    WHERE producttype == "Lens";
+
+OUTPUT @lenses
+TO "/output/lenses2.csv"
+USING Outputters.Csv();
+
+// remaining product types (serialize map generically)
+@others =
+    SELECT orderid,
+           producttype,
+           orderamount,
+           itemprice,
+           c1,
+           map == null ? (string) null 
+                       : string.Join(" ; ", 
+                                     from p in map 
+                                     select string.Format("{0}{1}{2}", p.Key, " : ", p.Value)) AS map 
+    FROM @data
+    WHERE producttype NOT IN ("Camera", "Lens");
+
+OUTPUT @others
+TO "/users/herring/others.csv"
+USING Outputters.Csv();

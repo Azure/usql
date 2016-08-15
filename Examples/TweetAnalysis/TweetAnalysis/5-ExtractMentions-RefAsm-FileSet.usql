@@ -13,6 +13,8 @@
 
 REFERENCE ASSEMBLY master.TweetAnalysis;
 
+USING x = TweetAnalysis.Udfs;
+
 @t =
     EXTRACT date string,
             time string,
@@ -38,7 +40,7 @@ REFERENCE ASSEMBLY master.TweetAnalysis;
 // Extract mentions
 @m =
     SELECT origin
-         , TweetAnalysis.Udfs.get_mentions(tweet) AS mentions
+         , x.get_mentions(tweet) AS mentions
          , author AS mentioned_by
     FROM @t;
 

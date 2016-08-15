@@ -13,6 +13,6 @@ CREATE TABLE TweetAuthorsAndMentions
 (
     INDEX idx
     CLUSTERED(author ASC)
-    PARTITIONED BY
-    HASH(author)
-) AS master.dbo.TweetAndMentionsTVF("/Samples/Data/Tweets/{origin:*}Tweets.csv");
+    DISTRIBUTED BY
+    HASH(author) INTO 3
+) AS master.dbo.TweetAndMentionsTVF("/Samples/Data/Tweets/{origin}Tweets.csv");
