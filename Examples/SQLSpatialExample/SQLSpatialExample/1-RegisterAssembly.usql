@@ -1,0 +1,23 @@
+﻿// 1. Get ENU\x64\SQLSysClrTypes.msi from https://www.microsoft.com/en-us/download/details.aspx?id=52676 (SQL Server 2016 version)
+// 2. install the MSI
+// 3. Upload the following files to @ASSEMBLY_PATH: Microsoft.SqlServer.Types.dll, SqlServerSpatial130.dll
+//    CAVEAT: Make sure that you upload the 64-bit version of the SqlServerSpatial130.dll (beware of the File Redirection semantics!)
+// 3. Register assembly with this script
+//
+// See  for more details.
+
+DECLARE @ASSEMBLY_PATH string = "/upload/asm/spatial/";
+DECLARE @SPATIAL_ASM string = @ASSEMBLY_PATH+"Microsoft.SqlServer.Types.dll";
+DECLARE @SPATIAL_NATIVEDLL string = @ASSEMBLY_PATH+"SqlServerSpatial130.dll";
+
+CREATE DATABASE IF NOT EXISTS SQLSpatial;
+USE DATABASE SQLSpatial;
+
+DROP ASSEMBLY IF EXISTS SqlSpatial;
+CREATE ASSEMBLY SqlSpatial
+FROM @SPATIAL_ASM
+WITH ADDITIONAL_FILES =
+     (
+         @SPATIAL_NATIVEDLL
+     );
+

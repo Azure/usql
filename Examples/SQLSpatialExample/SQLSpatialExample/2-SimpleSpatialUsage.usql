@@ -1,0 +1,18 @@
+﻿REFERENCE SYSTEM ASSEMBLY [System.Xml];
+REFERENCE ASSEMBLY SQLSpatial.SqlSpatial;
+
+USING Geometry = Microsoft.SqlServer.Types.SqlGeometry;
+USING Geography = Microsoft.SqlServer.Types.SqlGeography;
+USING SqlChars = System.Data.SqlTypes.SqlChars;
+
+@spatial =
+    SELECT * FROM (VALUES 
+                   // The following expression is not using the native DDL
+                   ( Geometry.Point(1.0,1.0,0).ToString()),    
+                   // The following expression is using the native DDL
+                   ( Geometry.STGeomFromText(new SqlChars("LINESTRING (100 100, 20 180, 180 180)"), 0).ToString()) 
+                  ) AS T(geom);
+
+OUTPUT @spatial
+TO "/output/spatial.csv"
+USING Outputters.Csv();
