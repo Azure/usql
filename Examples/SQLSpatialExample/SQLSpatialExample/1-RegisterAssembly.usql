@@ -4,7 +4,7 @@
 //    CAVEAT: Make sure that you upload the 64-bit version of the SqlServerSpatial130.dll (beware of the File Redirection semantics!)
 // 3. Register assembly with this script
 //
-// See  for more details.
+// See https://blogs.msdn.microsoft.com/azuredatalake/2016/08/26/how-to-register-u-sql-assemblies-in-your-u-sql-catalog/#s4 for more details.
 
 DECLARE @ASSEMBLY_PATH string = "/upload/asm/spatial/";
 DECLARE @SPATIAL_ASM string = @ASSEMBLY_PATH+"Microsoft.SqlServer.Types.dll";
