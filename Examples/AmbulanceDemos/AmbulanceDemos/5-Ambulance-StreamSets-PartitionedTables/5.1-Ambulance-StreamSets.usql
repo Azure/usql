@@ -4,7 +4,7 @@
 // Define paths
 DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/";
 
-DECLARE @ADL_FILESET_REQVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+DECLARE @ADL_FILESET_REQVID string = @ADL_DIR + "vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.{*}";
 
 @data_req = EXTRACT vehicle_id int
     , entry_id long
@@ -31,7 +31,7 @@ USING Outputters.Csv();
 
 ////////////////////
 
-DECLARE @ADL_FILESET_OPTVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+DECLARE @ADL_FILESET_OPTVID string = @ADL_DIR + "vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.{*}";
 
 @data_opt = EXTRACT vehicle_id int
     , entry_id long
@@ -57,7 +57,7 @@ USING Outputters.Csv();
 
 //////////////////////////////
 
-DECLARE @ADL_FILESET_PATH string = @ADL_DIR + "{date:yyyy}/{date:MM}/{date:dd}/vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.csv";
+DECLARE @ADL_FILESET_PATH string = @ADL_DIR + "{date:yyyy}/{date:MM}/{date:dd}/vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.csv";
 
 @data_opt = EXTRACT vehicle_id int
     , entry_id long
