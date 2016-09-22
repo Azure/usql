@@ -11,7 +11,9 @@ CREATE TABLE vehiclesP(
     , speed int
     , direction string
     , trip_id int?
-    , INDEX idx CLUSTERED (vehicle_id ASC) PARTITIONED BY BUCKETS (event_date) HASH (vehicle_id) INTO 4
+    , INDEX idx CLUSTERED (vehicle_id ASC) 
+      PARTITIONED BY (event_date) 
+      DISTRIBUTED BY HASH (vehicle_id) INTO 4
 );
 
 // Create partitions
