@@ -51,18 +51,16 @@ namespace Microsoft.Analytics.Samples.Formats.Json
             // Json.Net
             using(var reader = new JsonTextReader(new StreamReader(input.BaseStream)))
             {
-                // Parse Json
-                //  TODO: Json.Net fails with empty input files
-                var root = JToken.ReadFrom(reader);
-
-                // Rows
-                //  All objects are represented as rows
-                foreach(JObject o in SelectChildren(root, this.rowpath))
+                // Parse Json one token at a time
+                while (reader.Read())
                 {
-                    // All fields are represented as columns
-                    this.JObjectToRow(o, output);
+                    if (reader.TokenType == JsonToken.StartObject)
+                    {
+                        var token = JObject.Load(reader);
+                        this.JObjectToRow(token, output);
 
-                    yield return output.AsReadOnly();
+                        yield return output.AsReadOnly();
+                    }
                 }
             }
         }
