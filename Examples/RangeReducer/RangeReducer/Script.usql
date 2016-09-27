@@ -8,6 +8,9 @@
      READONLY user
      USING new ReduceSample.RangeReducer();
 
+// Remove comment to show filter push through the reducer
+// @r = SELECT * FROM @r WHERE user == "ABC";
+
 OUTPUT @r
 TO "/temp/result.csv"
 USING Outputters.Csv();

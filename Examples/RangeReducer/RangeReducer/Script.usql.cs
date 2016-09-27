@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ReduceSample
 {
-    [SqlUserDefinedReducer(IsRecursive = true)] // not sure if it can run recursive yet. Need to test with large data sets.
+    [SqlUserDefinedReducer(IsRecursive = true)]                                                                        // not sure if it can run recursive yet. Need to test with large data sets.
     public class RangeReducer : IReducer
     {
         public override IEnumerable<IRow> Reduce(IRowset input, IUpdatableRow output)
