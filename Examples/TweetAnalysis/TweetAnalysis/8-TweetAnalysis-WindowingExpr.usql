@@ -41,10 +41,14 @@ USING Outputters.Csv();
              @tweet_handle_mapping AS n
          ON t.author == n.old_handle;
 
-@t = SELECT author, category, SUM(tweetcount) AS tweetcount
-     FROM @t
-     WHERE file_origin.Contains(author)
-     GROUP BY author, category;
+@t =
+    SELECT author,
+           category,
+           SUM(tweetcount) AS tweetcount
+    FROM @t
+    WHERE file_origin != null && file_origin.Contains(author)
+    GROUP BY author,
+             category;
 
 @res =
     SELECT m.author,
@@ -58,6 +62,6 @@ USING Outputters.Csv();
     WHERE a.category == "author" AND m.category == "mention";
 
 OUTPUT @res
-TO "/Output/TweetAnalysis/MyTwitterAnalysis7.csv"
+TO "/Output/TweetAnalysis/influencer.csv"
 ORDER BY influence DESC
 USING Outputters.Csv();

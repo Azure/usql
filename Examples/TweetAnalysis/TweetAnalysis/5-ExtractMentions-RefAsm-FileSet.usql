@@ -13,7 +13,7 @@
 
 REFERENCE ASSEMBLY master.TweetAnalysis;
 
-USING x = TweetAnalysis.Udfs;
+USING x=TweetAnalysis.Udfs;
 
 @t =
     EXTRACT date string,
@@ -21,7 +21,7 @@ USING x = TweetAnalysis.Udfs;
             author string,
             tweet string,
             origin string // virtual column of tweet handle of tweet "universe" provider
-    FROM "/Samples/Data/Tweets/{origin:*}Tweets.csv"
+    FROM "/Samples/Data/Tweets/{origin}Tweets.csv"
     USING Extractors.Csv();
 
 // Deduplicate based on date, time, author and tweet content
