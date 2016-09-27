@@ -1,0 +1,7 @@
+﻿// Either register assembly from within VisualStudio or 
+// upload the built Images.dll into your ADL Storage account at the @ASMLOC location
+
+DECLARE @ASMLOC string = "/upload/asm/Images.dll";
+
+CREATE ASSEMBLY IF NOT EXISTS Images
+FROM @ASMLOC;

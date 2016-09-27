@@ -1,0 +1,34 @@
+﻿// Shows how to extract images (up to approx 4MB) into a rowset using a custom extractor 
+// that also extracts the image properties and creates a thumbnail. 
+// 
+// Note that this can work around the size limits of a row regarding the incoming image size. 
+
+REFERENCE ASSEMBLY Images;
+
+@image_features =
+    EXTRACT copyright string, 
+            equipment_make string,
+            equipment_model string,
+            description string,
+            thumbnail byte[], 
+            name string, format string
+    FROM @"/Samples/Data/Images/{name}.{format}"
+    USING new Images.ImageFeatureExtractor(500, 300);
+
+@image_features = SELECT * FROM @image_features WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
+
+OUTPUT @image_features
+TO @"/output/images/image_features.csv"
+USING Outputters.Csv();
+
+@scaled_image =
+    SELECT thumbnail
+    FROM @image_features
+    WHERE name == "GT4";
+
+OUTPUT @scaled_image
+TO "/output/images/GT4_thumbnail_2.jpg"
+USING new Images.ImageOutputter();
+
+
+
