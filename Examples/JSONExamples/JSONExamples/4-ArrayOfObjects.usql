@@ -1,0 +1,31 @@
+﻿/*
+
+[{
+	"field1": [
+		"This is ",
+		"a double "
+	],
+	"field2": [
+		"Field2 ",
+		"in object 1 "
+	]
+}, {
+	"field2": [
+		"field 2 ",
+		"in object 2"
+	]
+}]
+*/
+
+DECLARE @input string = "/Samples/Blogs/MRys/JSON/objectarray.json";
+
+REFERENCE ASSEMBLY JSONBlog.[Newtonsoft.Json];
+REFERENCE ASSEMBLY JSONBlog.[Microsoft.Analytics.Samples.Formats]; 
+
+@data0 = 
+    EXTRACT field2 string
+    FROM @input
+    USING new Microsoft.Analytics.Samples.Formats.Json.JsonExtractor("[*]");
+
+OUTPUT @data0 TO "/output/json/objarray.csv" USING Outputters.Csv();
+

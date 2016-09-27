@@ -1,0 +1,7 @@
+﻿DROP DATABASE IF EXISTS JSONBlog;
+
+CREATE DATABASE JSONBlog;
+
+// Now register the DataFormats and Newtonsoft.Json assemblies in this database.
+// Easiest way is to load the solution from  https://github.com/Azure/usql/tree/master/Examples/DataFormats, right click on the Microsoft.Analytics.Samples.Formats project and select the Register Assembly menu option. 
+// See TBD for more details on the registration steps. 

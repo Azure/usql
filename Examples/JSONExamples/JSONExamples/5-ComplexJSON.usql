@@ -1,0 +1,81 @@
+﻿DECLARE @input string = "/Samples/Blogs/MRys/JSON/complex.json";
+
+REFERENCE ASSEMBLY JSONBlog.[Newtonsoft.Json];
+REFERENCE ASSEMBLY JSONBlog.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+@json = 
+    EXTRACT personid int, 
+            name string, 
+            addresses string
+      FROM @input 
+    USING new JsonExtractor("[*].person");
+
+@person =
+    SELECT personid,
+           name,
+           JsonFunctions.JsonTuple(addresses, "address")["address"] AS address_array
+    FROM @json;
+
+@addresses = 
+    SELECT personid, 
+           name, 
+           JsonFunctions.JsonTuple(address) AS address
+    FROM @person
+         CROSS APPLY
+            EXPLODE (JsonFunctions.JsonTuple(address_array).Values) AS A(address);
+
+@result =
+    SELECT personid,
+           name,
+           address["addressid"]AS addressid,
+           address["street"]AS street,
+           address["postcode"]AS postcode,
+           address["city"]AS city
+    FROM @addresses;
+
+//Output the file to a tool of your choice.
+OUTPUT @result
+TO "/output/json/persons.csv"
+USING Outputters.Csv();
+
+
+/* [{
+	"person": {
+		"personid": 123456,
+		"name": "Person 1",
+		"addresses": {
+			"address": [{
+				"addressid": "2",
+				"street": "Street 2",
+				"postcode": "1234 AB",
+				"city": "City 1"
+			}, {
+				"addressid": "2",
+				"street": "Street 2",
+				"postcode": "5678 CD",
+				"city": "City 2"
+			}]
+		}
+	}
+}, {
+	"person": {
+		"personid": 798,
+		"name": "Person 2",
+		"addresses": {
+			"address": [{
+				"addressid": "1",
+				"street": "Street 1",
+				"postcode": "1234 AB",
+				"city": "City 1"
+			}, {
+				"addressid": "4",
+				"street": "Street 7",
+				"postcode": "98799",
+				"city": "City 3"
+			}]
+		}
+	}
+}]
+*/

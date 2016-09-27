@@ -1,0 +1,37 @@
+﻿REFERENCE ASSEMBLY JSONBlog.[Newtonsoft.Json];
+REFERENCE ASSEMBLY JSONBlog.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+// Extract schema specifies the properties to extract from JSON document at specified location (in this example at the root of the documents)
+@data =
+    EXTRACT
+        id       string,       // id of document
+        Revision string,       // revision number of document
+        Camera   string        // data of document (another JSON object)
+    FROM @"/Samples/Blogs/MRys/JSON/camera.json"
+    USING new JsonExtractor();
+
+@jsondocs = 
+    SELECT id, Revision, JsonFunctions.JsonTuple(Camera) AS cam 
+    FROM @data;
+
+@camera = 
+    SELECT 
+            id,
+            Revision,
+            cam["Manufacturer"] AS make,
+            cam["Model"] AS model,
+            cam["Type"] AS type,
+            cam["Sensor"] AS sensor,
+            cam["MP"] AS res,
+	        cam["['Image Processor']"] AS image_processor
+    FROM @jsondocs;
+
+OUTPUT @camera
+TO "/output/camera.json"
+USING new JsonOutputter();
+
+OUTPUT @camera
+TO "/output/json/camera.csv"
+USING Outputters.Csv();

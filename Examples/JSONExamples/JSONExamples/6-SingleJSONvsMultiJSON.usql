@@ -1,0 +1,102 @@
+﻿REFERENCE ASSEMBLY JSONBlog.[Newtonsoft.Json];
+REFERENCE ASSEMBLY JSONBlog.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+DECLARE @in_single string="/Samples/Blogs/MRys/JSON/{date:yyyy}/{date:MM}/{date:dd}/{*}.json";
+DECLARE @in_multiple string="/Samples/Blogs/MRys/JSON/games.json.csv";
+DECLARE @out_single string="/output/json/PlayerCountsRaw_S.csv";
+DECLARE @out_multiple string="/output/json/PlayerCountsRaw_M.csv";
+
+// if one document in a file
+@events2 =
+    EXTRACT date DateTime,
+            id string,
+            timeentry DateTime,
+            messagetypename string,
+            componentid string,
+            environmentid string,
+            sessionid string,
+            transactionid string,
+            level string,
+            messageobject string,
+            renderedMessage string
+    FROM @in_single
+    USING new JsonExtractor();
+
+@events2 =
+    SELECT date,
+           id,
+           timeentry,
+           messagetypename,
+           componentid,
+           environmentid,
+           sessionid,
+           transactionid,
+           level,
+           JsonFunctions.JsonTuple(messageobject, "..*") AS msg,
+           renderedMessage
+    FROM @events2;
+                    
+@events2 =
+    SELECT date,
+           id,
+           timeentry,
+           messagetypename,
+           componentid,
+           environmentid,
+           sessionid,
+           transactionid,
+           level,
+            msg["eventId"] AS eventId,
+            msg["eventName"] AS eventName,
+            msg["exception"] AS exception,
+            msg["messageTemplate"] AS messageTemplate,
+            msg["properties.0"] AS porperties0,
+            msg["properties.1"] AS porperties1,
+            msg["properties.processId"] AS processId,
+            msg["properties.threadId"] AS threadId,
+            msg["properties.messageVersion"] AS messageVersion,
+            String.Join(",", msg.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS msg,
+           renderedMessage
+    FROM @events2;
+
+
+OUTPUT @events2
+TO @out_single
+USING Outputters.Csv();
+
+//////////////////////////////////////////////
+// if more than one JSON document in a file
+@events =
+    EXTRACT jsonString string // limited to 128kB
+    FROM @in_multiple
+    USING Extractors.Text(delimiter : '\b', quoting : false);
+
+@jsonify = SELECT JsonFunctions.JsonTuple(jsonString, "..*") AS rec FROM @events;
+
+@columnized = SELECT 
+            rec["id"] AS id,
+            rec["timeentry"] AS timeentry,
+            rec["messagetypename"] AS messagetypename,
+            rec["componentid"] AS componentid,
+            rec["environmentid"] AS environmentid,
+            rec["sessionid"] AS sessionid,
+            rec["transactionid"] AS transactionid,
+            rec["level"] AS level,
+            rec["messageobject.eventId"] AS eventId,
+            rec["messageobject.eventName"] AS eventName,
+            rec["messageobject.exception"] AS exception,
+            rec["messageobject.messageTemplate"] AS messageTemplate,
+            rec["messageobject.properties.0"] AS porperties0,
+            rec["messageobject.properties.1"] AS porperties1,
+            rec["messageobject.properties.processId"] AS processId,
+            rec["messageobject.properties.threadId"] AS threadId,
+            rec["messageobject.properties.messageVersion"] AS messageVersion,
+            rec["messageobject.renderedMessage"] AS renderedMessage
+             
+    FROM @jsonify; 
+
+
+OUTPUT @columnized TO @out_multiple USING Outputters.Csv();
+
