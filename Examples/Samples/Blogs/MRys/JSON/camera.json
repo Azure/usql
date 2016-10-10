@@ -1,0 +1,13 @@
+{
+  "id": "1",
+  "Revision" : "Rev 1.1",
+  "Camera" :
+    {
+      "Manufacturer": "Canon",
+      "Model": "70D",
+      "Type": "SLR",
+      "Sensor": "APS-C CMOS",
+      "MP": 20.2,
+	  "Image Processor": "DIGIC 5+"
+    }
+}

@@ -1,0 +1,15 @@
+[{
+	"field1": [
+		"This is ",
+		"a double "
+	],
+	"field2": [
+		"nested ",
+		"array "
+	]
+}, {
+	"field2": [
+		"of ",
+		"string"
+	]
+}]
