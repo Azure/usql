@@ -13,7 +13,7 @@ namespace Images
 {
     // Helper class that binds together a stream and an image so that they can be disposed together.
     // It is needed because the stream must stay open for as long as the image is being used.
-    class StreamImage : IDisposable
+    public class StreamImage : IDisposable
     {
         private MemoryStream mMemoryStream;
         public Image mImage;
@@ -46,6 +46,83 @@ namespace Images
                 mMemoryStream.Dispose();
             }
         }
+
+        public string getStreamImageProperty(int propertyId)
+        {
+            foreach (PropertyItem propItem in mImage.PropertyItems)
+            {
+                if (propItem.Id == propertyId)
+                {
+                    return (propItem.Type == 2) ? System.Text.Encoding.UTF8.GetString(propItem.Value) : propItem.Value.ToString();
+                }
+            }
+            return null;
+        }
+
+        // Utility: draw the input image to the output image within the given region (at high quality).
+        private static void drawImage(Image inImage, Bitmap outImage, Rectangle region)
+        {
+            outImage.SetResolution(inImage.HorizontalResolution, inImage.VerticalResolution);
+            using (Graphics g = Graphics.FromImage(outImage))
+            {
+                // Clear background pixels, if any will remain after the drawing below.
+                if ((region.X != 0) ||
+                    (region.Y != 0) ||
+                    (region.Height != outImage.Height) ||
+                    (region.Width != outImage.Width))
+                {
+                    g.Clear(Color.Black);
+                }
+                // Draw image at high quality.
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                using (ImageAttributes attributes = new ImageAttributes())
+                {
+                    attributes.SetWrapMode(WrapMode.TileFlipXY);
+                    g.DrawImage(inImage, region, 0, 0, inImage.Width, inImage.Height, GraphicsUnit.Pixel, attributes);
+                }
+            }
+        }
+
+        public Bitmap scaleStreamImageBy(float scaleFactor)
+        {
+            int outWidth = (int)(mImage.Width * scaleFactor);
+            int outHeight = (int)(mImage.Height * scaleFactor);
+            using (Bitmap outImage = new Bitmap(outWidth, outHeight))
+            {
+                drawImage(mImage, outImage, new Rectangle(0, 0, outWidth, outHeight));
+                return outImage;
+            }
+        }
+        public Bitmap scaleStreamImageTo(int outWidth, int outHeight)
+        {
+            int x, y, w, h;
+            int iWoH = mImage.Width * outHeight;
+            int iHoW = mImage.Height * outWidth;
+            if (iWoH < iHoW)
+            {
+                w = (int)((double)(iWoH) / mImage.Height);
+                h = outHeight;
+                x = (int)((outWidth - w) / 2.0);
+                y = 0;
+            }
+            else
+            {
+                w = outWidth;
+                h = (int)((double)(iHoW) / mImage.Width);
+                x = 0;
+                y = (int)((outHeight - h) / 2.0);
+            }
+            using (Bitmap outImage = new Bitmap(outWidth, outHeight))
+            {
+                drawImage(mImage, outImage, new Rectangle(x, y, w, h));
+                return outImage;
+            }
+        }
+
     }
 
     // Sample image utilities and operations.
@@ -90,52 +167,13 @@ namespace Images
             }
         }
 
-        // Utility: draw the input image to the output image within the given region (at high quality).
-        private static void drawImage(Image inImage, Bitmap outImage, Rectangle region)
-        {
-            outImage.SetResolution(inImage.HorizontalResolution, inImage.VerticalResolution);
-            using (Graphics g = Graphics.FromImage(outImage))
-            {
-                // Clear background pixels, if any will remain after the drawing below.
-                if ((region.X != 0) ||
-                    (region.Y != 0) ||
-                    (region.Height != outImage.Height) ||
-                    (region.Width != outImage.Width))
-                {
-                    g.Clear(Color.Black);
-                }
-                // Draw image at high quality.
-                g.CompositingMode = CompositingMode.SourceCopy;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                using (ImageAttributes attributes = new ImageAttributes())
-                {
-                    attributes.SetWrapMode(WrapMode.TileFlipXY);
-                    g.DrawImage(inImage, region, 0, 0, inImage.Width, inImage.Height, GraphicsUnit.Pixel, attributes);
-                }
-            }
-        }
-
         // Operation: return the value of an image property (provided it's a string or integer).
         // Use property ID 8298 for copyright.
         // See https://msdn.microsoft.com/en-us/library/ms534416.aspx for additional IDs.
         public static string getImageProperty(byte[] inBytes, int propertyId)
         {
-            using (StreamImage inImage = byteArrayToImage(inBytes))
-            {
-                foreach (PropertyItem propItem in inImage.mImage.PropertyItems)
-                {
-                    if (propItem.Id == propertyId)
-                    {
-                        return (propItem.Type == 2) ? System.Text.Encoding.UTF8.GetString(propItem.Value) : propItem.Value.ToString();
-                    }
-                }
-            }
-            return null;
+            return byteArrayToImage(inBytes).getStreamImageProperty(propertyId);
         }
-
 
         // Operation: rotate an image by 90, 180, or 270 degrees.
         public static byte[] rotateImage(byte[] inBytes, int rotateType)
@@ -165,46 +203,13 @@ namespace Images
         // Operation: scale an image by a scale factor.
         public static byte[] scaleImageBy(byte[] inBytes, float scaleFactor)
         {
-            using (StreamImage inImage = byteArrayToImage(inBytes))
-            {
-                int outWidth = (int)(inImage.mImage.Width * scaleFactor);
-                int outHeight = (int)(inImage.mImage.Height * scaleFactor);
-                using (Bitmap outImage = new Bitmap(outWidth, outHeight))
-                {
-                    drawImage(inImage.mImage, outImage, new Rectangle(0, 0, outWidth, outHeight));
-                    return imageToByteArray(outImage);
-                }
-            }
+            return imageToByteArray(byteArrayToImage(inBytes).scaleStreamImageBy(scaleFactor));
         }
 
         // Operation: scale an image to the given dimensions.
         public static byte[] scaleImageTo(byte[] inBytes, int outWidth, int outHeight)
         {
-            using (StreamImage inImage = byteArrayToImage(inBytes))
-            {
-                int x, y, w, h;
-                int iWoH = inImage.mImage.Width * outHeight;
-                int iHoW = inImage.mImage.Height * outWidth;
-                if (iWoH < iHoW)
-                {
-                    w = (int)((double)(iWoH) / inImage.mImage.Height);
-                    h = outHeight;
-                    x = (int)((outWidth - w) / 2.0);
-                    y = 0;
-                }
-                else
-                {
-                    w = outWidth;
-                    h = (int)((double)(iHoW) / inImage.mImage.Width);
-                    x = 0;
-                    y = (int)((outHeight - h) / 2.0);
-                }
-                using (Bitmap outImage = new Bitmap(outWidth, outHeight))
-                {
-                    drawImage(inImage.mImage, outImage, new Rectangle(x, y, w, h));
-                    return imageToByteArray(outImage);
-                }
-            }
+            return imageToByteArray( byteArrayToImage(inBytes).scaleStreamImageTo(outWidth, outHeight));
         }
 
 
