@@ -4,7 +4,7 @@
 // Define paths
 DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceDemo/{date:YYYY}/{date:MM}/";
 
-DECLARE @ADL_FILESET_FILENAME string = @ADL_DIR + "{filename:*}.{ext:*}";
+DECLARE @ADL_FILESET_FILENAME string = @ADL_DIR + "{filename}.{ext}";
 
 @data = EXTRACT data string
     , filename string // virtual file set column

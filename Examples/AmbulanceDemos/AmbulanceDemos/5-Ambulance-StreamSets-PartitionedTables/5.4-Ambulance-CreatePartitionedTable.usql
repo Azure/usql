@@ -33,7 +33,7 @@ DECLARE @date3 DateTime = DateTime.Parse("2014-09-16");
 DECLARE @date4 DateTime = DateTime.Parse("2014-09-17");
 
 DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/";
-DECLARE @ADL_FILESET string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+DECLARE @ADL_FILESET string = @ADL_DIR + "vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.{*}";
 
 @data = EXTRACT vehicle_id int
     , entry_id long
