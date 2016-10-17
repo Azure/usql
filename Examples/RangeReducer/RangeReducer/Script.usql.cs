@@ -13,7 +13,7 @@ namespace ReduceSample
         public override IEnumerable<IRow> Reduce(IRowset input, IUpdatableRow output)
         {
             // Init aggregation values
-            int i = 0;
+            bool first_row_processed = false;
             var begin = DateTime.MaxValue; // Dummy value to make compiler happy
             var end = DateTime.MinValue; // Dummy value to make compiler happy
 
@@ -21,9 +21,9 @@ namespace ReduceSample
             foreach (var row in input.Rows)
             {
                 // Initialize the first interval with the first row if i is 0
-                if (i == 0)
+                if (!first_row_processed)
                 {
-                    i++; // mark that we handled the first row
+                    first_row_processed = true; // mark that we handled the first row
                     begin = row.Get<DateTime>("begin");
                     end = row.Get<DateTime>("end");
                     // If the end is just a time and not a date, it can be earlier than the begin, indicating it is on the next day.
