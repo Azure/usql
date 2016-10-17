@@ -1,0 +1,25 @@
+﻿@data = 
+  SELECT 42 AS n_int
+       , "\xFFFE" AS c_u
+       , '\xFFFD' AS c_u2
+       , '数' AS c_ch
+       , ',' AS c_c
+       , '4' AS c_int
+       , '\n' AS c_nl
+       , (char?) null AS c_null
+  FROM (VALUES(1)) AS T(dummy);
+
+OUTPUT @data TO "/output/builtinUDO/char_as_int1.csv" USING Outputters.Csv();
+
+OUTPUT @data TO "/output/builtinUDO/char_as_int2.csv" USING Outputters.Csv(charFormat:"uint16");
+
+OUTPUT @data TO "/output/builtinUDO/char_as_string.csv" USING Outputters.Csv(charFormat:"string");
+
+OUTPUT @data TO "/output/builtinUDO/char_as_string_utf16.csv" USING Outputters.Csv(charFormat:"string", encoding:Encoding.Unicode);
+
+OUTPUT @data TO "/output/builtinUDO/char_as_string2.csv" USING Outputters.Csv(charFormat:null);
+
+OUTPUT @data TO "/output/builtinUDO/char_as_int_null.csv" USING Outputters.Csv(nullEscape:"NULL",escapeCharacter:'#');
+
+OUTPUT @data TO "/output/builtinUDO/char_as_string_null.csv" USING Outputters.Csv(charFormat:"string", nullEscape:"NULL",escapeCharacter:'#');
+

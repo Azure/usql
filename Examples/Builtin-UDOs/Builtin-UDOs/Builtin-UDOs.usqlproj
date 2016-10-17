@@ -61,6 +61,9 @@
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
     </Script>
+    <Script Include="8-Output-Char.usql" />
+    <Script Include="7-Output-withHeaders.usql" />
+    <Script Include="9-Extract-Char.usql" />
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
   <PropertyGroup>

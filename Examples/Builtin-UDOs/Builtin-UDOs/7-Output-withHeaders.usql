@@ -1,0 +1,19 @@
+﻿@data =
+    SELECT "Jane" AS [first name], "Doe" AS [name,last], 42 AS [数量]
+    FROM(
+        VALUES
+        (
+            1
+        )) AS T(dummy);
+
+OUTPUT @data
+TO "/output/builtinUDO/output_header.csv"
+USING Outputters.Csv(outputHeader : true);
+
+OUTPUT @data
+TO "/output/builtinUDO/output_header_noquotes.csv"
+USING Outputters.Csv(outputHeader : true, quoting:false);
+
+OUTPUT @data
+TO "/output/builtinUDO/output_header_noquotes_esc.csv"
+USING Outputters.Csv(outputHeader : true, quoting : false, escapeCharacter: '#');
