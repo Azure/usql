@@ -118,33 +118,36 @@ Here we are using the JSON UDF to take a string of JSON (each line in the file i
 ````
 REFERENCE ASSEMBLY [Newtonsoft.Json];
 REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats]; 
-   
 
 @trial2 = 
-	EXTRACT jsonString string FROM @"mafs://accounts/mwinkleadl/fs/sampledata/radiowebsite/{*}.json" USING Extractors.Csv(delimiter:'\b', quoting:false);
-	
+    EXTRACT jsonString string FROM @"/small_radio_json.json" USING Extractors.Tsv(quoting:false);
+
 @cleanUp = SELECT jsonString FROM @trial2 WHERE (!jsonString.Contains("Part: h" ) AND jsonString!= "465}");
 
 @jsonify = SELECT Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(jsonString) AS rec FROM @cleanUp;
 
 @columnized = SELECT 
-			rec["ts"] AS ts,
-			rec["userId"] AS userId,
-			rec["sessionid"] AS sessionId,
-			rec["page"] AS page,
-			rec["auth"] AS auth,
-			rec["method"] AS method, 
-			rec["status"] AS status, 
-			rec["level"] AS level,
-			rec["itemInSession"] AS itemInSession,
-			rec["location"] AS location,
-			rec["lastName"] AS lastName,
-			rec["firstName"] AS firstName,
-			rec["registration"] AS registration,
-			rec["gender"] AS gender,
-			rec["artist"] AS artist,
-			rec["song"] AS song, 
-			Double.Parse((rec["length"] ?? "0")) AS length 
-	FROM @jsonify; 
+            rec["ts"] AS ts,
+            rec["userId"] AS userId,
+            rec["sessionid"] AS sessionId,
+            rec["page"] AS page,
+            rec["auth"] AS auth,
+            rec["method"] AS method, 
+            rec["status"] AS status, 
+            rec["level"] AS level,
+            rec["itemInSession"] AS itemInSession,
+            rec["location"] AS location,
+            rec["lastName"] AS lastName,
+            rec["firstName"] AS firstName,
+            rec["registration"] AS registration,
+            rec["gender"] AS gender,
+            rec["artist"] AS artist,
+            rec["song"] AS song, 
+            Double.Parse((rec["length"] ?? "0")) AS length 
+    FROM @jsonify;
+
+OUTPUT @columnized
+TO @"/out.csv"
+USING Outputters.Csv();
 
 ````
