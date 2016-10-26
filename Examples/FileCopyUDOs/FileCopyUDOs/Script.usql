@@ -1,0 +1,12 @@
+﻿@x =
+    EXTRACT block_no long,
+            block_size long,
+            block byte[]
+FROM "wasb://private-preview@mryskona2/PrivatePreview/GOPR0056.MP4"
+//    FROM "/Movies/GOPR0056.MP4"
+    USING new FileCopy.ReadFile();
+
+OUTPUT @x
+TO "/output/turtlecave.MP4"
+ORDER BY block_no
+USING new FileCopy.WriteFile();
