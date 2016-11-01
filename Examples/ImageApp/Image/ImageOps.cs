@@ -87,17 +87,17 @@ namespace Images
             }
         }
 
-        public Bitmap scaleStreamImageBy(float scaleFactor)
+        public byte[] scaleStreamImageBy(float scaleFactor)
         {
             int outWidth = (int)(mImage.Width * scaleFactor);
             int outHeight = (int)(mImage.Height * scaleFactor);
             using (Bitmap outImage = new Bitmap(outWidth, outHeight))
             {
                 drawImage(mImage, outImage, new Rectangle(0, 0, outWidth, outHeight));
-                return outImage;
+                return ImageOps.imageToByteArray(outImage);
             }
         }
-        public Bitmap scaleStreamImageTo(int outWidth, int outHeight)
+        public byte[] scaleStreamImageTo(int outWidth, int outHeight)
         {
             int x, y, w, h;
             int iWoH = mImage.Width * outHeight;
@@ -119,7 +119,7 @@ namespace Images
             using (Bitmap outImage = new Bitmap(outWidth, outHeight))
             {
                 drawImage(mImage, outImage, new Rectangle(x, y, w, h));
-                return outImage;
+                return ImageOps.imageToByteArray(outImage);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Images
         }
 
         // Utility: convert an image into a byte array containing a JPEG encoding of the image.
-        private static byte[] imageToByteArray(Image inImage)
+        public static byte[] imageToByteArray(Image inImage)
         {
             using (MemoryStream outStream = new MemoryStream())
             {
@@ -203,13 +203,13 @@ namespace Images
         // Operation: scale an image by a scale factor.
         public static byte[] scaleImageBy(byte[] inBytes, float scaleFactor)
         {
-            return imageToByteArray(byteArrayToImage(inBytes).scaleStreamImageBy(scaleFactor));
+            return byteArrayToImage(inBytes).scaleStreamImageBy(scaleFactor);
         }
 
         // Operation: scale an image to the given dimensions.
         public static byte[] scaleImageTo(byte[] inBytes, int outWidth, int outHeight)
         {
-            return imageToByteArray( byteArrayToImage(inBytes).scaleStreamImageTo(outWidth, outHeight));
+            return  byteArrayToImage(inBytes).scaleStreamImageTo(outWidth, outHeight);
         }
 
 

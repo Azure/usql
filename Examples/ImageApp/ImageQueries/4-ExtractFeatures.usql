@@ -15,7 +15,8 @@ REFERENCE ASSEMBLY Images;
     FROM @"/Samples/Data/Images/{name}.{format}"
     USING new Images.ImageFeatureExtractor(scaleWidth:500, scaleHeight:300);
 
-@image_features = SELECT * FROM @image_features WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
+@image_features = SELECT * FROM @image_features 
+                  WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
 
 OUTPUT @image_features
 TO @"/output/images/image_features.csv"
