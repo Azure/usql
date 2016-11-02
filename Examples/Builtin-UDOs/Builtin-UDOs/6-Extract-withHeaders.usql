@@ -69,7 +69,7 @@ USING Outputters.Csv();
 
 ///
 
-// silent:true will skip incorrect number of rows or replaces invalid invalid casts to nullable types. It will not skip encoding errors, allow invalid casts to not-nullable types, or skip a row where a cast error occurs.
+// silent:true will skip incorrect number of columns or replaces invalid casts to nullable types. It will not skip encoding errors, allow invalid casts to not-nullable types, or skip a row where a cast error occurs.
 @silent_r =
     EXTRACT id long?,
             name string,

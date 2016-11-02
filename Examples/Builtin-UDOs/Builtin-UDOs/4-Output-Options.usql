@@ -11,6 +11,10 @@ FROM (VALUES
    )  AS T(s_col, d_col, dt_col);
 
 OUTPUT @SampleRows
+TO "/output/builtinUDO/nooptions.csv"
+USING Outputters.Csv();
+
+OUTPUT @SampleRows
 TO "/output/builtinUDO/QuotedOptions.csv" 
 USING Outputters.Text(delimiter:'&', quoting: true, escapeCharacter: '$', nullEscape: "\\N");
 

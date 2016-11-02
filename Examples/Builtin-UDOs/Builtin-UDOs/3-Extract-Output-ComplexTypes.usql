@@ -34,7 +34,8 @@ FROM @Drivers;
 // Serialize SQL.MAP into string (or byte[]) for serialization
 @OutDrivers = 
  SELECT driver_id, name, street, city, region, zipcode, country
-     , String.Join(",", phone_numbers.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS phone_numbers
+      , phone_numbers == null ? null :
+             String.Join(",", phone_numbers.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS phone_numbers
 FROM @Drivers;
 
 OUTPUT @OutDrivers TO "/output/builtinUDO/Drivers.csv" USING Outputters.Csv();
@@ -60,7 +61,7 @@ FROM @Trips;
 // Serialize SQL.ARRAY into string (or byte[]) for serialization
 @OutTrips =   
 SELECT date, driver_id, vehicle_id
-     , String.Join(",", trips) AS trips
+     , String.Join(",", trip_ids) AS trips
 FROM @Trips;
 
 
