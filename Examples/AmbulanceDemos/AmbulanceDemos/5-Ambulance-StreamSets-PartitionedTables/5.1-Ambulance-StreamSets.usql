@@ -30,7 +30,7 @@ TO "/output/vehicles_req.txt"
 USING Outputters.Csv();
 
 ////////////////////
-
+/*
 DECLARE @ADL_FILESET_OPTVID string = @ADL_DIR + "vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.{*}";
 
 @data_opt = EXTRACT vehicle_id int
@@ -80,3 +80,5 @@ DECLARE @ADL_FILESET_PATH string = @ADL_DIR + "{date:yyyy}/{date:MM}/{date:dd}/v
 OUTPUT @alldata_path
 TO "/output/vehicles_path.txt"
 USING Outputters.Csv();
+
+*/
