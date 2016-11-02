@@ -32,6 +32,7 @@ USING x=TweetAnalysis.Udfs;
            tweet,
            ARRAY_AGG(origin.ToLowerInvariant()) AS origin
     FROM @t
+// uncomment to see partition elimination at work --->    WHERE origin IN("MikeDoesBigData", "iC")
     GROUP BY date,
              time,
              author, 
