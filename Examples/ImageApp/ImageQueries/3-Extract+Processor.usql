@@ -13,7 +13,8 @@ REFERENCE ASSEMBLY Images;
     FROM @"/Samples/Data/Images/{name}.{format}"
     USING new Images.ImageExtractor();
 
-//@image_data = SELECT image_data, name FROM @image_data WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
+// Uncomment next statement to address the runtime error that is caused by the TIFF files that are larger than 4MB
+// @image_data = SELECT image_data, name FROM @image_data WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
 
 @image_properties =
     PROCESS @image_data

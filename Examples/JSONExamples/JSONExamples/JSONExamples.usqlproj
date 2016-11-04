@@ -24,9 +24,9 @@
   <ItemGroup>
     <Script Include="1-CreateDB.usql" />
     <Script Include="2-IntroExample.usql" />
-    <Script Include="4-ArrayOfObjects.usql" />
-    <Script Include="5-ComplexJSON.usql" />
-    <Script Include="6-SingleJSONvsMultiJSON.usql" />
+    <Script Include="3-ArrayOfObjects.usql" />
+    <Script Include="4-ComplexJSON.usql" />
+    <Script Include="5-SingleJSONvsMultiJSON.usql" />
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
 </Project>

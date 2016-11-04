@@ -27,5 +27,5 @@ REFERENCE ASSEMBLY JSONBlog.[Microsoft.Analytics.Samples.Formats];
     FROM @input
     USING new Microsoft.Analytics.Samples.Formats.Json.JsonExtractor("[*]");
 
-OUTPUT @data0 TO "/output/json/objarray.csv" USING Outputters.Csv();
+OUTPUT @data0 TO "/output/json/objarray.csv" USING Outputters.Csv(escapeCharacter: '#');
 
