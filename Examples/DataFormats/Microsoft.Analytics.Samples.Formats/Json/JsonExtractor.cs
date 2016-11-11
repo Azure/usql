@@ -56,10 +56,17 @@ namespace Microsoft.Analytics.Samples.Formats.Json
                 {
                     if (reader.TokenType == JsonToken.StartObject)
                     {
-                        var token = JObject.Load(reader);
-                        this.JObjectToRow(token, output);
+                        var token = JToken.Load(reader);
 
-                        yield return output.AsReadOnly();
+                        // Rows
+                        //  All objects are represented as rows
+                        foreach (JObject o in SelectChildren(token, this.rowpath))
+                        {
+                            // All fields are represented as columns
+                            this.JObjectToRow(o, output);
+
+                            yield return output.AsReadOnly();
+                        }
                     }
                 }
             }
