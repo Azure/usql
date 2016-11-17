@@ -46,6 +46,8 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Json\MultiLevelJsonExtractor.cs" />
+    <Compile Include="Exceptions\PathNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Json\JsonExtractor.cs" />
     <Compile Include="Json\JsonFunctions.cs" />
