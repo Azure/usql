@@ -151,3 +151,63 @@ TO @"/out.csv"
 USING Outputters.Csv();
 
 ````
+## Using the Avro Extractor
+Avro is a splittable, well-defined, binary data format. It stores data in a row-oriented format and a schema (defined as JSON) describes the metadata including fields and their corresponding data types. See https://avro.apache.org/docs/current/ for more details about Avro.
+
+Given an Avro schema is provided, the Avro Extractor can read Avro files stored in Azure Data Lake Store.
+
+The Avro Extractor leverages the Microsoft Avro Library which is part of the Microsoft .NET SDK For Hadoop (https://hadoopsdk.codeplex.com/). An updated version of the .NET SDK For Hadoop is required and can be downloaded at https://github.com/flomader/hadoopsdk/releases/ (Microsoft.Hadoop.Avro.zip).
+
+You can find example uses for Avro inside the examples directory.
+````
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+REFERENCE ASSEMBLY [Microsoft.Hadoop.Avro]; 
+REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats]; 
+
+DECLARE @input_file string = @"\TwitterStream\{*}\{*}\{*}.avro";
+DECLARE @output_file string = @"\output\twitter.csv";
+
+@rs =
+    EXTRACT
+        createdat               string,
+        topic                   string,
+        sentimentscore          long,
+        eventprocessedutctime   string,
+        partitionid             long,
+        eventenqueuedutctime    string
+    FROM @input_file
+    USING new Microsoft.Analytics.Samples.Formats.Avro.AvroExtractor(@"
+    {
+      ""type"" : ""record"",
+      ""name"" : ""GenericFromIRecord0"",
+      ""namespace"" : ""Microsoft.Streaming.Avro"",
+      ""fields"" : [ {
+        ""name"" : ""createdat"",
+        ""type"" : [ ""null"", ""string"" ]
+      }, {
+        ""name"" : ""topic"",
+        ""type"" : [ ""null"", ""string"" ]
+      }, {
+        ""name"" : ""sentimentscore"",
+        ""type"" : [ ""null"", ""long"" ]
+      }, {
+        ""name"" : ""eventprocessedutctime"",
+        ""type"" : [ ""null"", ""string"" ]
+      }, {
+        ""name"" : ""partitionid"",
+        ""type"" : [ ""null"", ""long"" ]
+      }, {
+        ""name"" : ""eventenqueuedutctime"",
+        ""type"" : [ ""null"", ""string"" ]
+      } ]
+    }
+    ");
+
+@cnt =
+    SELECT topic, COUNT(*) AS cnt
+    FROM @rs
+    GROUP BY topic;
+
+OUTPUT @cnt TO @output_file USING Outputters.Text();
+
+````
