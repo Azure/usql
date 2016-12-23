@@ -1,4 +1,4 @@
-﻿REFERENCE SYSTEM ASSEMBLY [System.Xml];
+REFERENCE SYSTEM ASSEMBLY [System.Xml];
 REFERENCE ASSEMBLY SQLSpatial.SqlSpatial;
 
 USING Geometry = Microsoft.SqlServer.Types.SqlGeometry;
