@@ -37,8 +37,6 @@
         <h3>
 <a id="introducing-u-sql" class="anchor" href="#introducing-u-sql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introducing U-SQL</h3>
 
-          <p>TEST</p>
-
 <p>U-SQL is a data processing language that unifies the benefits of SQL with the expressive power of your own code. U-SQL’s scalable distributed query capability enables you to efficiently analyze data in file, object and relational stores such as Azure SQL Database.</p>
 
 
@@ -100,8 +98,8 @@ USING Outputters.Csv();
     GROUP BY author, category;
 
 OUTPUT @res TO "/output/MyTwitterAnalysis.csv"
-ORDER BY tweetcount DESC
-USING Outputters.Csv();
+    ORDER BY tweetcount DESC
+    USING Outputters.Csv();
 </code></pre>
 
 <h3>
@@ -125,11 +123,21 @@ USING Outputters.Csv();
 
 <p>U-SQL is built on the learnings from Microsoft’s internal experience with <a href="http://www.vldb.org/pvldb/1/1454166.pdf">SCOPE</a> and existing languages such as T-SQL, ANSI SQL, and Hive. For example, we base our SQL and programming language integration and the execution and optimization framework for U-SQL on SCOPE, which currently runs hundred thousands of jobs each day internally. We also align the metadata system (databases, tables, etc.), the SQL syntax, and language semantics with T-SQL and ANSI SQL, the query languages most of our SQL Server customers are familiar with. And we use C# data types and the C# expression language so you can seamlessly write C# predicates and expressions inside SELECT statements and use C# to add your custom logic. Finally, we looked to Hive and other Big Data languages to identify patterns and data processing requirements and integrate them into our framework.</p>
 
-          
+<h3> U-SQL Resources </h3>
+                <ul>
+                    <li><a
+                        href="https://aka.ms/AzureDataLake">Azure Data Lake</a>&nbsp;</li>
+                    <li><a
+                        href="https://github.com/Azure/USQL">U-SQL Git Repo</a>&nbsp;</li>
+                    <li><a
+                        href="http://aka.ms/usql_reference">Language Reference</a>&nbsp;</li>
+                    <li><a
+                        href="http://aka.ms/usqlfaq">u-SQL FAQ</a> </li>
+                </ul>
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p><a href="https://github.com/MikeRys" class="user-mention">@MikeRys</a>, <a href="https://github.com/SaveenR" class="user-mention">@SaveenR</a>, <a href="https://github.com/mwinkle" class="user-mention">@mwinkle</a></p>
+<p><a href="https://github.com/MikeRys" class="user-mention">@MikeRys</a>, <a href="https://github.com/SaveenR" class="user-mention">@SaveenR</a></p>
       </section>
       <footer>
         <p><small>Maintained by <a href="https://github.com/Azure">Azure</a></small><br/>
