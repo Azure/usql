@@ -48,16 +48,28 @@ namespace Microsoft.Analytics.Samples.Formats.Xml
 
         /// <summary>For each column, map from the XML path to the column name</summary>
         private SqlMap<string, string> columnPaths;
-        
+
+        /// <summary>Map namespace prefixes to namespace URIs</summary>
+        /// <remarks>If you have a default namespace (without prefix) in your XML document, 
+        /// provide a prefix in the map for that namespace URI and use that prefix in the 
+        /// XPath expression to select the nodes that are in the default namespace.</remarks>
+        private SqlMap<string, string> namespaceDecls;
+
         /// <summary>New instances are constructed at least once per vertex</summary>
         /// <param name="rowPath">Path of the XML element that contains rows.</param>
         /// <param name="columnPaths">For each column, map from the XML path to the column name. 
         /// It is specified relative to the row element.</param>
+        /// <param name="namespaceDecls">For each namespace URI in the document that you want to query, map the prefix to the namespace URI. 
+        /// If you have a default namespace (without prefix) in your XML document, 
+        /// provide a prefix in the map for that namespace URI and use that prefix in the 
+        /// XPath expression to select the nodes that are in the default namespace. 
+        /// If there is no namespace URI in the document, the map can be left null.</param>
         /// <remarks>Do not rely on static fields because their values will not cross vertices.</remarks>
-        public XmlDomExtractor(string rowPath, SqlMap<string, string> columnPaths)
+        public XmlDomExtractor(string rowPath, SqlMap<string, string> columnPaths, SqlMap<string,string> namespaceDecls = null)
         {
             this.rowPath = rowPath;
             this.columnPaths = columnPaths;
+            this.namespaceDecls = namespaceDecls;
         }
         
         /// <summary>Extract is called at least once per vertex</summary>
@@ -77,14 +89,25 @@ namespace Microsoft.Analytics.Samples.Formats.Xml
 
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(input.BaseStream);
-            foreach (XmlNode xmlNode in xmlDocument.DocumentElement.SelectNodes(this.rowPath))
+            XmlNamespaceManager nsmanager = new XmlNamespaceManager(xmlDocument.NameTable);
+
+            // If namespace declarations have been provided, add them to the namespace manager
+            if (this.namespaceDecls != null)
+            {
+                foreach (var namespaceDecl in this.namespaceDecls)
+                {
+                    nsmanager.AddNamespace(namespaceDecl.Key, namespaceDecl.Value);
+                }
+            }
+
+            foreach (XmlNode xmlNode in xmlDocument.DocumentElement.SelectNodes(this.rowPath, nsmanager))
             {
                 // IUpdatableRow implements a builder pattern to save memory allocations, 
                 // so call output.Set in a loop
                 foreach(IColumn col in output.Schema)
                 {
                     var explicitColumnMapping = this.columnPaths.FirstOrDefault(columnPath => columnPath.Value == col.Name);
-                    XmlNode xml = xmlNode.SelectSingleNode(explicitColumnMapping.Key ?? col.Name);
+                    XmlNode xml = xmlNode.SelectSingleNode(explicitColumnMapping.Key ?? col.Name, nsmanager);
                     output.Set(explicitColumnMapping.Value ?? col.Name, xml == null ? null : xml.InnerXml);
                 }
 

@@ -1,0 +1,29 @@
+﻿REFERENCE ASSEMBLY [ExtR];
+
+DEPLOY RESOURCE @"/usqlext/samples/R/SampleScript.R";
+DEPLOY RESOURCE @"/usqlext/samples/R/LR_Iris.rda";
+
+
+DECLARE @IrisData string =  @"/usqlext/samples/R/iris.txt";
+DECLARE @OutputFilePredictions string = @"/my/R/Output/LRPredictionsIris.txt";
+
+@InputData =
+    EXTRACT V1 double,
+            V2 double,
+            V3 double,
+            V4 double,
+            V5 string
+    FROM @IrisData
+    USING Extractors.Csv();
+
+@ExtendedData =
+    SELECT 0 AS Par,
+           *
+    FROM @InputData;
+
+@RScriptOutput = REDUCE @ExtendedData ON Par
+PRODUCE Par, RowId int, ROutput string
+READONLY Par
+USING new Extension.r.Reducer("SampleScript.R");
+
+OUTPUT @RScriptOutput TO @OutputFilePredictions USING Outputters.Tsv();
