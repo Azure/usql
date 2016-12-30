@@ -11,7 +11,7 @@
     <Name>JSONExamples</Name>
     <RootNamespace>JSONExamples</RootNamespace>
     <RuntimeVersion>default</RuntimeVersion>
-    <OutputStreamPath>C:\Users\bkotvis\AppData\Local\USQLDataRoot</OutputStreamPath>
+    <OutputStreamPath>C:\LocalRunDataRoot</OutputStreamPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
