@@ -1,0 +1,97 @@
+﻿DECLARE @input string = "/Samples/Blogs/MRys/JSON/multilevel.json";
+
+REFERENCE ASSEMBLY JSONBlog.[Newtonsoft.Json];
+REFERENCE ASSEMBLY JSONBlog.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+/*
+Define the path as you would with the JSONExtractor, the second argument is if you want errors to be thrown if it can't find an attribute, 
+third argument is an array of attributes that will be located from the specified level or higher in the document tree.  
+In this case personid and name are at the person level and everything else is at the address level or lower (accesscode)
+*/
+@result =
+    EXTRACT personid int,
+            name string,
+            addressid string,
+            street string,
+            postcode string,
+            city string,
+            accesscode string
+    FROM @input
+    USING new MultiLevelJsonExtractor("persons[*].person.addresses.address[*]",
+          false,
+          "personid",
+          "name",
+          "addressid",
+          "street",
+          "postcode",
+          "city",
+          "mainlocation.accesscode");         
+          
+
+
+//Output the file to a tool of your choice.
+OUTPUT @result
+TO "/output/json/persons_multilevel.csv"
+USING Outputters.Csv();
+
+
+/*  
+ {
+	 "persons":
+		 [{
+			"person": {
+				"personid": 123456,
+				"name": "Person 1",
+				"addresses": {
+					"address": [{
+						"addressid": "2",
+						"street": "Street 2",
+						"postcode": "1234 AB",
+						"city": "City 1",
+						"mainlocation":{
+						    "name": "Front Door",
+							"accesscode": "54214"
+						}
+					}, {
+						"addressid": "2",
+						"street": "Street 2",
+						"postcode": "5678 CD",
+						"city": "City 2",
+						"mainlocation":{
+						    "name": "Side Door",
+							"accesscode": "4214"
+						}
+					}]
+				}
+			}
+		}, {
+			"person": {
+				"personid": 798,
+				"name": "Person 2",
+				"addresses": {
+					"address": [{
+						"addressid": "1",
+						"street": "Street 1",
+						"postcode": "1234 AB",
+						"city": "City 1",
+						"mainlocation":{
+						    "name": "Front Door",
+							"accesscode": "2145"
+						}
+					}, {
+						"addressid": "4",
+						"street": "Street 7",
+						"postcode": "98799",
+						"city": "City 3",
+						"mainlocation":{
+						    "name": "Garage Door",
+							"accesscode": "9875"
+						}
+					}]
+				}
+			}
+		}]
+}
+*/
