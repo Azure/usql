@@ -1,0 +1,56 @@
+ {
+	 "persons":
+		 [{
+			"person": {
+				"personid": 123456,
+				"name": "Person 1",
+				"addresses": {
+					"address": [{
+						"addressid": "2",
+						"street": "Street 2",
+						"postcode": "1234 AB",
+						"city": "City 1",
+						"mainlocation":{
+						    "name": "Front Door",
+							"accesscode": "54214"
+						}
+					}, {
+						"addressid": "2",
+						"street": "Street 2",
+						"postcode": "5678 CD",
+						"city": "City 2",
+						"mainlocation":{
+						    "name": "Side Door",
+							"accesscode": "4214"
+						}
+					}]
+				}
+			}
+		}, {
+			"person": {
+				"personid": 798,
+				"name": "Person 2",
+				"addresses": {
+					"address": [{
+						"addressid": "1",
+						"street": "Street 1",
+						"postcode": "1234 AB",
+						"city": "City 1",
+						"mainlocation":{
+						    "name": "Front Door",
+							"accesscode": "2145"
+						}
+					}, {
+						"addressid": "4",
+						"street": "Street 7",
+						"postcode": "98799",
+						"city": "City 3",
+						"mainlocation":{
+						    "name": "Garage Door",
+							"accesscode": "9875"
+						}
+					}]
+				}
+			}
+		}]
+}

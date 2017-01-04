@@ -27,6 +27,12 @@
     <Script Include="3-ArrayOfObjects.usql" />
     <Script Include="4-ComplexJSON.usql" />
     <Script Include="5-SingleJSONvsMultiJSON.usql" />
+    <Script Include="6-MultiLevelExtractionJSON.usql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ScriptCode Include="4-ComplexJSON.usql.cs">
+      <DependentUpon>4-ComplexJSON.usql</DependentUpon>
+    </ScriptCode>
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
 </Project>
