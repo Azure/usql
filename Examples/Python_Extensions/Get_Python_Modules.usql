@@ -1,0 +1,28 @@
+REFERENCE ASSEMBLY [ExtPython];
+
+DECLARE @myScript = @"
+
+import sys
+import pkgutil
+import pandas
+
+def usqlml_main(df):
+    modules = [i for i in pkgutil.iter_modules()]
+    mydata = []
+    for m in modules:
+        mydata.append( { 'module' : m[1] } )
+    df = pandas.DataFrame(mydata)      
+    return df
+";
+
+@t  = 
+    SELECT * FROM  (VALUES (1)) AS D(number);
+
+@m  =
+    REDUCE @t ON number
+    PRODUCE module  string
+    USING new Extension.Python.Reducer(pyScript:@myScript);
+
+OUTPUT @m
+    TO "/usql_python_modules.csv"
+    USING Outputters.Csv(outputHeader: true);
