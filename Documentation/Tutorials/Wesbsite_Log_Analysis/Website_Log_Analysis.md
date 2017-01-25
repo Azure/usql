@@ -128,3 +128,8 @@ Review the U-SQL script, and then click Submit. It takes a few minutes for the j
         TO @"/Samples/Outputs/UnsuccessfulResponses.log"
         USING Outputters.Tsv();
 
+
+## You are Done
+
+At this point you've submitted 3 U-SQL Jobs to analyze a website log. The outputs were text file and a U-SQL table.
+
