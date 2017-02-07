@@ -1,0 +1,5 @@
+import sys
+sys.path.insert(0, 'modules.zip')
+import helloworld
+
+print(helloworld.hello_world)
