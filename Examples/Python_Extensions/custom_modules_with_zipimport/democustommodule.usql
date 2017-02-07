@@ -1,7 +1,7 @@
 REFERENCE ASSEMBLY [ExtPython];
 DEPLOY RESOURCE "/modules.zip";
 
-// mymodule.pymodule is inside the modules.zip file
+// mymodule.pym is inside the modules.zip file
 
 DECLARE @myScript = @"
 import sys
