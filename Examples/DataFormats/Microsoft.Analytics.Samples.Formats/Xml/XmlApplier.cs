@@ -81,7 +81,7 @@ namespace Microsoft.Analytics.Samples.Formats.Xml
             {
                 throw new ArgumentException(string.Format("Column '{0}' must be of type 'string', not '{1}'", column.Name, column.Type.Name));
             }
-            
+            // TODO: Add XML Namespace support and allow document fragments (should also be supported on XmlDomExtractor!).
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(input.Get<string>(this.xmlColumnName));
             foreach (XmlNode xmlNode in xmlDocument.DocumentElement.SelectNodes(this.rowPath))
