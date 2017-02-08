@@ -1,7 +1,6 @@
-﻿// Shows how to extract images (up to approx 4MB) into a rowset using a custom extractor 
-// that also extracts the image properties and creates a thumbnail. 
+﻿// Shows how to extract images properties into a rowset using a custom extractor 
+// that also creates a thumbnail. This should not have any limit on the original image size.
 // 
-// Note that this can work around the size limits of a row regarding the incoming image size. 
 
 REFERENCE ASSEMBLY Images;
 
