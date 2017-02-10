@@ -1,0 +1,45 @@
+﻿// R Example that applies a prediction model to Sepal/Petal measurements of Iris flowers.
+// Requires that the Extension library ExtR has been installed in the master database. 
+// You can install the library from the Azure Portal in the Example Script tab of your ADLA account.
+
+REFERENCE ASSEMBLY master.ExtR;
+
+DEPLOY RESOURCE @"/Samples/Data/RSample/SampleScript.R"; // R script as file
+DEPLOY RESOURCE @"/Samples/Data/RSample/LR_Iris.rda";    // Prediction Model 
+
+DECLARE @IrisData string =  @"/Samples/Data/RSample/iris.csv";
+DECLARE @OutputFilePredictions string = @"/Output/LRPredictionsIris.csv";
+DECLARE @PartitionCount = 10;
+
+// R script as string
+DECLARE @RScript = @"
+load(""LR_Iris.rda""),
+
+output2USQL=predict(lm.fit, inputFromUSQL, interval=""confidence"")
+";
+
+@InputData =
+    EXTRACT V1 double, // SepalLength
+            V2 double, // SepalWidth
+            V3 double, // PetalLength
+            V4 double, // PetalWidth
+            V5 string  // Species
+    FROM @IrisData
+    USING Extractors.Csv();
+
+//Randomly partition the data to apply the model in parallel
+@InputData = 
+    SELECT Extension.R.RandomNumberGenerator.getRandomNumber(@PartitionCount) AS Par,
+           *
+    FROM @InputData;
+
+@RScriptOutput = 
+    REDUCE @InputData ON Par
+    PRODUCE Par, RowId int, ROutput string
+    READONLY Par
+    USING new Extension.R.Reducer("SampleScript.R"); // Alternative with R in a deployed file
+//    USING new Extension.R.Reducer(command:@RScript); // Alternative with R as string
+
+OUTPUT @RScriptOutput 
+TO @OutputFilePredictions 
+USING Outputters.Csv();

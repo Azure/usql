@@ -1,0 +1,35 @@
+﻿REFERENCE ASSEMBLY master.ExtPython;
+
+DECLARE @myScript = @"
+def get_mentions(tweet):
+    return ';'.join( ( w[1:] for w in tweet.split() if w[0]=='@' ) )
+
+def get_topics(tweet):
+    return ';'.join( ( w[1:] for w in tweet.split() if w[0]=='#' ) )
+
+def usqlml_main(df):
+    del df['origin']
+    del df['time']
+    df['mentions'] = df.tweet.apply(get_mentions)
+    df['topics'] = df.tweet.apply(get_topics)
+    del df['tweet']
+    return df
+";
+
+@t = 
+    EXTRACT date string, time string, author string, tweet string, origin string
+    FROM "/Samples/Data/Tweets/{origin}.csv"
+    USING Extractors.Csv();
+
+@m  =
+    REDUCE @t ON origin
+    PRODUCE author string, date string, mentions string, topics string
+    USING new Extension.Python.Reducer(pyScript:@myScript);
+
+@m = 
+    SELECT * FROM @m 
+    WHERE !(String.IsNullOrEmpty(mentions) AND String.IsNullOrEmpty(topics));
+
+OUTPUT @m
+  TO "/tweetmentions.csv"
+  USING Outputters.Csv();
