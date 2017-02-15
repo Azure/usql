@@ -1,0 +1,21 @@
+// ERROR Divide by Zero in Expression
+
+@searchlog = 
+    EXTRACT UserId          int, 
+            Start           DateTime, 
+            Region          string, 
+            Query           string, 
+            Duration        int, 
+            Urls            string, 
+            ClickedUrls     string
+    FROM @"/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@searchlog = 
+    SELECT *,
+           (1/(60-Duration)) AS InverseDuration
+    FROM @searchlog;
+
+OUTPUT @searchlog 
+    TO @"/Samples/Output/SearchLog_output.tsv"
+    USING Outputters.Tsv();

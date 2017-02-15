@@ -1,0 +1,17 @@
+// ERROR Input File does not Exist
+
+@searchlog = 
+    EXTRACT UserId          int, 
+            Start           DateTime, 
+            Region          string, 
+            Query           string, 
+            Duration        int, 
+            Urls            string, 
+            ClickedUrls     string
+    FROM @"/Samples/Data/SearchLogXYZ.tsv"
+    USING Extractors.Tsv();
+
+OUTPUT @searchlog 
+    TO @"/Samples/Output/SearchLog_output.tsv"
+    USING Outputters.Tsv();
+
