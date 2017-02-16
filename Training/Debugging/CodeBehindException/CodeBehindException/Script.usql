@@ -1,0 +1,16 @@
+﻿@a  = 
+    SELECT * FROM 
+        (VALUES
+            ("2017/2/5","01:34:12","saveenr","@mrys U-SQL is great!"),
+            ("2017/2/6","07:23:31","mrys","@saveenr Thanks!")
+        ) AS 
+              D( date, time, author, tweet );
+
+@b = SELECT 
+        author, 
+        CodeBehindException.Helpers.NormalizeAuthor(author) AS AuthorNormalized
+     FROM @a;               
+
+OUTPUT @b
+  TO "/output.csv"
+  USING Outputters.Csv();

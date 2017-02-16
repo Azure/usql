@@ -1,0 +1,17 @@
+﻿@t  = 
+    SELECT * FROM 
+        (VALUES
+            ("2016/03/31","1:00","mrys","@saveenr great demo yesterday", 7),
+            ("2016/03/31","7:00","saveenr","@mrys Thanks! U-SQL RuL3Z!", 4 )
+        ) AS 
+              D( date, time, author, tweet , retweets);
+
+@results = 
+    SELECT
+        AGG<MVA_UDAgg.MySum>(retweets,0) AS totalretweets
+    FROM @t
+    GROUP BY date;
+
+OUTPUT @results
+    TO "/output.csv"
+    USING Outputters.Csv();
