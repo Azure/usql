@@ -8,7 +8,7 @@
 
 @results = 
     SELECT
-        AGG<MVA_UDAgg.MySum>(retweets,0) AS totalretweets
+        AGG<MVA_UDAgg.MySum>(retweets) AS totalretweets
     FROM @t
     GROUP BY date;
 

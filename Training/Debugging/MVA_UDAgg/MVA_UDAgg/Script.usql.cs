@@ -2,7 +2,7 @@
 
 namespace MVA_UDAgg
 {
-    public class MySum : IAggregate<int, int, long>
+    public class MySum : IAggregate<int, long>
     {
         long total;
 
@@ -11,9 +11,9 @@ namespace MVA_UDAgg
             total = 0;
         }
 
-        public override void Accumulate(int i1, int i2)
+        public override void Accumulate(int value)
         {
-            total += (i1*i1);
+            total += value;
         }
 
         public override long Terminate()
