@@ -1,0 +1,24 @@
+﻿@rows  = 
+    SELECT * FROM 
+        (VALUES
+            ("0000"),
+            ("0001"),
+            ("1001"),
+            ("0110")
+        ) AS 
+              D( bitstring );
+
+@results = 
+    SELECT bitstring, new MyUDTExamples.Bits(bitstring) AS bits
+    FROM @rows
+    ;
+
+@results = 
+    SELECT bitstring, bits.ToInteger() AS bits_int
+    FROM @results
+    ;
+
+
+OUTPUT @results
+    TO "/output.csv"
+    USING Outputters.Csv();
