@@ -1,0 +1,21 @@
+﻿@events  = 
+    SELECT * FROM 
+        (VALUES
+            ("c1",DateTime.Parse("2016-03-31T01:00:03.000Z"),"1","start"),
+            ("c1",DateTime.Parse("2016-03-31T01:00:47.000Z"),"1","stop"),
+            ("c1",DateTime.Parse("2016-03-31T01:00:28.000Z"),"2","start"),
+            ("c1",DateTime.Parse("2016-03-31T01:00:51.000Z"),"2","stop"),
+            ("c1",DateTime.Parse("2016-03-31T01:00:31.000Z"),"2","start"),
+            ("c1",DateTime.Parse("2016-03-31T01:00:42.000Z"),"2","stop")
+        ) AS 
+              D( cohort, timestamp, id, op );
+
+@results = 
+    REDUCE @events 
+    PRESORT timestamp ON cohort
+    PRODUCE cohort string, max int
+    USING new MVA_MaxParallelActivitiesReducer.RangeReducer();
+
+OUTPUT @results
+    TO "/output.csv"
+    USING Outputters.Csv();
