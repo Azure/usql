@@ -2,6 +2,7 @@
 
 namespace MVA_UDAgg
 {
+    // [SqlUserDefinedReducer(IsRecursive = true)]
     public class MySum : IAggregate<int, long>
     {
         long total;
