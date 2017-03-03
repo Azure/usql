@@ -1,0 +1,38 @@
+﻿REFERENCE ASSEMBLY [MVA_Extractor].[TemperatureDataLib];
+REFERENCE ASSEMBLY [MVA_Extractor].[Newtonsoft.Json];
+
+// read one file
+//@rows = 
+//    EXTRACT 
+//        GatewayName string,
+//        Timestamp DateTime,
+//        EventProcessedUtcTime DateTime,
+//        PartitionId int?,
+//        DeviceName string,
+//        ObjectType string,
+//        Instance int,
+//        PresentValue string
+//    FROM @"/B19BlobFiles/01/00/0_6dc716282e24415588b5ef7d94cdac66_1.json" 
+//    USING new AzureStackDemo.RecordExtractor();
+
+
+// read many files
+@rows = 
+    EXTRACT 
+        GatewayName string,
+        Timestamp DateTime,
+        EventProcessedUtcTime DateTime,
+        PartitionId int?,
+        DeviceName string,
+        ObjectType string,
+        Instance int,
+        PresentValue string,
+        __filename string,
+        __folder1 string,
+        __folder2 string
+    FROM @"/B19BlobFiles/{__folder1}/{__folder2}/{__filename}.json"
+    USING new TemperatureAnalysis.RecordExtractor();
+
+OUTPUT @rows TO "/output.csv" USING Outputters.Csv();
+
+
