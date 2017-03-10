@@ -1,11 +1,11 @@
 REFERENCE ASSEMBLY [ExtPython];
-DEPLOY RESOURCE "/modules.zip";
+DEPLOY RESOURCE @"/mycustommodules.zip";
 
-// mymodule.pym is inside the modules.zip file
+// mymodule.py is inside the mycustommodules.zip file
 
 DECLARE @myScript = @"
 import sys
-sys.path.insert(0, 'modules.zip')
+sys.path.insert(0, 'mycustommodules.zip')
 import mymodule 
 
 def usqlml_main(df):
