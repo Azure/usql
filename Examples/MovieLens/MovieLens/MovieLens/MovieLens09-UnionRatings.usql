@@ -1,0 +1,41 @@
+﻿DROP FUNCTION IF EXISTS GetRatings;
+CREATE FUNCTION GetRatings(@rank int = 0)
+RETURNS @r TABLE(MovieID int, UserID int, Rating int, Timestamp int)
+AS
+BEGIN
+DECLARE @RATINGSInp string = "r" + @rank.ToString() + ".csv";
+
+
+@r =
+    EXTRACT MovieID int ,UserID int,Rating int,Timestamp int
+    FROM @RATINGSInp
+    USING Extractors.Csv();
+
+END;
+
+@FullSet = GetRatings
+           (
+               1
+           )
+           UNION ALL GetRatings
+                     (
+                         2
+                     )
+           UNION ALL GetRatings
+                     (
+                         3
+                     )
+           UNION ALL GetRatings
+                     (
+                         4
+                     )
+           UNION ALL GetRatings
+                     (
+                         5
+                     );
+
+
+@c = SELECT COUNT(*) AS c FROM @FullSet;
+
+OUTPUT @c
+TO "RatingCount.csv" USING Outputters.Csv();

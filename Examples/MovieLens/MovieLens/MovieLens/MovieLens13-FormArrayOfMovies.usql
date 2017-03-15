@@ -1,0 +1,71 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+
+@RatingsRaw =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@RatingsSplit =
+    SELECT RatingLine,new SQL.ARRAY<string>(
+           RatingLine.Split(new string[]{"::"},StringSplitOptions.None)) AS Ratings
+    FROM @RatingsRaw;
+
+@Ratings =
+    SELECT int.Parse(Ratings[0]) AS MovieID,
+           int.Parse(Ratings[1]) AS UserID,
+           int.Parse(Ratings[2]) AS Rating,
+           Ratings[3] AS Timestamp
+FROM @RatingsSplit;
+
+/*
+@AvgRating =
+    SELECT MovieID,
+           AVG(Rating) AS AvgRating
+    FROM @Ratings
+    GROUP BY MovieID;
+*/
+
+@UsersRaw =
+    EXTRACT UserLine string
+    FROM @USERSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@UsersSplit =
+    SELECT UserLine,new SQL.ARRAY<string>(
+           UserLine.Split(new string[]{"::"},StringSplitOptions.None)) AS UserArr
+    FROM @UsersRaw;
+
+
+@Users =
+    SELECT int.Parse(UserArr[0]) AS UserID,
+           UserArr[1]AS Gender,
+           int.Parse(UserArr[2]) AS Age,
+           int.Parse(UserArr[3]) AS Occupation,
+           UserArr[4]AS Zip
+    FROM @UsersSplit;
+
+
+@UserWithMovies =
+    SELECT u.*,
+           ARRAY_AGG(r.MovieID) AS MoviesArr
+    FROM @Users AS u
+         JOIN
+             @Ratings AS r
+         ON u.UserID == r.UserID
+    GROUP BY u.UserID,
+             u.Gender,
+             u.Age,
+             u.Occupation,
+                u.Zip;
+
+@outer =
+    SELECT UserID,MoviesArr.Count AS Movies,MoviesMap.Count AS MapCount
+    FROM @UserWithMovies;
+
+OUTPUT @outer
+TO "UserWithMovies.csv" 
+USING Outputters.Csv();
+
+

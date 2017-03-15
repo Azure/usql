@@ -1,0 +1,27 @@
+﻿DROP TABLE IF EXISTS Ratings;
+CREATE TABLE Ratings(
+    MovieID int,
+    UserID int,
+    Rating int,
+    Timestamp string,
+       INDEX [idx Ratings] CLUSTERED(UserID ASC,MovieID ASC)
+                                         PARTITIONED BY HASH(UserID)
+);
+
+
+DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "Ratings.csv";
+
+@Ratings=
+EXTRACT MovieID int,
+        UserID int,
+        Rating int,
+        TimeStamp string
+FROM @RATINGSInp
+USING Extractors.Csv();
+
+ 
+INSERT INTO Ratings
+SELECT *
+FROM @Ratings;
+

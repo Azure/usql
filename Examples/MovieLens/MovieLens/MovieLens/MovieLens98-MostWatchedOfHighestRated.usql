@@ -1,0 +1,119 @@
+﻿// Load data from ADL file into tables. 
+USE master;
+
+/// Uncomment the below for local running
+//CREATE ASSEMBLY ext FROM "MovieLensExtractor.dll";
+//REFERENCE ASSEMBLY ext;
+
+// Use for ADL running - You must register the assembley first -> View->Server Explorer -> Data Lake Analytics....
+REFERENCE ASSEMBLY [MovieLensExtractor];
+
+
+
+DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+DECLARE @MOVIESInp string = @INPUTDIR + "movies.dat";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+
+// MovieLensExtractorMeta will use the outputrow meta data fo work from , presently ints and strings are supported.
+@Users =
+    EXTRACT UserID int,
+            Gender string,
+            Age int,
+            Occupation int,
+            Zip string
+    FROM @USERSInp
+    USING new MovieLensExtractor.MovieLensExtractorMeta();
+
+@Movies =
+    EXTRACT MovieID int,
+            MovieName string,
+            Genres string
+    FROM @MOVIESInp
+    USING new MovieLensExtractor.MovieLensExtractorMeta();
+
+@m = SELECT *,new SQL.ARRAY<string>(
+                Genres.Split('|')) AS Genre
+     FROM @Movies;
+
+@MovieGenre = SELECT MovieID,MovieName,g AS Genre
+     FROM @m CROSS APPLY EXPLODE(Genre) AS Genre(g);
+
+@Ratings =
+    EXTRACT UserID int,
+            MovieID int,
+            Rating int,
+            TimeStamp int
+    FROM @RATINGSInp
+    USING new MovieLensExtractor.MovieLensExtractorMeta();
+
+// Top100 with more than 75 ratings , note inline cast to float; 
+
+@MovieAggs =
+    SELECT MovieID,
+           AVG((float) Rating) AS AvgRating,
+           COUNT( * ) AS RatingCount
+    FROM @Ratings AS r
+    GROUP BY MovieID
+HAVING COUNT(*) > 75;
+
+
+@Top100 =
+    SELECT *
+    FROM @MovieAggs
+    ORDER BY AvgRating DESC
+    FETCH 100 ROWS;
+
+@i =
+    SELECT t.*,
+           m.MovieID AS AlsoWatchedMovieID,
+           mv.MovieName AS AlsoWatchedMovieName,
+           ROW_NUMBER() OVER(PARTITION BY t.MovieID ORDER BY alsoWatched.MovieID != r.MovieID DESC, m.RatingCount DESC) AS rowN
+    FROM @Top100 AS t
+         JOIN
+             @Ratings AS r
+         ON r.MovieID == t.MovieID
+         JOIN
+             @Ratings AS alsoWatched
+         ON r.UserID == alsoWatched.UserID
+         //       AND alsoWatched.MovieID != r.MovieID
+         JOIN
+             @MovieAggs AS m
+         ON m.MovieID == alsoWatched.MovieID
+         JOIN
+             @Movies AS mv
+         ON mv.MovieID == m.MovieID;
+        
+ 
+@y =
+    SELECT M.MovieID,
+           M.MovieName,
+           AvgRating,
+           RatingCount,
+           j.AlsoWatchedMovieID,
+           j.AlsoWatchedMovieName
+    FROM @i AS j
+         JOIN
+             @Movies AS M
+         ON j.MovieID == M.MovieID
+WHERE j.rowN == 1;
+
+
+
+OUTPUT @y
+TO "Top100.csv"
+ORDER BY AvgRating DESC
+USING Outputters.Csv()
+;
+
+    
+// Outputs below not really useful but prevent the DEAD CODE error being thrown 
+// which is good in a production env but this is a simple demo.
+OUTPUT @Users
+TO "Users.csv" USING Outputters.Csv();
+
+
+OUTPUT @MovieGenre
+TO "Movies.csv"
+USING Outputters.Csv();
+      

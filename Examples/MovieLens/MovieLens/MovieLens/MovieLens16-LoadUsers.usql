@@ -1,0 +1,25 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @USERSInp string = @INPUTDIR + "users.dat";
+
+@UsersRaw =
+    EXTRACT UserLine string
+    FROM @USERSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@UsersSplit =
+    SELECT UserLine,new SQL.ARRAY<string>(
+           UserLine.Split(new string[]{"::"},StringSplitOptions.None)) AS UserArr
+    FROM @UsersRaw;
+
+
+@Users =
+    SELECT int.Parse(UserArr[0]) AS UserID,
+           UserArr[1] AS Gender,
+           int.Parse(UserArr[2])  AS Age,
+           int.Parse(UserArr[3]) AS Occupation,
+           UserArr[4] AS Zip
+FROM @UsersSplit;
+
+INSERT INTO Users
+SELECT *
+FROM @Users;

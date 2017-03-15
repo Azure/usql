@@ -1,0 +1,15 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+
+@Ratings =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+
+
+@c = SELECT COUNT(*) AS c FROM @Ratings;
+
+OUTPUT @c
+TO "RatingCount.csv" USING Outputters.Csv();
+

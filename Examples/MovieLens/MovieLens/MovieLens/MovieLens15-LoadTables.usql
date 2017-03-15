@@ -1,0 +1,35 @@
+﻿DROP TABLE IF EXISTS Ratings;
+CREATE TABLE Ratings(
+    MovieID int,
+    UserID int,
+    Rating int,
+    Timestamp string,
+       INDEX [idx Ratings] CLUSTERED(UserID ASC,MovieID ASC)
+                                         PARTITIONED BY HASH(UserID)
+);
+
+DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+
+@RatingsRaw =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@RatingsSplit =
+    SELECT RatingLine,new SQL.ARRAY<string>(
+           RatingLine.Split(new string[]{"::"},StringSplitOptions.None)) AS Ratings
+    FROM @RatingsRaw;
+
+@Ratings =
+    SELECT int.Parse(Ratings[0]) AS MovieID,
+           int.Parse(Ratings[1]) AS UserID,
+           int.Parse(Ratings[2]) AS Rating,
+           Ratings[3] AS Timestamp
+FROM @RatingsSplit;
+
+INSERT INTO Ratings
+SELECT *
+FROM @Ratings;
+
+

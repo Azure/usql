@@ -1,0 +1,25 @@
+﻿DECLARE @INPUTDIR string =  "/movies/ml-1m/";
+DECLARE @RATINGSInp string = @INPUTDIR + "ratings.dat";
+
+@Ratings =
+    EXTRACT RatingLine string
+    FROM @RATINGSInp
+    USING Extractors.Tsv( rowDelimiter: "\n");
+
+@RatingsSplit =
+    SELECT RatingLine,new SQL.ARRAY<string>(
+           RatingLine.Split(new string[]{"::"},StringSplitOptions.None)) AS Ratings
+    FROM @Ratings;
+
+
+@x =
+    SELECT Ratings[0] AS MovieID,
+           Ratings[1] AS UserID,
+           Ratings[2] AS Ratings,
+           Ratings[3] AS Timestamp
+FROM @RatingsSplit;
+
+@c = SELECT COUNT(*) AS c FROM @x;
+
+OUTPUT @c
+TO "RatingCount.csv" USING Outputters.Csv();

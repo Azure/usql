@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RuntimeVersion>default</RuntimeVersion>
+    <Name>MovieLens</Name>
+    <RootNamespace>MovieLens</RootNamespace>
+    <ScopePath>%24(SCRIPT_DIR);%24(CLUSTER_ROOT);%24(SCOPE_DIR);%24(PROJECT_DIR)</ScopePath>
+    <InputStreamSearchPath>%24(PROJECT_DIR);%24(SCRIPT_DIR);%24(CLUSTER_ROOT)</InputStreamSearchPath>
+    <OutputStreamPath>C:\LocalRunDataRoot</OutputStreamPath>
+    <ProjectGuid>{8a639f6b-c226-4dc3-9856-4726e215633d}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="MovieLens" />
+  </ItemGroup>
+  <ItemGroup>
+    <Script Include="MovieLens\MovieLens14-CreateTables.usql" />
+    <Script Include="MovieLens\MovieLens15-LoadTables.usql" />
+    <Script Include="MovieLens\MovieLens16-LoadUsers.usql" />
+    <Script Include="MovieLens\MovieLens17-ConvertRatingsToCSV.usql" />
+    <Script Include="MovieLens\MovieLens92-SimilarityWithMin.usql" />
+    <Script Include="MovieLens\MovieLens93-CosineSimilarityFromTables.usql" />
+    <Script Include="MovieLens\MovieLens94-CosineSimilarityWithNotWatchedSuggestionEarlyExclusion.usql" />
+    <Script Include="MovieLens\MovieLens04-LoadRatingsAsString.usql" />
+    <Script Include="MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql" />
+    <Script Include="MovieLens\MovieLens01-LoadUsers.usql" />
+    <Script Include="MovieLens\MovieLens03-LoadRatingsWithStringExtractor.usql" />
+    <Script Include="MovieLens\MovieLens05-LoadRatingUSQLSplit.usql" />
+    <Script Include="MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql" />
+    <Script Include="MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql" />
+    <Script Include="MovieLens\MovieLens08-SplitRatings.usql" />
+    <Script Include="MovieLens\MovieLens09-UnionRatings.usql" />
+    <Script Include="MovieLens\MovieLens10-OccupationsTable.usql" />
+    <Script Include="MovieLens\MovieLens11-SummariseOccupations.usql" />
+    <Script Include="MovieLens\MovieLens12-CreateViews.usql" />
+    <Script Include="MovieLens\MovieLens13-FormArrayOfMovies.usql" />
+    <Script Include="MovieLens\MovieLens95-CosineSimilarityWithNotWatchedSuggestion.usql" />
+    <Script Include="MovieLens\MovieLens96-CosineSimilarityWithSuggestion.usql" />
+    <Script Include="MovieLens\MovieLens97-CosineSimilarity.usql" />
+    <Script Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql" />
+    <Script Include="MovieLens\MovieLens99-LoadMovies.usql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ScriptCode Include="MovieLens\MovieLens14-CreateTables.usql.cs">
+      <DependentUpon>MovieLens\MovieLens14-CreateTables.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens15-LoadTables.usql.cs">
+      <DependentUpon>MovieLens\MovieLens15-LoadTables.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens16-LoadUsers.usql.cs">
+      <DependentUpon>MovieLens\MovieLens16-LoadUsers.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens17-ConvertRatingsToCSV.usql.cs">
+      <DependentUpon>MovieLens\MovieLens17-ConvertRatingsToCSV.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens92-SimilarityWithMin.usql.cs">
+      <DependentUpon>MovieLens\MovieLens92-SimilarityWithMin.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens93-CosineSimilarityFromTables.usql.cs">
+      <DependentUpon>MovieLens\MovieLens93-CosineSimilarityFromTables.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens94-CosineSimilarityWithNotWatchedSuggestionEarlyExclusion.usql.cs">
+      <DependentUpon>MovieLens\MovieLens94-CosineSimilarityWithNotWatchedSuggestionEarlyExclusion.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens04-LoadRatingsAsString.usql.cs">
+      <DependentUpon>MovieLens\MovieLens04-LoadRatingsAsString.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql.cs">
+      <DependentUpon>MovieLens\MovieLens02-LoadRatingsWithMetaExtractor.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens01-LoadUsers.usql.cs">
+      <DependentUpon>MovieLens\MovieLens01-LoadUsers.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens03-LoadRatingsWithStringExtractor.usql.cs">
+      <DependentUpon>MovieLens\MovieLens03-LoadRatingsWithStringExtractor.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens05-LoadRatingUSQLSplit.usql.cs">
+      <DependentUpon>MovieLens\MovieLens05-LoadRatingUSQLSplit.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql.cs">
+      <DependentUpon>MovieLens\MovieLens06-LoadRatingsUSQLSplitDD.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql.cs">
+      <DependentUpon>MovieLens\MovieLens07-LoadRatingsWithBatchExtractor.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens08-SplitRatings.usql.cs">
+      <DependentUpon>MovieLens\MovieLens08-SplitRatings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens09-UnionRatings.usql.cs">
+      <DependentUpon>MovieLens\MovieLens09-UnionRatings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens10-OccupationsTable.usql.cs">
+      <DependentUpon>MovieLens\MovieLens10-OccupationsTable.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens11-SummariseOccupations.usql.cs">
+      <DependentUpon>MovieLens\MovieLens11-SummariseOccupations.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens12-CreateViews.usql.cs">
+      <DependentUpon>MovieLens\MovieLens12-CreateViews.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens13-FormArrayOfMovies.usql.cs">
+      <DependentUpon>MovieLens\MovieLens13-FormArrayOfMovies.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens95-CosineSimilarityWithNotWatchedSuggestion.usql.cs">
+      <DependentUpon>MovieLens\MovieLens95-CosineSimilarityWithNotWatchedSuggestion.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens96-CosineSimilarityWithSuggestion.usql.cs">
+      <DependentUpon>MovieLens\MovieLens96-CosineSimilarityWithSuggestion.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens97-CosineSimilarity.usql.cs">
+      <DependentUpon>MovieLens\MovieLens97-CosineSimilarity.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens98-MostWatchedOfHighestRated.usql.cs">
+      <DependentUpon>MovieLens\MovieLens98-MostWatchedOfHighestRated.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="MovieLens\MovieLens99-LoadMovies.usql.cs">
+      <DependentUpon>MovieLens\MovieLens99-LoadMovies.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MovieLensExtractor\MovieLensExtractor.csproj">
+      <Name>MovieLensExtractor</Name>
+      <Project>{1b3e7106-6d16-4b96-87c5-f15e18ffc08f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
+</Project>
