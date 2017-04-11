@@ -1,0 +1,32 @@
+﻿// This example needs the Cognitive Extensions to U-SQL.
+// See https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-u-sql-cognitive
+// They can be installed from the ADLA Azure Portal.
+
+REFERENCE ASSEMBLY ImageCommon;
+REFERENCE ASSEMBLY ImageTagging;
+
+// Since tagging is implemented as a Processor, we need to first extract the images into a rowset.
+// This means the max size of an image is slighly less than the max rowsize (4MB)!
+@imgs =
+    EXTRACT ImgData byte[],
+            name string, format string
+    FROM @"/Samples/Data/Images/{name}.{format}"
+    USING new Cognition.Vision.ImageExtractor();
+
+@imgs = 
+    SELECT name+"."+format AS FileName, ImgData 
+    FROM @imgs 
+    WHERE format IN ("jpeg", "jpg");
+
+// Extract the number of objects on each image and tag them 
+@objects =
+    PROCESS @imgs 
+    PRODUCE FileName,
+            NumObjects int,
+            Tags string
+    READONLY FileName
+    USING new Cognition.Vision.ImageTagger();
+
+OUTPUT @objects
+TO "/Output/VisionTagger.csv"
+USING Outputters.Csv();

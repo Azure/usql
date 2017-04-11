@@ -13,11 +13,11 @@ namespace Images
 {
     public static class UpdatableRowExtensions
     {
-        public static void SetColumnIfExists<T>(this IUpdatableRow source, string colName, T value)
+        public static void SetColumnIfRequested<T>(this IUpdatableRow source, string colName, Func<T> expr)
         {
             var colIdx = source.Schema.IndexOf(colName);
             if (colIdx != -1)
-            { source.Set<T>(colIdx, value); }
+            { source.Set<T>(colIdx, expr()); }
         } 
     }
 
@@ -36,12 +36,12 @@ namespace Images
             // load image only once into memory per row
             using (StreamImage inImage = new StreamImage(img))
             {
-                output.SetColumnIfExists("image", img);
-                output.SetColumnIfExists("equipment_make", inImage.getStreamImageProperty(ImageProperties.equipment_make));
-                output.SetColumnIfExists("equipment_model", inImage.getStreamImageProperty(ImageProperties.equipment_model));
-                output.SetColumnIfExists("description", inImage.getStreamImageProperty(ImageProperties.description));
-                output.SetColumnIfExists("copyright", inImage.getStreamImageProperty(ImageProperties.copyright));
-                output.SetColumnIfExists("thumbnail", inImage.scaleStreamImageTo(this._scaleWidth, this._scaleHeight));
+                output.SetColumnIfRequested("image", () => img);
+                output.SetColumnIfRequested("equipment_make", () => inImage.getStreamImageProperty(ImageProperties.equipment_make));
+                output.SetColumnIfRequested("equipment_model", () => inImage.getStreamImageProperty(ImageProperties.equipment_model));
+                output.SetColumnIfRequested("description", () => inImage.getStreamImageProperty(ImageProperties.description));
+                output.SetColumnIfRequested("copyright", () => inImage.getStreamImageProperty(ImageProperties.copyright));
+                output.SetColumnIfRequested("thumbnail", () => inImage.scaleStreamImageTo(this._scaleWidth, this._scaleHeight));
             }
             yield return output.AsReadOnly();
         }

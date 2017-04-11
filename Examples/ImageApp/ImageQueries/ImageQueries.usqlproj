@@ -26,6 +26,7 @@
     <Script Include="1-RegisterAsm.usql" />
     <Script Include="3-Extract+Processor.usql" />
     <Script Include="4-ExtractFeatures.usql" />
+    <Script Include="5-CognitiveImageProcessing.usql" />
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
 </Project>
