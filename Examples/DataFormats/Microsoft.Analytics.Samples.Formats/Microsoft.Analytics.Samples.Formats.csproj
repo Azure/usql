@@ -37,7 +37,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Hadoop.Avro">
-      <HintPath>..\..\..\..\hadoopsdk\Bin\Unsigned\Debug\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Hadoop.Avro.1.5.6\lib\net45\Microsoft.Hadoop.Avro.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
