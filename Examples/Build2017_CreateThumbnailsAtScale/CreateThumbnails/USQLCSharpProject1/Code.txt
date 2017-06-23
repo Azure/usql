@@ -1,0 +1,163 @@
+// Creating a Table of Images
+
+CREATE DATABASE IF NOT EXISTS Build;
+
+@imgs = EXTRACT FileName string, ImgData byte[]
+    FROM @"adl://adltrainingsampledata.azuredatalakestore.net/MegaFace/MegaFace.tsv"
+    USING  Extractors.Tsv();
+
+DROP TABLE IF EXISTS Build.dbo.Megaface;
+
+CREATE TABLE Build.dbo.Megaface
+( 
+    INDEX idx  
+    CLUSTERED(FileName ASC)
+    DISTRIBUTED BY HASH(FileName) 
+) AS SELECT * FROM @imgs;
+
+
+// Baseline thumb creation
+
+REFERENCE ASSEMBLY Build.DemoAsm;
+
+@imgs = SELECT * FROM Build.dbo.Megaface;
+
+@thumbs = 
+    SELECT FileName, ImgData
+    FROM @imgs;
+
+DROP TABLE IF EXISTS Build.dbo.MegafaceThumbs;
+
+CREATE TABLE Build.dbo.MegafaceThumbs
+( 
+    INDEX idx  
+    CLUSTERED(FileName ASC)
+    DISTRIBUTED BY HASH(FileName) 
+) AS SELECT * FROM @thumbs;
+
+// NO-op thumbnail generation
+
+namespace Demo
+{
+    public static class Helpers
+    {
+        public static byte[] CreateThumbnail (byte[] imagedata)
+        {
+            return imagedata;
+        }
+    }
+}
+
+
+// thumbnails
+
+
+@imgs = SELECT * FROM Build.dbo.Megaface;
+
+@thumbs = 
+    SELECT 
+      FileName, 
+      Demo.Helpers.CreateThumbnail( ImgData ) AS ImgData
+    FROM @imgs;
+
+DROP TABLE IF EXISTS Build.dbo.MegafaceThumbs;
+
+CREATE TABLE Build.dbo.MegafaceThumbs
+( 
+    INDEX idx  
+    CLUSTERED(FileName ASC)
+    DISTRIBUTED BY HASH(FileName) 
+) AS SELECT * FROM @thumbs;
+
+// thumbnail code
+
+
+namespace Demo
+{
+    public static class Helpers
+    {
+        static byte[] CreateThumbnail(byte[] bytes)
+        {
+            using (var ms = new MemoryStream(bytes))
+            {
+                var bmp = new System.Drawing.Bitmap(ms);
+                var resized = 
+                 new System.Drawing.Bitmap(bmp, 
+                       new System.Drawing.Size(bmp.Width / 4, bmp.Height / 4));
+                var converter = new System.Drawing.ImageConverter();
+                var outbytes = (byte[])converter.ConvertTo(resized, typeof(byte[]));
+                return outbytes;
+            }
+        }
+    }
+}
+
+
+// Getting the images out
+
+
+@img = SELECT * FROM Build.dbo.MegafaceThumbs;
+
+OUTPUT @imgs
+    TO "/thumbnails/{FileName}"
+    USING BinaryFileOutputter();
+
+
+
+
+// Maximiniz Parallelization
+
+@imgs = SELECT * FROM Build.dbo.Megaface;
+
+@imgs =
+    PROCESS @imgs 
+    PRODUCE FileName,
+            ImageData byte[],
+    READONLY FileName
+    USING new Build.Demo.ImageThumbnailer()
+    OPTION (PARTITION(FileName) = (PARTITIONCOUNT = 1000));
+
+OUTPUT @imgs
+    TO "/thumbnails/{FileName}"
+    USING BinaryFileOutputter();
+
+/// More parallelzation
+
+@thumbs = 
+    SELECT FileName, Demo.Helpers.CreateThumbnail( ImgData ) AS ImgData
+    FROM @imgs
+    OPTION (PARTITION(FileName) = (PARTITIONCOUNT = 1000));
+
+
+
+// Object Detection
+
+
+REFERENCE ASSEMBLY ImageCommon;
+REFERENCE ASSEMBLY FaceSdk;
+REFERENCE ASSEMBLY ImageEmotion;
+REFERENCE ASSEMBLY ImageTagging;
+REFERENCE ASSEMBLY ImageOcr;
+
+…
+@imgs = SELECT * FROM Build.dbo.Megaface;
+
+@objects =
+    PROCESS @imgs 
+    PRODUCE FileName,
+            NumObjects int,
+            Tags string
+    READONLY FileName
+    USING new Cognition.Vision.ImageTagger();
+
+OUTPUT @objects
+    TO "/objects.csv“
+     USING Outputters.Csv();
+
+
+
+
+
+
+
+

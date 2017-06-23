@@ -1,0 +1,18 @@
+﻿using Microsoft.Analytics.Interfaces;
+using Microsoft.Analytics.Types.Sql;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace CodeBehind
+{
+    public static class Helpers
+    {
+        public static byte[] CreateThumbnail(byte[] imagedata)        {
+
+            return imagedata;
+        }
+    }
+}
