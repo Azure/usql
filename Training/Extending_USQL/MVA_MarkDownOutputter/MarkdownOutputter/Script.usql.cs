@@ -12,8 +12,11 @@ namespace MVADemo
     [SqlUserDefinedOutputter(AtomicFileProcessing = true)]
     public class MarkdownOutputter : IOutputter
     {
+        private int row_count;
+
         public MarkdownOutputter()
         {
+            row_count = 0;
         }
 
         public override void Close()
@@ -22,14 +25,41 @@ namespace MVADemo
 
         public override void Output(IRow row, IUnstructuredWriter output)
         {
-            var streamWriter = new StreamWriter(output.BaseStream, Encoding.UTF8);
+            var streamWriter = new StreamWriter(output.BaseStream);
 
             // Metadata schema initialization to enumerate column names
             var schema = row.Schema;
 
+
+            if (this.row_count == 0)
+            {
+                streamWriter.Write("|");
+                for (int i = 0; i < schema.Count(); i++)
+                {
+                    var col = schema[i];
+                    streamWriter.Write(" ");
+                    streamWriter.Write(col.Name);
+                    streamWriter.Write(" ");
+                    streamWriter.Write("|");
+                }
+                streamWriter.Write("\r\n");
+                streamWriter.Flush();
+
+                streamWriter.Write("|");
+                for (int i = 0; i < schema.Count(); i++)
+                {
+                    var col = schema[i];
+                    streamWriter.Write(" ");
+                    streamWriter.Write("---");
+                    streamWriter.Write(" ");
+                    streamWriter.Write("|");
+                }
+                streamWriter.Write("\r\n");
+                streamWriter.Flush();
+            }
+
             // Data row output
             streamWriter.Write("|");
-
             for (int i = 0; i < schema.Count(); i++)
             {
                 var col = schema[i];
@@ -60,13 +90,17 @@ namespace MVADemo
                 catch (System.NullReferenceException)
                 {
                     // Handling NULL values--keeping them empty
-                    val = "ERR";
+                    val = "NULL";
                 }
+                streamWriter.Write(" ");
                 streamWriter.Write(val);
+                streamWriter.Write(" ");
                 streamWriter.Write("|");
             }
             streamWriter.Write("\n");
             streamWriter.Flush();
+            
+        this.row_count++;
         }
     }
 }
