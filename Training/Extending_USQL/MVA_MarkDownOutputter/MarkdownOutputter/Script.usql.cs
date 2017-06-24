@@ -57,14 +57,15 @@ namespace MVADemo
                         default: break;
                     }
                 }
-                // Handling NULL values--keeping them empty
                 catch (System.NullReferenceException)
                 {
+                    // Handling NULL values--keeping them empty
+                    val = "ERR";
                 }
                 streamWriter.Write(val);
                 streamWriter.Write("|");
             }
-            streamWriter.Write("\r\n");
+            streamWriter.Write("\n");
             streamWriter.Flush();
         }
     }

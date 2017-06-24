@@ -1,10 +1,31 @@
-﻿@a  = 
-    SELECT * FROM 
-        (VALUES
-            ("Contoso", 1500.0),
-            ("Woodgrove", 2700.0)
-        ) AS 
-              D( customer, amount );
-OUTPUT @a
-    TO "/data.md"
+﻿@departments =
+    SELECT * FROM
+    (VALUES
+    ("31", "Sales"),
+    ("33", "Engineering"),
+    ("34", "Clerical"),
+    ("35", "Marketing")
+    ) AS D( DepID, DepName );
+
+@employees =
+SELECT * FROM
+    (VALUES
+    ("31", "Rafferty"),
+    ("33", "Jones"),
+    ("33", "Heisenberg"),
+    ("34", "Robinson"),
+    ("34", "Smith"),
+    ((string)null, "Williams")
+    ) AS D( DepID, EmpName );
+
+@cross_join =
+    SELECT
+        @departments.DepID AS DepID_Dep,
+        @employees.DepID AS DepID_Emp,
+        @employees.EmpName, 
+        @departments.DepName
+    FROM @employees CROSS JOIN @departments;
+
+OUTPUT @cross_join
+    TO "/cross_join.md"
     USING new MVADemo.MarkdownOutputter();
