@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "CreateThumbnails", "CreateThumbnails\CreateThumbnails.usqlproj", "{77E0D62A-67FD-41C4-A230-0526478752A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USQLCSharpProject1", "USQLCSharpProject1\USQLCSharpProject1.csproj", "{1B3E7106-6D16-4B96-87C5-F15E18FFC08F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAsm", "USQLCSharpProject1\DemoAsm.csproj", "{1B3E7106-6D16-4B96-87C5-F15E18FFC08F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

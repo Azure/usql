@@ -1,12 +1,7 @@
-﻿using Microsoft.Analytics.Interfaces;
-using Microsoft.Analytics.Types.Sql;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
-namespace Demo // Register as DemoAsm
+// Register as DemoAsm
+namespace Demo 
 {
     public static class Helpers
     {
@@ -20,6 +15,11 @@ namespace Demo // Register as DemoAsm
                 var outbytes = (byte[])converter.ConvertTo(resized, typeof(byte[]));
                 return outbytes;
             }
+        }
+
+        public static byte[] CreateThumbnailNull(byte[] bytes)
+        {
+            return null;
         }
     }
 }

@@ -9,8 +9,8 @@
     <ProjectGuid>{1B3E7106-6D16-4B96-87C5-F15E18FFC08F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>USQLCSharpProject1</RootNamespace>
-    <AssemblyName>USQLCSharpProject1</AssemblyName>
+    <RootNamespace>Demo</RootNamespace>
+    <AssemblyName>DemoAsm</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
