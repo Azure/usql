@@ -82,6 +82,10 @@ namespace DocumentOutputers
                         val = row.Get<string>(col.Name).ToString();
                         val = val ?? "NULL";
                     }
+                    else if (coltype == typeof(bool))
+                    {
+                        val = row.Get<bool>(col.Name).ToString();
+                    }
                     else if (coltype == typeof(char))
                     {
                         val = row.Get<char>(col.Name).ToString();
@@ -151,7 +155,7 @@ namespace DocumentOutputers
                 catch (System.NullReferenceException)
                 {
                     // Handling NULL values--keeping them empty
-                    val = "EXCEPTION";
+                    val = "NullReferenceException";
                 }
                 streamWriter.Write(" ");
                 streamWriter.Write(val);

@@ -21,8 +21,12 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Script Include="Maps.usql" />
     <Script Include="Joins.usql" />
     <Script Include="WindowFunctions.usql" />
+    <ScriptCode Include="Maps.usql.cs">
+      <DependentUpon>Maps.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="Joins.usql.cs">
       <DependentUpon>Joins.usql</DependentUpon>
     </ScriptCode>

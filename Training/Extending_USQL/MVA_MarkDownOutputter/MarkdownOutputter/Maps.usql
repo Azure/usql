@@ -1,0 +1,108 @@
+﻿/*
+@querylog =
+SELECT * FROM ( VALUES
+("Banana" , 300, "Image" ),
+("Cherry" , 300, "Image" ),
+("Durian" , 500, "Image" ),
+("Apple" , 100, "Web" ),
+("Fig" , 200, "Web" ),
+("Papaya" , 200, "Web" ),
+("Avocado" , 300, "Web" ),
+("Cherry" , 400, "Web" ),
+("Durian" , 500, "Web" ) )
+AS T(Query,Latency,Vertical);
+
+@employees =
+SELECT * FROM ( VALUES
+(1, "Noah", "Engineering", 100, 10000),
+(2, "Sophia", "Engineering", 100, 20000),
+(3, "Liam", "Engineering", 100, 30000),
+(4, "Emma", "HR", 200, 10000),
+(5, "Jacob", "HR", 200, 10000),
+(6, "Olivia", "HR", 200, 10000),
+(7, "Mason", "Executive", 300, 50000),
+(8, "Ava", "Marketing", 400, 15000),
+(9, "Ethan", "Marketing", 400, 10000) )
+AS T(EmpID, EmpName, DeptName, DeptID, Salary);
+
+@result=
+    SELECT
+        EmpName,
+        DeptName,
+    SUM(Salary) OVER( PARTITION BY DeptName ) AS SalaryByDept
+    FROM @employees;
+
+
+OUTPUT @result
+    TO "/result.md"
+    USING new MVADemo.MarkdownOutputter();
+
+OUTPUT @querylog
+    TO "/querylog.md"
+    USING new MVADemo.MarkdownOutputter();
+*/
+
+REFERENCE ASSEMBLY [master].[DocumentOutputers];
+
+
+@cities =
+SELECT * FROM
+    ( VALUES
+        ( "Vermont", "Burlington;Essex;South Burlington;Colchester;Rutland" ),
+        ( "Virginia", "Virginia Beach;Norfolk;Chesapeake;Richmond;Newport News" ),
+        ( "Washington", "Seattle;Spokane;Tacoma;Vancouver;Bellevue" ),
+        ( "West Virginia", "Charleston;Huntington;Parkersburg;Morgantown;Wheeling" ),
+        ( "Wisconsin", "Milwaukee;Madison;Green Bay;Kenosha;Racine" ),
+        ( "Wyoming", "Cheyenne;Casper;Laramie;Gillette;Rock Springs" )
+    )
+AS T(State, Cities);
+
+@xxx = 
+    SELECT *
+    FROM
+    ( VALUES
+        ( "Website", new SqlMap<string,string> { 
+                {"Mallory", "PM"}, 
+                {"Bob", "Dev"} ,
+                {"Alice", "Dev"} ,
+                {"Stan", "Dev"} ,
+                {"Chris", "UX"} ,
+             } 
+        ),
+        ( "DB", new SqlMap<string,string> { 
+                {"Ted", "Test"}, 
+                {"Joe", "Dev"} ,
+                {"Chuck", "Dev"} 
+             } 
+        )
+)
+AS T(Category, Dict);
+
+
+@output = 
+    SELECT         
+        State,
+        SqlArray.Create( Cities.Split(';') ) AS Cities
+    FROM @cities;
+
+@output =
+    SELECT
+        State ,
+        SqlArray.Create( Cities.Where( c=>c.StartsWith("C") ) ) AS Cities
+    FROM @output;
+
+@output = 
+    SELECT
+         State ,
+        Cities ,
+        Cities.Count AS NumCities
+    FROM @output;
+
+OUTPUT @output
+    TO "/cities.md"
+    USING new DocumentOutputers.MarkdownOutputer(outputHeader: true, outputHeaderType: true);
+
+OUTPUT @xxx
+    TO "/xxx.md"
+    USING new DocumentOutputers.MarkdownOutputer(outputHeader: true, outputHeaderType: true);
+    
