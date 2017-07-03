@@ -57,7 +57,7 @@ SELECT * FROM
     )
 AS T(State, Cities);
 
-@xxx =
+@xxx = 
 SELECT *
 FROM
 ( VALUES
