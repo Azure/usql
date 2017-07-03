@@ -1,4 +1,5 @@
-﻿@querylog =
+﻿/*
+@querylog =
 SELECT * FROM ( VALUES
 ("Banana" , 300, "Image" ),
 ("Cherry" , 300, "Image" ),
@@ -39,3 +40,43 @@ OUTPUT @result
 OUTPUT @querylog
     TO "/querylog.md"
     USING new MVADemo.MarkdownOutputter();
+*/
+
+
+@cities =
+SELECT * FROM
+    ( VALUES
+        ( "Vermont", "Burlington;Essex;South Burlington;Colchester;Rutland" ),
+        ( "Virginia", "Virginia Beach;Norfolk;Chesapeake;Richmond;Newport News" ),
+        ( "Washington", "Seattle;Spokane;Tacoma;Vancouver;Bellevue" ),
+        ( "West Virginia", "Charleston;Huntington;Parkersburg;Morgantown;Wheeling" ),
+        ( "Wisconsin", "Milwaukee;Madison;Green Bay;Kenosha;Racine" ),
+        ( "Wyoming", "Cheyenne;Casper;Laramie;Gillette;Rock Springs" )
+    )
+AS T(State, Cities);
+
+
+@output = 
+    SELECT         
+        State,
+        SqlArray.Create( Cities.Split(';') ) AS Cities
+    FROM @cities;
+
+@output =
+    SELECT
+        State ,
+        SqlArray.Create( Cities.Where( c=>c.StartsWith("C") ) ) AS Cities
+    FROM @output;
+
+@output =
+    SELECT
+        State ,
+        Cities ,
+        Cities.Count AS NumCities
+    FROM @output;
+
+OUTPUT @output
+    TO "/cities.md"
+    USING new MVADemo.MarkdownOutputter();
+
+    

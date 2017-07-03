@@ -73,6 +73,15 @@ namespace MVADemo
                         val = row.Get<string>(col.Name).ToString();
                         val = val ?? "NULL";
                     }
+                    else if (coltype == typeof(System.String))
+                    {
+                        val = row.Get<System.String>(col.Name).ToString();
+                        val = val ?? "NULL";
+                    }
+                    else if (coltype == typeof(char))
+                    {
+                        val = row.Get<char>(col.Name).ToString();
+                    }
                     else if (coltype == typeof(float))
                     {
                         val = row.Get<float>(col.Name).ToString();
@@ -80,6 +89,10 @@ namespace MVADemo
                     else if (coltype == typeof(double))
                     {
                         val = row.Get<double>(col.Name).ToString();
+                    }
+                    else if (coltype == typeof(int))
+                    {
+                        val = row.Get<int>(col.Name).ToString();
                     }
                     else if (coltype == typeof(long))
                     {
@@ -109,16 +122,49 @@ namespace MVADemo
                         val = row.Get < double?> (col.Name).ToString();
                         val = val ?? "NULL";
                     }
+                    else if (coltype == typeof(SqlArray<string>))
+                    {
+
+                        var arr = row.Get<SqlArray<string>>(col.Name);
+
+                        if (arr != null)
+                        {
+                            var sb = new System.Text.StringBuilder();
+                            sb.Append("SqlArray<");
+                            sb.Append("string");
+                            sb.Append(">{ ");
+
+                            for (int j = 0; j < arr.Count; j++)
+                            {
+                                if (j > 0)
+                                {
+                                    sb.Append(", ");
+                                }
+
+                                sb.Append("\"");
+                                sb.Append(arr[j]);
+                                sb.Append("\"");
+
+                            }
+
+                            sb.Append(" }");
+                            val = sb.ToString();
+                        }
+                        else
+                        {
+                            val = "NULL";
+                        }
+                    }
                     else
                     {
-                        val = "UNKNOWNTYPE";
+                        val = "UNKNOWNTYPE:" + coltype.FullName;
                     }
 
                 }
                 catch (System.NullReferenceException)
                 {
                     // Handling NULL values--keeping them empty
-                    val = "NULL";
+                    val = "EXCEPTION";
                 }
                 streamWriter.Write(" ");
                 streamWriter.Write(val);
@@ -128,7 +174,8 @@ namespace MVADemo
             streamWriter.Write("\n");
             streamWriter.Flush();
             
-        this.row_count++;
+            this.row_count++;
         }
+
     }
 }
