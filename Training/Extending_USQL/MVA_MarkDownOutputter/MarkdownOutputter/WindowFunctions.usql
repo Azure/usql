@@ -42,6 +42,8 @@ OUTPUT @querylog
     USING new MVADemo.MarkdownOutputter();
 */
 
+REFERENCE ASSEMBLY [master].[DocumentOutputers];
+
 
 @cities =
 SELECT * FROM
@@ -54,6 +56,15 @@ SELECT * FROM
         ( "Wyoming", "Cheyenne;Casper;Laramie;Gillette;Rock Springs" )
     )
 AS T(State, Cities);
+
+@xxx =
+SELECT *
+FROM
+( VALUES
+( "cat1", new SqlMap<string,string> { {"A", "X"}, {"B", "Y"} } )
+
+)
+AS T(Category, Dict);
 
 
 @output = 
@@ -68,15 +79,18 @@ AS T(State, Cities);
         SqlArray.Create( Cities.Where( c=>c.StartsWith("C") ) ) AS Cities
     FROM @output;
 
-@output =
+@output = 
     SELECT
-        State ,
+         State ,
         Cities ,
         Cities.Count AS NumCities
     FROM @output;
 
 OUTPUT @output
     TO "/cities.md"
-    USING new MVADemo.MarkdownOutputter();
+    USING new DocumentOutputers.MarkdownOutputer(outputHeader: true, outputHeaderType: true);
 
+OUTPUT @xxx
+    TO "/xxx.md"
+    USING new DocumentOutputers.MarkdownOutputer(outputHeader: true, outputHeaderType: true);
     
