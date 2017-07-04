@@ -1,7 +1,7 @@
 ﻿
-REFERENCE ASSEMBLY [master].[DocumentOutputers];
+REFERENCE ASSEMBLY [master].[MarkdownFormat];
 
-
+  
 @projectmembers = 
     SELECT *
     FROM
@@ -22,23 +22,33 @@ REFERENCE ASSEMBLY [master].[DocumentOutputers];
         )
 )
 AS T(Project, Members);
-
- 
+  
+  
 OUTPUT @projectmembers
     TO "/projectmembers.md"
-    USING new DocumentOutputers.MarkdownOutputer(outputHeader: true );
+    USING new MarkdownFormat.MarkdownOutputter(outputHeader: true );
 
 
 @output =
     SELECT 
         Project,
+        Members["Mallory"] AS MalloryRole,
         Members.ContainsKey("Mallory") AS ContainsMallory
 FROM @projectmembers;
  
 OUTPUT @output
     TO "/output.md"
-    USING new DocumentOutputers.MarkdownOutputer(outputHeader: true );
+    USING new MarkdownFormat.MarkdownOutputter(outputHeader: true, outputHeaderType: true );
 
 
+@output2 =
+    SELECT 
+        Project,
+        Members["Mallory"] AS MalloryRole
+FROM @projectmembers;
 
+
+OUTPUT @output2
+    TO "/output.csv"
+    USING Outputters.Csv();
         

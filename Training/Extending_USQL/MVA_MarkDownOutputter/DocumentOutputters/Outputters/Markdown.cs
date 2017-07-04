@@ -4,16 +4,16 @@ using System.Linq;
 using USQLTYPES = Microsoft.Analytics.Types.Sql;
 using USQLINTERFACES = Microsoft.Analytics.Interfaces;
 
-namespace DocumentOutputers
+namespace MarkdownFormat
 {
     [USQLINTERFACES.SqlUserDefinedOutputter(AtomicFileProcessing = true)]
-    public class MarkdownOutputer : USQLINTERFACES.IOutputter
+    public class MarkdownOutputter : USQLINTERFACES.IOutputter
     {
         private int row_count;
         public bool OutputHeader;
         public bool OutputHeaderType;
 
-        public MarkdownOutputer( bool outputHeader = false, bool outputHeaderType = false)
+        public MarkdownOutputter( bool outputHeader = false, bool outputHeaderType = false)
         {
             row_count = 0;
             this.OutputHeader = outputHeader;
@@ -79,7 +79,7 @@ namespace DocumentOutputers
                     var coltype = col.Type;
                     if (coltype == typeof(string))
                     {
-                        val = row.Get<string>(col.Name).ToString();
+                        val = row.Get<string>(col.Name);
                         val = val ?? "NULL";
                     }
                     else if (coltype == typeof(bool))
@@ -152,7 +152,7 @@ namespace DocumentOutputers
                     }
 
                 }
-                catch (System.NullReferenceException)
+                catch (System.NullReferenceException exc)
                 {
                     // Handling NULL values--keeping them empty
                     val = "NullReferenceException";
@@ -203,9 +203,9 @@ namespace DocumentOutputers
 
         private static string _Get_val_from_usqlmap<K,V>(USQLINTERFACES.IRow row, USQLINTERFACES.IColumn col, string val)
         {
-            var arr = row.Get<USQLTYPES.SqlMap<K,V>>(col.Name);
+            var map = row.Get<USQLTYPES.SqlMap<K,V>>(col.Name);
 
-            if (arr != null)
+            if (map != null)
             {
                 var sb = new System.Text.StringBuilder();
                 sb.Append("SqlMap<");
@@ -215,17 +215,22 @@ namespace DocumentOutputers
                 sb.Append(">{ ");
 
                 int kn = 0;
-                foreach (var key in arr.Keys)
+                foreach (var key in map.Keys)
                 {
                     if (kn > 0)
                     {
                         sb.Append("; ");
                     }
 
-                    sb.AppendFormat("{0}={1}", key.ToString(), arr[key].ToString());
+                    string val_str = "NULL";
+                    if (map.ContainsKey(key))
+                    {
+                    }
+
+                    var key_str = key.ToString();
+                    sb.AppendFormat("{0}={1}", key_str, val_str);
  
                     kn++;
-
                 }
 
                 sb.Append(" }");

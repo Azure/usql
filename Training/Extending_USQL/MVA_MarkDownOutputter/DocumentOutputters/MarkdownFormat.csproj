@@ -9,8 +9,8 @@
     <ProjectGuid>{1B3E7106-6D16-4B96-87C5-F15E18FFC08F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DocumentOutputers</RootNamespace>
-    <AssemblyName>DocumentOutputers</AssemblyName>
+    <RootNamespace>MarkdownFormat</RootNamespace>
+    <AssemblyName>MarkdownFormat</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,7 +42,7 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MarkdownOutputer.cs" />
+    <Compile Include="Outputters\Markdown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
