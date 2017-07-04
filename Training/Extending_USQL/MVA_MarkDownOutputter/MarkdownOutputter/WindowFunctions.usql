@@ -40,12 +40,26 @@ OUTPUT @output
     TO "/output.md"
     USING new MarkdownFormat.MarkdownOutputter(outputHeader: true, outputHeaderType: true );
 
+@projectmembers2 = 
+    SELECT *
+    FROM
+    ( VALUES
+        ( "Website", new SqlMap<string,int?> { 
+                {"Mallory", 1}, 
+                {"Bob", 2} ,
+                {"Alice", 3} ,
+             } 
+        )
+)
+AS T(Project, Members);
+  
 
 @output2 =
     SELECT 
         Project,
-        Members["Mallory"] AS MalloryRole
-FROM @projectmembers;
+        Members["Mallory"] AS MalloryRole1,
+        Members["Mallory2"] AS MalloryRole2
+FROM @projectmembers2;
 
 
 OUTPUT @output2
