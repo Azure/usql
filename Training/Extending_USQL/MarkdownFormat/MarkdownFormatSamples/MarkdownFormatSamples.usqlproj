@@ -4,12 +4,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>f8d442f6-ffe1-4397-a70c-669b34b5c84a</ProjectGuid>
+    <ProjectGuid>6824f22a-59d4-4d15-9cc6-bbf5693c3ecd</ProjectGuid>
     <OutputType>File</OutputType>
     <AssemblyName>Algebra.xml</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <Name>ProcessTemperatureData</Name>
-    <RootNamespace>AzureStackDemo</RootNamespace>
+    <Name>MarkdownFormatSamples</Name>
+    <RootNamespace>MarkdownOutputter</RootNamespace>
     <RuntimeVersion>default</RuntimeVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -21,9 +21,17 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="Script.usql" />
-    <ScriptCode Include="Script.usql.cs">
-      <DependentUpon>Script.usql</DependentUpon>
+    <Script Include="Maps.usql" />
+    <Script Include="Joins.usql" />
+    <Script Include="WindowFunctions.usql" />
+    <ScriptCode Include="Maps.usql.cs">
+      <DependentUpon>Maps.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="Joins.usql.cs">
+      <DependentUpon>Joins.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="WindowFunctions.usql.cs">
+      <DependentUpon>WindowFunctions.usql</DependentUpon>
     </ScriptCode>
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
