@@ -1,6 +1,6 @@
 ﻿
 REFERENCE ASSEMBLY [master].[MarkdownFormat];
-
+ 
   
 @projectmembers = 
     SELECT *
@@ -35,11 +35,11 @@ OUTPUT @projectmembers
         Members["Mallory"] AS MalloryRole,
         Members.ContainsKey("Mallory") AS ContainsMallory
 FROM @projectmembers;
- 
+  
 OUTPUT @output
     TO "/output.md"
     USING new MarkdownFormat.MarkdownOutputter(outputHeader: true, outputHeaderType: true );
-
+ 
 @projectmembers2 = 
     SELECT *
     FROM
@@ -61,6 +61,9 @@ AS T(Project, Members);
         Members["Mallory2"] AS MalloryRole2
 FROM @projectmembers2;
 
+OUTPUT @projectmembers2
+    TO "/projectmembers2.csv"
+    USING new MarkdownFormat.MarkdownOutputter(outputHeader: true, outputHeaderType: true );
 
 OUTPUT @output2
     TO "/output.csv"

@@ -146,6 +146,10 @@ namespace MarkdownFormat
                     {
                         val = _Get_val_from_usqlmap<string,string>(row, col, val);
                     }
+                    else if (coltype == typeof(USQLTYPES.SqlMap<string, int?>))
+                    {
+                        val = _Get_val_from_usqlmap<string, int?>(row, col, val);
+                    }
                     else
                     {
                         val = "UNKNOWNTYPE:" + get_usql_type_name(coltype);
