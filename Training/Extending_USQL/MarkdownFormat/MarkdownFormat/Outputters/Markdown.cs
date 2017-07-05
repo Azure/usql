@@ -226,9 +226,11 @@ namespace MarkdownFormat
                         sb.Append("; ");
                     }
 
+                    V xval = map[key];
                     string val_str = "NULL";
-                    if (map.ContainsKey(key))
+                    if (xval != null)
                     {
+                        val_str = xval.ToString();
                     }
 
                     var key_str = key.ToString();

@@ -35,7 +35,7 @@ OUTPUT @projectmembers
         Members["Mallory"] AS MalloryRole,
         Members.ContainsKey("Mallory") AS ContainsMallory
 FROM @projectmembers;
-  
+    
 OUTPUT @output
     TO "/output.md"
     USING new MarkdownFormat.MarkdownOutputter(outputHeader: true, outputHeaderType: true );
@@ -48,6 +48,7 @@ OUTPUT @output
                 {"Mallory", 1}, 
                 {"Bob", 2} ,
                 {"Alice", 3} ,
+                {"Alice2", null} 
              } 
         )
 )
@@ -62,7 +63,7 @@ AS T(Project, Members);
 FROM @projectmembers2;
 
 OUTPUT @projectmembers2
-    TO "/projectmembers2.csv"
+    TO "/projectmembers2.md"
     USING new MarkdownFormat.MarkdownOutputter(outputHeader: true, outputHeaderType: true );
 
 OUTPUT @output2
