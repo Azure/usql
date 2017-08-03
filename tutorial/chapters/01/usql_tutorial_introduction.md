@@ -1,1 +1,0 @@
-# U-SQL Tutorial Introduction
