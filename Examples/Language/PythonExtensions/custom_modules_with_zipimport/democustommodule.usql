@@ -1,0 +1,27 @@
+REFERENCE ASSEMBLY [ExtPython];
+DEPLOY RESOURCE @"/mycustommodules.zip";
+
+// mymodule.py is inside the mycustommodules.zip file
+
+DECLARE @myScript = @"
+import sys
+sys.path.insert(0, 'mycustommodules.zip')
+import mymodule 
+
+def usqlml_main(df):
+    del df['number']
+    df['hello_world'] = str(mymodule.hello_world)
+    return df
+";
+
+@rows  = 
+    SELECT * FROM  (VALUES (1)) AS D(number);
+
+@rows  =
+    REDUCE @rows ON number
+    PRODUCE hello_world string
+    USING new Extension.Python.Reducer(pyScript:@myScript);
+
+OUTPUT @rows
+    TO "/demo_python_custom_module.csv"
+    USING Outputters.Csv(outputHeader: true);

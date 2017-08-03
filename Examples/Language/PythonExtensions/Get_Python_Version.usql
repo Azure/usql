@@ -1,0 +1,26 @@
+REFERENCE ASSEMBLY [ExtPython];
+
+DECLARE @myScript = @"
+
+import sys
+
+def usqlml_main(df):
+    del df['number']
+    df['major'] = str(sys.version_info.major)
+    df['minor'] = str(sys.version_info.minor)
+    df['serial'] = str(sys.version_info.serial)
+    df['releaselevel'] = str(sys.version_info.releaselevel)
+    return df
+";
+
+@t  = 
+    SELECT * FROM  (VALUES (1)) AS D(number);
+
+@m  =
+    REDUCE @t ON number
+    PRODUCE major string, minor string, serial string, releaselevel string
+    USING new Extension.Python.Reducer(pyScript:@myScript);
+
+OUTPUT @m
+    TO "/usql_python_version.csv"
+    USING Outputters.Csv(outputHeader: true);

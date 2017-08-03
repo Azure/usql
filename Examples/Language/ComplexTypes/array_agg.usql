@@ -1,0 +1,28 @@
+@a  = 
+    SELECT * FROM 
+        (VALUES
+            ("en-us", "A" ),
+            ("en-us", "B" ),
+            ("en-us", "C" ),
+            ("en-gb", "D" ),
+            ("en-gb", "E" ),
+            ("en-gb", "F" )
+        ) AS 
+            D( Region, Code );
+
+@b = 
+    SELECT 
+        Region,
+        ARRAY_AGG<string>(Code) AS CodesArray
+    FROM @a
+    GROUP BY Region;
+
+@c =
+    SELECT 
+        Region,
+        string.Join( ";", CodesArray) AS CodesString
+    FROM @b;
+
+OUTPUT @c 
+    TO @"/Samples/Output/ARRAY_AGG_output.tsv"
+    USING Outputters.Tsv();

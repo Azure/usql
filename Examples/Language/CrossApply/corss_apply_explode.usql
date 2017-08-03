@@ -1,0 +1,24 @@
+@a  = 
+    SELECT * FROM 
+        (VALUES
+            ("en-us", "A;B;C" ),
+            ("en-gb", "D;E;F" )
+        ) AS 
+            D( Region, CodesString );
+
+@b =  
+    SELECT 
+       Region,
+       SqlArray.Create(CodesString.Split(';')) AS CodesArray
+      FROM @a;
+
+@c = 
+    SELECT
+        Region,
+        Token AS Code
+    FROM @b
+        CROSS APPLY EXPLODE (CodesArray) AS r(Token);
+
+OUTPUT @c 
+    TO @"/Samples/Output/CROSS_APPLY_EXPLODE_output.tsv"
+    USING Outputters.Tsv();

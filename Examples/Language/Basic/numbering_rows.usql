@@ -1,0 +1,17 @@
+@a  = 
+    SELECT * FROM 
+        (VALUES
+            ("Contoso",   123, 1500.0, new DateTime(1979,3,31) ),
+            ("Woodgrove", 456, 2700.0, new DateTime(1979,4,10) )
+        ) AS 
+            D( customer, id, amount, date );
+
+@b =  
+       SELECT 
+           ROW_NUMBER() OVER ( ) AS RowNumber, 
+           *
+       FROM @a;
+
+OUTPUT @b 
+    TO @"/Samples/Output/Numbering_rows_output.tsv"
+    USING Outputters.Tsv();

@@ -1,0 +1,16 @@
+//Read some data
+@searchlog = 
+    EXTRACT UserId          int, 
+            Start           DateTime, 
+            Region          string, 
+            Query           string, 
+            Duration        int, 
+            Urls            string, 
+            ClickedUrls     string
+    FROM @"/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+//Insert it into a previously created table
+INSERT INTO SampleDBTutorials.dbo.SearchLog
+SELECT *
+FROM @searchlog;

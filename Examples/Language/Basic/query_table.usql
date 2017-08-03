@@ -1,0 +1,14 @@
+//Read from SearchLog table
+@athletes =
+    SELECT *
+    FROM SampleDBTutorials.dbo.SearchLog;
+
+//Write it to a file so we can look at it
+OUTPUT @athletes
+TO @"/Samples/Output/SearchLog_output.tsv"
+USING Outputters.Tsv();
+
+//Alternatively, we can output the whole table to a file without using SELECT
+OUTPUT SampleDBTutorials.dbo.SearchLog
+TO @"/Samples/Output/SearchLog_output_direct.tsv"
+USING Outputters.Tsv();

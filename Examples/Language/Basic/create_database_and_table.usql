@@ -1,0 +1,18 @@
+//Create Database SampleDBTutorials
+CREATE DATABASE IF NOT EXISTS SampleDBTutorials;
+
+//Create Table OlympicAthletes
+CREATE TABLE IF NOT EXISTS SampleDBTutorials.dbo.SearchLog
+(
+        //Define schema of table
+        UserId          int, 
+        Start           DateTime, 
+        Region          string, 
+        Query           string, 
+        Duration        int, 
+        Urls            string, 
+        ClickedUrls     string,
+    INDEX idx1 //Name of index
+    CLUSTERED (Region ASC) //Column to cluster by
+    DISTRIBUTED BY HASH (Region) //Column to partition by
+);
