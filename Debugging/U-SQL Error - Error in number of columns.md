@@ -52,6 +52,12 @@ Even if you required only a subset of columns in the file for your processing, y
 
 *When to not use this*: When you have a much larger number of columns or if you don’t know the full structure of your data and are interested in a small subset.
 
+### Help with Option 1: Let Visual Studio Generate Your EXTRACT Statement
+
+If you'd like help to generate an EXTRACT statement -- and this is very useful when you have many columns of in your input, use the "Cloud Explorer" view in Visual Sutdio to explore your files (View->Cloud Explorer). Drill down into the explorer until you see your input file. Double click on its name to enter the "File Preview." In that window you will find a button called "Create EXTRACT Script." Click on it. A new window opens showing both the file preview and a script starting with "@input =" for you to use. Check the "File Has Header Row" (assuming it does) and the generic "Column_n" field names are replaced with the ideally meaningful header names. Copy the EXTRACT statement into the script you are writing. You may need to change the "FROM" clause to remove the "adl://<server name>" part of the path.
+
+Note that if you checked the "File Has Header Row" box, the very important "skipFirstNRows:1" parameter is added to your "Extractors.Csv()" clause to become "Extractors.Csv(skipFirstNRows:1)". Headers are string values. If any of the columns are judged to be anything but string, you'll see conversion errors when you run the script.
+
 ### Option 2: Use the silent option in your extractor to skip mismatched columns
 
 You can specify a silent parameter to your extractor that will skip rows in your file that have a mismatched number of columns. This is ideal for scenarios where you know the number of columns that are supposed to be in the file, but you don’t want one corrupt row to block the extraction of the rest of the data. Use this with caution – while you will get out of the syntax error, you might run into interesting semantic errors. The sample with the silent flag included looks like this :-
