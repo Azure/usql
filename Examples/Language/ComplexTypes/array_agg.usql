@@ -1,14 +1,14 @@
 @a  = 
-    SELECT * FROM 
+    SELECT * 
+    FROM 
         (VALUES
-            ("en-us", "A" ),
-            ("en-us", "B" ),
-            ("en-us", "C" ),
-            ("en-gb", "D" ),
-            ("en-gb", "E" ),
-            ("en-gb", "F" )
-        ) AS 
-            D( Region, Code );
+            ("en-us", "A"),
+            ("en-us", "B"),
+            ("en-us", "C"),
+            ("en-gb", "D"),
+            ("en-gb", "E"),
+            ("en-gb", "F")
+        ) AS D(Region, Code);
 
 @b = 
     SELECT 
@@ -20,7 +20,7 @@
 @c =
     SELECT 
         Region,
-        string.Join( ";", CodesArray) AS CodesString
+        string.Join(";", CodesArray) AS CodesString
     FROM @b;
 
 OUTPUT @c 
