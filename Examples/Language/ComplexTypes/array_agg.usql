@@ -1,4 +1,4 @@
-@a  = 
+@a = 
     SELECT * 
     FROM 
         (VALUES
