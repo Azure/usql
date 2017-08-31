@@ -1,0 +1,26 @@
+@querylog = 
+    SELECT * FROM ( VALUES
+        ("Banana"  , 300, "Image" ),
+        ("Cherry"  , 300, "Image" ),
+        ("Durian"  , 500, "Image" ),
+        ("Apple"   , 100, "Web"   ),
+        ("Fig"     , 200, "Web"   ),
+        ("Papaya"  , 200, "Web"   ),
+        ("Avocado" , 300, "Web"   ),
+        ("Cherry"  , 400, "Web"   ),
+        ("Durian"  , 500, "Web"   ) )
+    AS T(Query,Latency,Vertical);
+
+@result =
+    SELECT
+        *,
+        ROW_NUMBER() OVER (PARTITION BY Vertical ORDER BY Latency) AS RowNumber,
+        RANK() OVER (PARTITION BY Vertical ORDER BY Latency) AS Rank,
+        DENSE_RANK() OVER (PARTITION BY Vertical ORDER BY Latency) AS DenseRank
+    FROM @querylog;
+
+
+OUTPUT @result
+TO @"/Samples/Output/ranking.tsv"
+USING Outputters.Tsv();
+

@@ -1,0 +1,41 @@
+DECLARE @StartDate = DateTime.Parse("1979-03-31");
+
+@numbers_10 = 
+    SELECT
+        *
+    FROM 
+    (VALUES
+        (0),
+        (1),
+        (2),
+        (3),
+        (4),
+        (5),
+        (6),
+        (7),
+        (8),
+        (9)
+    ) AS T(Value);
+
+@numbers_100 = 
+    SELECT (a.Value*10 + b.Value) AS Value
+    FROM @numbers_10 AS a CROSS JOIN @numbers_10 AS b;
+
+@numbers_10000 = 
+    SELECT (a.Value*100 + b.Value) AS Value
+    FROM @numbers_100 AS a CROSS JOIN @numbers_100 AS b;
+
+@dates_10000 = 
+    SELECT 
+        Value,
+        @StartDate.AddDays( Value ) AS Date
+    FROM @numbers_10000;
+
+OUTPUT @numbers_10000 
+    TO "/Samples/Output/numbers_10000.csv" 
+    USING Outputters.Csv(outputHeader:true);
+
+OUTPUT @dates_10000 
+    TO "/Samples/Output/dates_10000.csv" 
+    USING Outputters.Csv(outputHeader:true);
+

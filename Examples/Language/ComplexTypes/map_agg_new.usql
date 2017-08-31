@@ -1,0 +1,30 @@
+@projectmembers_raw = 
+    SELECT *
+    FROM
+    ( VALUES
+        ( "Website","Mallory", "PM" ), 
+        ( "Website","Bob", "Dev" ),
+        ( "Website","Alice", "Dev" ) ,
+        ( "Website","Stan", "Dev" ) ,
+        ( "Website","Chris", "UX" ) ,
+        ( "DB", "Ted", "Test" ), 
+        ( "DB", "Joe", "Dev" ) ,
+        ( "DB", "Chuck", "Dev" ) 
+    )
+AS T(Project, Employee, Role);
+
+@projectmembers =
+    SELECT 
+         Project,
+         MAP_AGG<string, string>(Employee, Role) AS Members
+    FROM @projectmembers_raw
+    GROUP BY Project;
+
+@projectmembers =
+    SELECT Project,
+           string.Join(",", Members.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS Members
+    FROM @projectmembers;
+
+OUTPUT @projectmembers 
+    TO @"/Samples/Output/MAP_AGG_output.tsv"
+    USING Outputters.Tsv();

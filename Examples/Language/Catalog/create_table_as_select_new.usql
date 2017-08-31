@@ -1,0 +1,27 @@
+@projectmembers = 
+    SELECT *
+    FROM
+    ( VALUES
+        ( "Website","Mallory", "PM" ), 
+        ( "Website","Bob", "Dev" ),
+        ( "Website","Alice", "Dev" ) ,
+        ( "Website","Stan", "Dev" ) ,
+        ( "Website","Chris", "UX" ) ,
+        ( "DB", "Ted", "Test" ), 
+        ( "DB", "Joe", "Dev" ) ,
+        ( "DB", "Chuck", "Dev" ) 
+    )
+AS T(Project, Employee, Role);
+
+
+CREATE DATABASE IF NOT EXISTS MyDB;
+
+DROP TABLE IF EXISTS MyDB.dbo.ProjectMembersRaw;
+
+CREATE TABLE MyDB.dbo.ProjectMembersRaw
+(
+    INDEX idx
+    CLUSTERED(Project ASC)
+    DISTRIBUTED BY
+    RANGE(Project)
+) AS SELECT * FROM @projectmembers;
