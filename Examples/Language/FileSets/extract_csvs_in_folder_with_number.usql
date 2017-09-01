@@ -1,0 +1,15 @@
+@rs =
+    EXTRACT 
+        user       string,
+        id         string,
+        __filenum  int,
+    FROM 
+        "/input/data{__filenum}.csv"
+    USING Extractors.Csv();
+
+@rs =
+    SELECT *
+    FROM @rs
+    WHERE 
+        ( __filenum >= 7  ) AND 
+        ( __filenum <= 9 );

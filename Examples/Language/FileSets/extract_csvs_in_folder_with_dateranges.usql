@@ -1,0 +1,15 @@
+@rs = 
+  EXTRACT 
+      user    string,
+      id      string,
+      __date  DateTime
+  FROM 
+    "/input/data-{__date:yyyy}-{__date:MM}-{__date:dd}.csv"
+  USING Extractors.Csv();
+
+@rs = 
+  SELECT * 
+  FROM @rs
+  WHERE 
+    date >= System.DateTime.Parse("2016/1/1") AND
+    date < System.DateTime.Parse("2016/2/1");
