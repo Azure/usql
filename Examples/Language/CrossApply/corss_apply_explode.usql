@@ -1,16 +1,16 @@
-@a  = 
-    SELECT * FROM 
+@a = 
+    SELECT * 
+    FROM 
         (VALUES
-            ("en-us", "A;B;C" ),
-            ("en-gb", "D;E;F" )
-        ) AS 
-            D( Region, CodesString );
+            ("en-us", "A;B;C"),
+            ("en-gb", "D;E;F")
+        ) AS D(Region, CodesString);
 
 @b =  
     SELECT 
-       Region,
-       SqlArray.Create(CodesString.Split(';')) AS CodesArray
-      FROM @a;
+        Region,
+        SqlArray.Create(CodesString.Split(';')) AS CodesArray
+    FROM @a;
 
 @c = 
     SELECT
