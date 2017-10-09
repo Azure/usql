@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Analytics.Samples.Formats.Avro;
-using Microsoft.Hadoop.Avro.Container;
-using Microsoft.Hadoop.Avro;
+using Microsoft.Analytics.Samples.Formats.ApacheAvro;
+using Avro.Generic;
+using Avro;
+using Avro.File;
+using Avro.IO;
 
 namespace Microsoft.Analytics.Samples.Formats.Tests
 {
@@ -74,14 +76,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeInt_Extracted()
         {
-            var output = SingleColumnRowGenerator<int>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""int""}]}";
             var data = new List<SingleColumnPoco<int>>
             {
                 new SingleColumnPoco<int>() { Value = 1 },
                 new SingleColumnPoco<int>() { Value = 0 },
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<int>("Value") == 1);
             Assert.IsTrue(result[1].Get<int>("Value") == 0);
@@ -90,15 +92,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableInt_Extracted()
         {
-            var output = SingleColumnRowGenerator<int?>().AsUpdatable();
-
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""int""]}]}";
             var data = new List<SingleColumnPoco<int?>>
             {
                 new SingleColumnPoco<int?>() { Value = 1 },
                 new SingleColumnPoco<int?>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<int?>("Value") == 1);
             Assert.IsTrue(result[1].Get<int?>("Value") == null);
@@ -107,13 +108,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeBoolean_Extracted()
         {
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""boolean""}]}";
             var data = new List<SingleColumnPoco<bool>>
             {
                 new SingleColumnPoco<bool>() { Value = true },
                 new SingleColumnPoco<bool>() { Value = false }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<bool>("Value") == true);
             Assert.IsTrue(result[1].Get<bool>("Value") == false);
@@ -122,7 +124,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableBoolean_Extracted()
         {
-            var output = SingleColumnRowGenerator<bool?>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""boolean""]}]}";
             var data = new List<SingleColumnPoco<bool?>>
             {
                 new SingleColumnPoco<bool?>() { Value = true },
@@ -130,7 +132,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new SingleColumnPoco<bool?>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<bool?>("Value") == true);
             Assert.IsTrue(result[1].Get<bool?>("Value") == false);
@@ -140,14 +142,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeLong_Extracted()
         {
-            var output = SingleColumnRowGenerator<long>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""long""}]}";
             var data = new List<SingleColumnPoco<long>>
             {
                 new SingleColumnPoco<long>() { Value = 9223372036854775807 },
                 new SingleColumnPoco<long>() { Value = -9223372036854775807 }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<long>("Value") == 9223372036854775807);
             Assert.IsTrue(result[1].Get<long>("Value") == -9223372036854775807);
@@ -156,7 +158,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableLong_Extracted()
         {
-            var output = SingleColumnRowGenerator<long?>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""long""]}]}";
             var data = new List<SingleColumnPoco<long?>>
             {
                 new SingleColumnPoco<long?>() { Value = 9223372036854775807 },
@@ -164,7 +166,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new SingleColumnPoco<long?>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<long?>("Value") == 9223372036854775807);
             Assert.IsTrue(result[1].Get<long?>("Value") == -9223372036854775807);
@@ -174,14 +176,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeFloat_Extracted()
         {
-            var output = SingleColumnRowGenerator<float>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""float""}]}";
             var data = new List<SingleColumnPoco<float>>
             {
                 new SingleColumnPoco<float>() { Value = 3.5F},
                 new SingleColumnPoco<float>() { Value = 0 }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<float>("Value") == 3.5F);
             Assert.IsTrue(result[1].Get<float>("Value") == 0);
@@ -190,7 +192,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableFloat_Extracted()
         {
-            var output = SingleColumnRowGenerator<float?>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""float""]}]}";
             var data = new List<SingleColumnPoco<float?>>
             {
                 new SingleColumnPoco<float?>() { Value = 3.5F},
@@ -198,7 +200,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new SingleColumnPoco<float?>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<float?>("Value") == 3.5F);
             Assert.IsTrue(result[1].Get<float?>("Value") == 0);
@@ -208,14 +210,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeDouble_Extracted()
         {
-            var output = SingleColumnRowGenerator<double>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""double""}]}";
             var data = new List<SingleColumnPoco<double>>
             {
                 new SingleColumnPoco<double>() { Value = 3D},
                 new SingleColumnPoco<double>() { Value = 0 }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<double>("Value") == 3D);
             Assert.IsTrue(result[1].Get<double>("Value") == 0);
@@ -224,7 +226,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableDouble_Extracted()
         {
-            var output = SingleColumnRowGenerator<double?>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""double""]}]}";
             var data = new List<SingleColumnPoco<double?>>
             {
                 new SingleColumnPoco<double?>() { Value = 3D},
@@ -232,7 +234,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new SingleColumnPoco<double?>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<double?>("Value") == 3D);
             Assert.IsTrue(result[1].Get<double?>("Value") == 0);
@@ -242,14 +244,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeByte_Extracted()
         {
-            var output = SingleColumnRowGenerator<byte[]>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""bytes""}]}";
             byte[] bytes = { 2, 4, 6 };
             var data = new List<SingleColumnPoco<byte[]>>
             {
                 new SingleColumnPoco<byte[]>() { Value = bytes }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<byte[]>("Value")[0] == 2);
         }
@@ -257,7 +259,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableByte_Extracted()
         {
-            var output = SingleColumnRowGenerator<byte[]>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""bytes""]}]}";
             byte[] bytes = { 2, 4, 6 };
             var data = new List<SingleColumnPoco<byte[]>>
             {
@@ -265,7 +267,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new SingleColumnPoco<byte[]>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<byte[]>("Value")[0] == 2);
             Assert.IsTrue(result[1].Get<byte[]>("Value") == null);
@@ -274,14 +276,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeString_Extracted()
         {
-            var output = SingleColumnRowGenerator<string>().AsUpdatable();
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""string""}]}";
             var data = new List<SingleColumnPoco<string>>
             {
                 new SingleColumnPoco<string>() { Value = "asdf" },
                 new SingleColumnPoco<string>() { Value = "" }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<string>("Value") == "asdf");
             Assert.IsTrue(result[1].Get<string>("Value") == "");
@@ -290,15 +292,14 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_DatatypeNullableString_Extracted()
         {
-            var output = SingleColumnRowGenerator<string>().AsUpdatable();
-
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":[""null"",""string""]}]}";
             var data = new List<SingleColumnPoco<string>>
             {
                 new SingleColumnPoco<string>() { Value = "asdf" },
                 new SingleColumnPoco<string>() { Value = null }
             };
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result[0].Get<string>("Value") == "asdf");
             Assert.IsTrue(result[1].Get<string>("Value") == null);
@@ -307,24 +308,21 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         [TestMethod]
         public void AvroExtractor_EmptyFile_ReturnNoRow()
         {
-            var output = SingleColumnRowGenerator<string>().AsUpdatable();
-
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""string""}]}";
             var data = new List<SingleColumnPoco<string>>();
 
-            var result = ExecuteExtract(data);
+            var result = ExecuteExtract(data, schema);
 
             Assert.IsTrue(result.Count == 0);
         }
 
-        private IList<IRow> ExecuteExtract<T>(List<SingleColumnPoco<T>> data)
+        private IList<IRow> ExecuteExtract<T>(List<SingleColumnPoco<T>> data, string schema)
         {
             var output = SingleColumnRowGenerator<T>().AsUpdatable();
 
             using (var dataStream = new MemoryStream())
             {
-                serializeAvro(dataStream, data);
-
-                var schema = getAvroSchema<SingleColumnPoco<T>>();
+                serializeAvro(dataStream, data, schema);
 
                 var reader = new USqlStreamReader(dataStream);
                 var extractor = new AvroExtractor(schema);
@@ -332,21 +330,24 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             }
         }
 
-        private void serializeAvro<T>(MemoryStream dataStream, List<T> data)
+        private void serializeAvro<T>(MemoryStream dataStream, List<SingleColumnPoco<T>> data, string schema)
         {
-            using (var avroWriter = AvroContainer.CreateWriter<T>(dataStream, Codec.Deflate))
-            {
-                using (var seqWriter = new SequentialWriter<T>(avroWriter, 24))
-                {
-                    data.ForEach(seqWriter.Write);
-                }
-            }
-        }
+            var avroSchema = Schema.Parse(schema);
+            var writer = new GenericWriter<GenericRecord>(avroSchema);
+            var fileWriter = DataFileWriter<GenericRecord>.OpenWriter(writer, dataStream);
+            var encoder = new BinaryEncoder(dataStream);
 
-        private string getAvroSchema<T>()
-        {
-            var avroSerializer = AvroSerializer.Create<T>();
-            return avroSerializer.ReaderSchema.ToString();
+            foreach (SingleColumnPoco<T> record in data)
+            {
+                var genericRecord = new GenericRecord(avroSchema as RecordSchema);
+
+                genericRecord.Add("Value", record.Value);
+
+                fileWriter.Append(genericRecord);
+            }
+
+            fileWriter.Flush();
+            dataStream.Seek(0, SeekOrigin.Begin);
         }
     }
 }

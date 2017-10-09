@@ -1,19 +1,15 @@
 # U-SQL Avro Example
 This example demonstrates how you can use U-SQL to analyze data stored in Avro files.
 
-## Deploying
-The Avro Extractor requires Microsoft.Analytics.Samples.Formats and an updated version of the Microsoft.Hadoop.Avro library which can be found [here](https://github.com/flomader/hadoopsdk).
-
-1. Download the latest version of Microsoft.Hadoop.Avro.zip from [here]( https://github.com/flomader/hadoopsdk/releases).
-2. Extract Microsoft.Hadoop.Avro.dll from Microsoft.Hadoop.Avro.zip
-3. Clone and open the Microsoft.Analytics.Samples.Formats solution in Visual Studio.
-4. Update the reference of the file Microsoft.Hadoop.Avro.dll
-5. Build the Microsoft.Analytics.Samples.Formats solution
+## Build
+1. Open Microsoft.Analytics.Samples.sln in Visual Studio 2017
+2. Build the Microsoft.Analytics.Samples solution
 
 ### Register assemblies
-1. Copy the following files to a directory in Azure Data Lake Store (e.g. \Assemblies\Avro):
+1. Copy the following files from your build directory to a directory in Azure Data Lake Store (e.g. \Assemblies\Avro):
   * Microsoft.Analytics.Samples.Formats.dll
-  * Microsoft.Hadoop.Avro.dll
+  * Avro.dll
+  * log4net.dll
   * Newtonsoft.Json.dll
 2. Create a database (e.g. run 1-CreateDB.usql.cs), switch to the new database 
 3. Check file paths in 2-RegisterAssemblies.usql and update them if necessary
