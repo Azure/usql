@@ -32,22 +32,24 @@ namespace Microsoft.Analytics.Samples.Formats.Avro
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
-            if (input.Length == 0)
-            {
-                yield break;
-            }
-
             var serializer = AvroSerializer.CreateGeneric(avroSchema);
             using (var genericReader = AvroContainer.CreateGenericReader(input.BaseStream))
             {
                 using (var reader = new SequentialReader<dynamic>(genericReader))
-                { 
+                {
                     foreach (var obj in reader.Objects)
                     {
                         foreach (var column in output.Schema)
-                        {                            
-                            output.Set(column.Name, obj[column.Name]);
-                        }         
+                        {
+                            if (obj[column.Name] != null)
+                            {
+                                output.Set(column.Name, obj[column.Name]);
+                            }
+                            else
+                            {
+                                output.Set<object>(column.Name, null);
+                            }
+                        }
 
                         yield return output.AsReadOnly();
                     }
