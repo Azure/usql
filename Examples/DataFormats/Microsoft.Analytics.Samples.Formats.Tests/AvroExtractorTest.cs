@@ -3,6 +3,7 @@ using Microsoft.Analytics.Types.Sql;
 using Microsoft.Analytics.UnitTest;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -73,6 +74,15 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             return new USqlRow(schema, null);
         }
 
+        public IRow DualColumnRowGenerator<T, T2>()
+        {
+            var foo = new USqlColumn<T>("Value");
+            var bar = new USqlColumn<T2>("Value2");
+            var columns = new List<IColumn> { foo, bar };
+            var schema = new USqlSchema(columns);
+            return new USqlRow(schema, null);
+        }
+
         [TestMethod]
         public void AvroExtractor_DatatypeInt_Extracted()
         {
@@ -87,6 +97,25 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
 
             Assert.IsTrue(result[0].Get<int>("Value") == 1);
             Assert.IsTrue(result[1].Get<int>("Value") == 0);
+        }
+
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeInt_Extracted_Using_Internal_Schema_Flag()
+        {
+            var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""fields"":[{""name"":""Value2"",""type"":""int""},{""name"":""Value"",""type"": ""int"",""default"":""0"" }]}";
+            var data = new List<SingleColumnPoco<int>>
+            {
+                new SingleColumnPoco<int>() { Value = 1 },
+                new SingleColumnPoco<int>() { Value = 0 },
+            };
+
+            var result = ExecuteExtract<int, int>(data, schema, true);
+
+            Assert.IsTrue(result[0].Get<int>("Value") == 1);
+            Assert.IsTrue(result[0].Get<int>("Value2") == 0);
+            Assert.IsTrue(result[1].Get<int>("Value") == 0);
+            Assert.IsTrue(result[1].Get<int>("Value2") == 0);
         }
 
         [TestMethod]
@@ -316,7 +345,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             Assert.IsTrue(result.Count == 0);
         }
 
-        private IList<IRow> ExecuteExtract<T>(List<SingleColumnPoco<T>> data, string schema)
+        private IList<IRow> ExecuteExtract<T>(List<SingleColumnPoco<T>> data, string schema, bool autoSchemaExtract = false)
         {
             var output = SingleColumnRowGenerator<T>().AsUpdatable();
 
@@ -325,7 +354,21 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 serializeAvro(dataStream, data, schema);
 
                 var reader = new USqlStreamReader(dataStream);
-                var extractor = new AvroExtractor(schema);
+                var extractor = new AvroExtractor(schema, autoSchemaExtract);
+                return extractor.Extract(reader, output).ToList();
+            }
+        }
+
+        private IList<IRow> ExecuteExtract<T,T2>(List<SingleColumnPoco<T>> data, string schema, bool autoSchemaExtract = false)
+        {
+            var output = DualColumnRowGenerator<T, T2>().AsUpdatable();
+
+            using (var dataStream = new MemoryStream())
+            {
+                serializeAvro(dataStream, data, schema);
+
+                var reader = new USqlStreamReader(dataStream);
+                var extractor = new AvroExtractor(schema, autoSchemaExtract);
                 return extractor.Extract(reader, output).ToList();
             }
         }
@@ -333,15 +376,25 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         private void serializeAvro<T>(MemoryStream dataStream, List<SingleColumnPoco<T>> data, string schema)
         {
             var avroSchema = Schema.Parse(schema);
+            var recordSchema = avroSchema as RecordSchema;
+
+            Debug.Assert(recordSchema != null, "recordSchema != null");
+
             var writer = new GenericWriter<GenericRecord>(avroSchema);
             var fileWriter = DataFileWriter<GenericRecord>.OpenWriter(writer, dataStream);
             var encoder = new BinaryEncoder(dataStream);
 
             foreach (SingleColumnPoco<T> record in data)
             {
-                var genericRecord = new GenericRecord(avroSchema as RecordSchema);
+                var genericRecord = new GenericRecord(recordSchema);
 
                 genericRecord.Add("Value", record.Value);
+
+                // some tests use value2 field
+                if (recordSchema.Fields.Exists(x => x.Name == "Value2"))
+                {
+                    genericRecord.Add("Value2", 0);
+                }
 
                 fileWriter.Append(genericRecord);
             }
