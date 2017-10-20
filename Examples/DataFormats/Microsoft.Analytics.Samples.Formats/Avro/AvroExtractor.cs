@@ -57,9 +57,9 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
                         {
                             output.Set<object>(column.Name, null);
                         }
-
-                        yield return output.AsReadOnly();
                     }
+                    
+                    yield return output.AsReadOnly();
                 }
             }
         }
