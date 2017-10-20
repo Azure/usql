@@ -53,6 +53,7 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Avro\EventDataExtractor.cs" />
     <Compile Include="Json\MultiLevelJsonExtractor.cs" />
     <Compile Include="Exceptions\PathNotFoundException.cs" />
     <Compile Include="Avro\AvroExtractor.cs" />
