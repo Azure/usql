@@ -22,6 +22,7 @@ using System.Runtime.Serialization;
 using System;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.Analytics.Types.Sql;
 
 namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
 {
@@ -31,7 +32,6 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
     {
         public string AvroField { get; set; }
         public string Key { get; set; }
-        public string Type { get; set; }
     }
 
 
@@ -45,7 +45,7 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
 {
     ""EnqueuedTimeUtc"": {""AvroField"": ""EnqueuedTimeUtc""},
     ""Body"": {""AvroField"": ""Body""},
-    ""Prop1"": {""AvroField"": ""Properties"",""Key"": ""MyProp1"",""Type"": ""string""}
+    ""Prop1"": {""AvroField"": ""Properties"",""Key"": ""MyProp1""}
 }";
              */
 
@@ -57,6 +57,8 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
             this.avroSchema = avroSchema;
             this.extractMap = extractMap;
         }
+
+
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
@@ -90,18 +92,20 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
                                     output.Set<object>(map.Key, null);
                                 else
                                 {
-                                    switch (map.Type.ToLower())
-                                    {
-                                        case "int":
-                                            output.Set(column.Name,(int)val); break;
-                                        case "datetime":
-                                            output.Set(column.Name, (DateTime)val); break;
-                                        case "float":
-                                            output.Set(column.Name, (float)val); break;
-                                        case "string":
-                                        default:
-                                            output.Set(column.Name, val.ToString()); break;
-                                    }
+                                    output.Set(column.Name, val);
+
+                                    //switch (map.Type.ToLower())
+                                    //{
+                                    //    case "int":
+                                    //        output.Set(column.Name,(int)val); break;
+                                    //    case "datetime":
+                                    //        output.Set(column.Name, (DateTime)val); break;
+                                    //    case "float":
+                                    //        output.Set(column.Name, (float)val); break;
+                                    //    case "string":
+                                    //    default:
+                                    //        output.Set(column.Name, val.ToString()); break;
+                                    //}
                                 }
  
                             }
