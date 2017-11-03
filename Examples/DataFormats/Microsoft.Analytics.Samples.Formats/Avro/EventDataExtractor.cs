@@ -39,32 +39,20 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
     [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
     public class EventDataExtractor : IExtractor
     {
-        /*
-         Sample Extract Map:
-         DECLARE @extractMap string = @"
-{
-    ""EnqueuedTimeUtc"": {""AvroField"": ""EnqueuedTimeUtc""},
-    ""Body"": {""AvroField"": ""Body""},
-    ""Prop1"": {""AvroField"": ""Properties"",""Key"": ""MyProp1""}
-}";
-             */
 
         private readonly string avroSchema;
-        private readonly string extractMap;
+        private readonly Dictionary<string, OutputToAvroMap> _extractMap;
 
         public EventDataExtractor(string avroSchema, string extractMap)
         {
             this.avroSchema = avroSchema;
-            this.extractMap = extractMap;
+            _extractMap = JsonConvert.DeserializeObject<Dictionary<string, OutputToAvroMap>>(extractMap);
+
         }
-
-
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
             var avschema = Avro.Schema.Parse(avroSchema);
-            var extractSchema = JsonConvert.DeserializeObject<Dictionary<string, OutputToAvroMap>>(extractMap);
-
             var reader = new GenericDatumReader<GenericRecord>(avschema, avschema);
 
             using (var ms = new MemoryStream())
@@ -72,59 +60,37 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
                 CreateSeekableStream(input, ms);
                 ms.Position = 0;
 
+
                 var fileReader = DataFileReader<GenericRecord>.OpenReader(ms, avschema);
 
                 while (fileReader.HasNext())
                 {
                     var avroRecord = fileReader.Next();
-                    
+
+                    var userprops = (Dictionary<string, object>)avroRecord["Properties"];
+
                     foreach (var column in output.Schema)
                     {
-                        var map = extractSchema[column.Name];
-                        if (avroRecord[map.AvroField] != null) 
+                        var map = _extractMap[column.Name];
+                        if (map.AvroField == "Properties")
                         {
-                            if (!string.IsNullOrEmpty(map.Key))
-                            {
-
-                                var bag = (Dictionary<string, object>)avroRecord[map.AvroField];
-                                object val;
-                                if (bag.TryGetValue(map.Key, out val) == false)
-                                    output.Set<object>(map.Key, null);
-                                else
-                                {
-                                    output.Set(column.Name, val);
-
-                                    //switch (map.Type.ToLower())
-                                    //{
-                                    //    case "int":
-                                    //        output.Set(column.Name,(int)val); break;
-                                    //    case "datetime":
-                                    //        output.Set(column.Name, (DateTime)val); break;
-                                    //    case "float":
-                                    //        output.Set(column.Name, (float)val); break;
-                                    //    case "string":
-                                    //    default:
-                                    //        output.Set(column.Name, val.ToString()); break;
-                                    //}
-                                }
- 
-                            }
-                            else
-                                output.Set(column.Name, avroRecord[map.AvroField]);
+                            output.Set(column.Name, userprops[map.Key]);
+                        }
+                        else if (avroRecord[column.Name] != null)
+                        {
+                            output.Set(column.Name, avroRecord[column.Name]);
                         }
                         else
                         {
                             output.Set<object>(column.Name, null);
                         }
-
-                        yield return output.AsReadOnly();
                     }
 
-
+                    yield return output.AsReadOnly();
                 }
-
             }
         }
+
 
 
         private void CreateSeekableStream(IUnstructuredReader input, MemoryStream output)

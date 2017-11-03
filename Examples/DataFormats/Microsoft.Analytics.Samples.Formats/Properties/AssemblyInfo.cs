@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Microsoft, portions by Mesh Systems")]
 [assembly: AssemblyProduct("Microsoft.Analytics.Samples")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
@@ -30,3 +30,5 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("48B4A89E-7DF7-4E25-B617-CCBEB63F6416")]
+[assembly: AssemblyVersion("1.0.*")]
+
