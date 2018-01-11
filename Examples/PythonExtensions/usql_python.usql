@@ -1,0 +1,28 @@
+REFERENCE ASSEMBLY [ExtPython];
+
+DECLARE @myScript = @"
+def mult10(v):
+    return v*10.0
+
+def usqlml_main(df):
+    df['amount10'] = df.amount.apply(mult10)
+    del df['amount']
+    return df
+";
+
+@a  = 
+    SELECT * FROM 
+        (VALUES
+            ("Contoso", 1500.0),
+            ("Woodgrove", 2700.0)
+        ) AS 
+            D( customer, amount );
+
+@b  =
+    REDUCE @a ON customer
+    PRODUCE customer string, amount double
+    USING new Extension.Python.Reducer( pyScript:@myScript );
+
+OUTPUT @b 
+    TO @"/Samples/Output/Python_output.tsv"
+    USING Outputters.Tsv();

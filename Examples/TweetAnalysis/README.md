@@ -1,6 +1,6 @@
-#Tweet Analysis Sample
+# Tweet Analysis Sample
 
-##Story Line
+## Story Line
 
 We receive a set of tweet files downloaded from http://tweetdownload.net and start out with doing some exploration of the data.
 

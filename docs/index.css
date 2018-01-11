@@ -1,0 +1,42 @@
+body {
+    font-family: "Segoe UI", "Lucida Grande";
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
+}
+
+h1 {
+    font-family: "Segoe UI Light", "Lucida Grande";
+    font-weight: normal;
+    font-size: 35pt;
+    letter-spacing: -3px;
+    color: #505050;
+}
+
+h2 {
+    font-family: "Segoe UI Semibold", "Lucida Grande";
+    font-weight: normal;
+}
+
+a {
+    font-family: "Segoe UI Semibold", "Lucida Grande";
+    color: #0066cc;
+    text-decoration: none;
+}
+
+table td {
+    vertical-align: top;
+    border-left: 1px solid #ddd;
+    padding-right: 10pt;
+    padding-left: 10pt;
+}
+
+    table td:first-child {
+        padding-left: 0pt;
+        border-left: none;
+    }
+
+.SubHeading {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: -2px;
+}

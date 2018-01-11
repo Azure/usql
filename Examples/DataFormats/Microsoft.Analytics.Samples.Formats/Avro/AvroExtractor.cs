@@ -15,10 +15,11 @@
 //
 using System.Collections.Generic;
 using Microsoft.Analytics.Interfaces;
-using Microsoft.Hadoop.Avro;
-using Microsoft.Hadoop.Avro.Container;
+using Avro.File;
+using Avro.Generic;
+using System.IO;
 
-namespace Microsoft.Analytics.Samples.Formats.Avro
+namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
 {
     [SqlUserDefinedExtractor(AtomicFileProcessing = true)]
     public class AvroExtractor : IExtractor
@@ -32,27 +33,40 @@ namespace Microsoft.Analytics.Samples.Formats.Avro
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
-            if (input.Length == 0)
-            {
-                yield break;
-            }
+            var avschema = Avro.Schema.Parse(avroSchema);
+            var reader = new GenericDatumReader<GenericRecord>(avschema, avschema);
 
-            var serializer = AvroSerializer.CreateGeneric(avroSchema);
-            using (var genericReader = AvroContainer.CreateGenericReader(input.BaseStream))
+            using (var ms = new MemoryStream())
             {
-                using (var reader = new SequentialReader<dynamic>(genericReader))
-                { 
-                    foreach (var obj in reader.Objects)
+                CreateSeekableStream(input, ms);
+                ms.Position = 0;
+
+                var fileReader = DataFileReader<GenericRecord>.OpenReader(ms, avschema);
+
+                while (fileReader.HasNext())
+                {
+                    var avroRecord = fileReader.Next();
+
+                    foreach (var column in output.Schema)
                     {
-                        foreach (var column in output.Schema)
-                        {                            
-                            output.Set(column.Name, obj[column.Name]);
-                        }         
-
-                        yield return output.AsReadOnly();
+                        if (avroRecord[column.Name] != null)
+                        {
+                            output.Set(column.Name, avroRecord[column.Name]);
+                        }
+                        else
+                        {
+                            output.Set<object>(column.Name, null);
+                        }
                     }
+                    
+                    yield return output.AsReadOnly();
                 }
             }
+        }
+
+        private void CreateSeekableStream(IUnstructuredReader input, MemoryStream output)
+        {
+            input.BaseStream.CopyTo(output);
         }
     }
 }
