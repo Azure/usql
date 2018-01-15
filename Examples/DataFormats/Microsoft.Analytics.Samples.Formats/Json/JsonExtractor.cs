@@ -46,7 +46,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
         }
         
         /// <summary/>
-        public override IEnumerable<IRow>       Extract(IUnstructuredReader input, IUpdatableRow output)
+        public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
             // Json.Net
             using(var reader = new JsonTextReader(new StreamReader(input.BaseStream)))
@@ -73,7 +73,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
         }
 
         /// <summary/>
-        private static IEnumerable<JObject>     SelectChildren(JToken root, string path)
+        private static IEnumerable<JObject> SelectChildren(JToken root, string path)
         {
             // JObject children (only)
             //   As JObject(fields) have a clear mapping to Row(columns) as opposed to JArray (positional) or JValue(scalar)
@@ -99,7 +99,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
         }
         
         /// <summary/>
-        protected virtual void                  JObjectToRow(JObject o, IUpdatableRow row)
+        protected virtual void JObjectToRow(JObject o, IUpdatableRow row)
         {
             foreach(var c in row.Schema)
             {
