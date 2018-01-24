@@ -18,13 +18,13 @@ is `EncodingErrorSample.txt`:
 - `@codePage` - Code page to validate the file. The folloing code pages
 are supported:
 
-| Constant Name      | CP Number |
-| :---               |      ---: |
-| `@codePageUtf8`    |     65001 |
-| `@codePageUtf16`   |      1200 |
-| `@codePageUtf16be` |      1201 |
-| `@codePageUtf32`   |     12000 |
-| `@codePageUtf32be` |     12001 |
+  | Constant Name      | CP Number |
+  | :---               |      ---: |
+  | `@codePageUtf8`    |     65001 |
+  | `@codePageUtf16`   |      1200 |
+  | `@codePageUtf16be` |      1201 |
+  | `@codePageUtf32`   |     12000 |
+  | `@codePageUtf32be` |     12001 |
 
 - `@rowDelimiter` - The string is used to break input file into records.
 Row delimiters must occur in the input file at least once in 4MB. The
