@@ -1,0 +1,42 @@
+﻿DECLARE EXTERNAL @inputFile = @"[EnlistmentRoot]\usql\Examples\HandleEncoding\FixEncodingErrors\EncodingErrorSample.txt";
+
+DECLARE EXTERNAL @outputFile = Path.Combine(Path.GetDirectoryName(@inputFile),
+    Path.GetFileNameWithoutExtension(@inputFile) + ".filtered" + Path.GetExtension(@inputFile));
+DECLARE EXTERNAL @errorsFile = Path.Combine(Path.GetDirectoryName(@inputFile),
+    Path.GetFileNameWithoutExtension(@inputFile) + ".errors" + Path.GetExtension(@inputFile));
+
+DECLARE @codePageUtf8 = 65001;
+DECLARE @codePageUtf16 = 1200;
+DECLARE @codePageUtf16be = 1201;
+DECLARE @codePageUtf32 = 12000;
+DECLARE @codePageUtf32be = 12001;
+
+DECLARE EXTERNAL @codePage = @codePageUtf8;
+DECLARE EXTERNAL @rowDelimiter = "\n";
+DECLARE EXTERNAL @skipInvalidRecordsInOutputfile = false;
+DECLARE EXTERNAL @replaceInvalidBytesInErrorsFile = false;
+DECLARE EXTERNAL @offsetFormatInErrorsFile = "{0}:\t"; // null for not writing offset to errors file
+
+@data =
+    EXTRACT record byte[],
+            offset long,
+            encodingErrors bool
+    FROM @inputFile
+    USING new HandleEncoding.EncodingValidatingExtractor(@codePage, @rowDelimiter);
+
+IF @skipInvalidRecordsInOutputfile THEN
+    OUTPUT (SELECT * FROM @data WHERE !encodingErrors)
+    TO @outputFile
+    ORDER BY offset
+    USING new HandleEncoding.RecordOutputter();
+ELSE
+    OUTPUT @data
+    TO @outputFile
+    ORDER BY offset
+    USING new HandleEncoding.RecordOutputter(@codePage, replaceInvalidBytes: true, offsetFormat: null);
+END;
+
+OUTPUT (SELECT * FROM @data WHERE encodingErrors)
+TO @errorsFile
+ORDER BY offset
+USING new HandleEncoding.RecordOutputter(@codePage, @replaceInvalidBytesInErrorsFile, @offsetFormatInErrorsFile);
