@@ -152,11 +152,11 @@ USING Outputters.Csv();
 
 ````
 ## Using the Multiline-Json Extractor
-There is a limitiation with the approach above, if you have very long JSON documents in the rows. You can hit either the 128kB limit of string typed columns or the 4MB limit of row size in the output of the first, text-based extractor.
+There is a limitiation with the approach above, if you have very long JSON documents in the rows. You can hit either the 128kB [limit](https://feedback.azure.com/forums/327234-data-lake/suggestions/13416093-usql-string-data-type-has-a-size-limit-of-128kb) of `string` typed columns or the 4MB limit of row size in the output of the first, text-based extractor.
 In this case, you can use MultiLineJsonExtractor, which has the following key capabilities:
 - handles line splitting using the user-supplied delimiter
 - processes lines in parallel
-- stores compressed JSON fragments in byte[] typed columns for further processing
+- stores compressed JSON fragments in `byte[]` typed columns for further processing
 
 First, we create a table to hold all extracted data, some parts in compressed form.
 ````
@@ -172,7 +172,7 @@ CREATE TABLE dbo.WikidataImport
     ,INDEX cIX_ID CLUSTERED(Id ASC) DISTRIBUTED BY HASH(Id)
 );
 ````
-Then we fire up the extractor and load in the staging table. For byte[] typed columns, the extractor GZip compresses the corresponding JSON fragment.
+Then we fire up the extractor and load in the staging table. For `byte[]` typed columns, the extractor GZip compresses the corresponding JSON fragment.
 ````
 REFERENCE ASSEMBLY wikidata.[Newtonsoft.Json];
 REFERENCE ASSEMBLY wikidata.[Microsoft.Analytics.Samples.Formats]; 
@@ -208,7 +208,7 @@ FROM @RawData;
 For working with the compressed colums, please refer to the next section.
 
 ## Using the JSON UDF's with compressed columns
-You can pass a byte[] typed column with compressed JSON fragment in it to JsonTuple. First it decompresses the fragment in-memory, then works as usual, querying the JSON via path expressions.
+You can pass a `byte[]` typed column with compressed JSON fragment in it to JsonTuple. First, it decompresses the fragment in-memory, then works as usual, queries the JSON via path expressions.
 
 
 ````
