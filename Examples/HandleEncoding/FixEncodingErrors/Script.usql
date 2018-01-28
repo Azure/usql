@@ -13,9 +13,10 @@ DECLARE @codePageUtf32be = 12001;
 
 DECLARE EXTERNAL @codePage = @codePageUtf8;
 DECLARE EXTERNAL @rowDelimiter = "\n";
-DECLARE EXTERNAL @skipInvalidRecordsInOutputfile = false;
+DECLARE EXTERNAL @removeInvalidInputRecordsFromOutputfile = false;
 DECLARE EXTERNAL @replaceInvalidBytesInErrorsFile = false;
-DECLARE EXTERNAL @offsetFormatInErrorsFile = "{0}:\t"; // null for not writing offset to errors file
+// If null, offsets of invalid records will not be written to the errors file
+DECLARE EXTERNAL @offsetFormatInErrorsFile = "{0}:\t";
 
 @data =
     EXTRACT record byte[],
@@ -24,7 +25,7 @@ DECLARE EXTERNAL @offsetFormatInErrorsFile = "{0}:\t"; // null for not writing o
     FROM @inputFile
     USING new HandleEncoding.EncodingValidatingExtractor(@codePage, @rowDelimiter);
 
-IF @skipInvalidRecordsInOutputfile THEN
+IF @removeInvalidInputRecordsFromOutputfile THEN
     OUTPUT (SELECT * FROM @data WHERE !encodingErrors)
     TO @outputFile
     ORDER BY offset

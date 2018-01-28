@@ -41,28 +41,57 @@ namespace HandleEncoding
             // We need to assign record start offset to each record so that later we can sort records by offsets and
             // output them in the right order. However, since there is no API to get the actual start offset of a record,
             // we keep track of record offsets in the "offset" variable. We start from the split start offset (input.Start)
-            // and increment it by record size as we read records.
+            // and increment it by record size as we read records. There are two issues with this solution.
             //
-            // There are two issues here. In the explanations below, let S(k) and S(k+1)
-            // be two adjacent splits, and E(k) and E(k+1) their corresponding extractors.
+            // In the explanations below, let
+            // - S(k) and S(k+1) be two adjacent splits, and
+            // - E(k) and E(k+1) their corresponding extractors;
+            // - S(k+1).Start be the absolute start offset of S(k+1) in the entire file;
+            // - R(m), R(m+1), and R(m+2) be three consequetive records, and
+            // - DL be record delimiter length in bytes.
             //
-            // 1. It is impossible to precisely calculate record offsets in non-first splits.
-            // Let a record R(m) start within S(k) and extend into S(k+1). E(k) will extract the entire R(m).
-            // E(k+1) will skip the rest of R(m) and start extracting from the next record, R(m+1).
-            // This happens inside input.Split() call and is invisible to the extractor logic.
-            // E(k+1) cannot know how many bytes of R(m) were skipped inside input.Split() and thus cannot assign
-            // to R(m+1) it's real precise offset. Therefore:
+            // When extractors read records near the boundary between the splits, the general rules are:
+            // * E(k+1) always skips one (possibly) incomplete record at the beginning of S(k+1)
+            //   and starts extracting from the next record. In other words, it skips bytes at the
+            //   beginning of S(k+1) until it has seen a complete record delimiter.
+            // * Complementarily, E(k) extracts the last record of S(k) and continues extracting
+            //   from S(k+1) until it reads one complete record delimiter that started in S(k+1).
+            //
+            // More formally:
+            // A. If R(m) begins within S(k) and extends into S(k+1) for more than DL bytes,
+            //    - E(k) will extract R(m).
+            //    - E(k+1) will skip the rest of R(m) including its record delimiter
+            //      and extract R(m+1).
+            // B. If R(m) begins within S(k) and extends into S(k+1) for exactly DL bytes,
+            //    - E(k) will extract R(m).
+            //    - E(k+1) will skip record delimiter of R(m) and extract R(m+1).
+            // C. If R(m) begins within S(k) and extends into S(k+1) for less than DL bytes,
+            //    - E(k) will extract R(m) and R(m+1).
+            //    - E(k+1) will skip the last bytes of record delimiter of R(m)
+            //     and the entire R(m+1), and extract R(m+2).
+            // D. If R(m) begins within S(k) and ends at the split boundary, i.e., the last
+            //    byte of the record delimiter of R(m) is the last byte of S(k),
+            //    - E(k) will extract R(m) and R(m+1).
+            //    - E(k+1) will skip the entire R(m+1) and extract R(m+2).
+            //
+            // Issue 1: It is impossible to precisely calculate record offsets in non-first splits. Usolved.
+            // Consider layouts A. and B. above. E(k+1) will skip the rest of R(m) and start extracting from R(m+1).
+            // This happens inside input.Split() call and is invisible to the extractor logic. E(k+1) cannot know how many
+            // bytes of R(m) were skipped inside input.Split() and thus cannot assign to R(m+1) it's real precise offset.
+            // Therefore:
             // Offsets assigned to all records of all subsequent splits will be smaller than their real offsets
-            // by the number of bytes belonging to the last record of the previous split that extends into the current split.
+            // by the number of bytes of the last record of the previous split, which extend into the current split, less DL.
             //
-            // 2. We need to avoid record offset collision on split boundary.
-            // Let a record R(m) start exactly at S(k+1).Start. R(m) will be extracted by E(k), which (under certain circumstances)
-            // may legitimately assign S(k+1).Start to its offset. E(k+1) will skip the entire R(m) and start extracting
-            // from the next record, R(m+1). This happens inside input.Split() call and is invisible to the extractor logic.
-            // E(k+1) will assign the initial value of its local "offset" variable to the offset of R(m+1).
-            // If E(k+1) initializes "offset" with S(k+1).Start, both R(m) and R(m+1) will be assigned the same offset.
-            // To avoid this collision, in all subsequesnt splits, we add the length of the row delimiter to input.Start,
-            // the row delimiter length being the smallest number of bytes that can be skipped at the beginning of a non-first split.
+            // Issue 2: We need to avoid record offset collision on split boundary. Compensated.
+            // Consider layout D. above. E(k) will extract R(m+1) and, under certain circumstances, may legitimately
+            // assign S(k+1).Start to R(m+1) offset. E(k+1) will skip the entire R(m+1) and start extracting from  R(m+2).
+            // This happens inside input.Split() call and is invisible to the extractor logic. E(k+1) will assign the initial
+            // value of its local "offset" variable to the offset of R(m+2). If E(k+1) initializes "offset" with input.Start,
+            // both R(m+1) and R(m+2) will be assigned the same offset, S(k+1).Start.
+            // To avoid this collision:
+            // In all subsequent splits, we initialize "offset" with (input.Start + DL). With this technique we guarantee
+            // that for each record the assigned offset is never larger than its real precise offset in the entire file.
+            // Note that DL is the smallest number of bytes that can be skipped at the beginning of a non-first split.
             var offset = input.Start + (input.Start > 0 ? this.rowDelimiter.Length : 0);
 
             foreach (var recordStream in input.Split(this.rowDelimiter))

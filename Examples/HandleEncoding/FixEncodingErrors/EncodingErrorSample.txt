@@ -11,4 +11,4 @@ Byte sequence is ED A0 BD ED B0 88 (high and low surrogate halves are encoded in
 Note that in the output file (EncodingErrorSample.filtered.txt), the script
 substitutes bad bytes with the replacement character '�' (U+FFFD).
 However, in the errors file (EncodingErrorSample.errors.txt),
-the bad charcters are written without changes.
+the bad bytes are written without changes.
