@@ -5,7 +5,7 @@ These examples show how to handle various data encoding issues.
 The sample script copies its input file to the output file while
 substituting the bytes invalid in the given encoding with replacement
 character (U+FFFD). Additionally, records containing invalid bytes will
-be written to the errors file, optionally prepended by their offsets
+be written to the errors file, optionally prepended with their offsets
 in the original file.
 
 The following script parameters can be used to modify script behavior:
@@ -27,11 +27,11 @@ are supported:
   | `@codePageUtf32be` |     12001 |
 
 - `@rowDelimiter` - The string is used to break input file into records.
-Row delimiters must occur in the input file at least once in 4MB. The
-output file will have row delimiter after the last record even if the
-input file did not have it.
+Row delimiters must occur in the input file at least once in 4MB.
+The output file will have row delimiter after the last record even if
+the input file did not have it.
 
-- `@removeInvalidInputRecordsFromOutputfile` - If `true`, records
+- `@removeInvalidInputRecordsFromOutputfile` - If `true`, the records
 containing invalid bytes will _not_ be copied to the output file.
 
 - `@replaceInvalidBytesInErrorsFile` - If `true`, invalid bytes in the
