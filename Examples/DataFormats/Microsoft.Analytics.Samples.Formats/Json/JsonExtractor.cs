@@ -49,7 +49,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
             // Json.Net
-            using(var reader = new JsonTextReader(new StreamReader(input.BaseStream)))
+            using(var reader = GetJsonReader(input.BaseStream))
             {
                 // Parse Json one token at a time
                 while (reader.Read())
@@ -70,6 +70,11 @@ namespace Microsoft.Analytics.Samples.Formats.Json
                     }
                 }
             }
+        }
+
+        protected virtual JsonReader GetJsonReader(Stream stream) 
+        {
+            return (JsonReader) new JsonTextReader(new StreamReader(stream)); 
         }
 
         /// <summary/>

@@ -1,0 +1,28 @@
+﻿// Script to create packages for easier import of relevant dependencies
+// Please run in desired database and schema context (or it will be run in your master database and dbo schema)
+// Also make sure you update the database context of the REFERENCE ASSEMBLY statement, if 
+// the assembly is registered in a different database context or with a different name.
+
+DROP PACKAGE IF EXISTS XmlPackage;
+CREATE PACKAGE IF NOT EXISTS XmlPackage () AS 
+BEGIN
+   EXPORT ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+   EXPORT SYSTEM ASSEMBLY [System.Xml];
+END;
+
+DROP PACKAGE IF EXISTS JsonPackage;
+CREATE PACKAGE IF NOT EXISTS JsonPackage () AS
+BEGIN
+   EXPORT ASSEMBLY [Newtonsoft.Json];
+   EXPORT ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+
+   USING Microsoft.Analytics.Samples.Formats.Json;
+END;
+
+DROP PACKAGE IF EXISTS BsonPackage;
+CREATE PACKAGE IF NOT EXISTS BsonPackage () AS
+BEGIN
+   EXPORT ASSEMBLY [Newtonsoft.Json];
+   EXPORT ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+   EXPORT ASSEMBLY [Newtonsoft.Json.Bson]; 
+END;
