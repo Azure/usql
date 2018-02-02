@@ -32,6 +32,7 @@ namespace HandleEncoding
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
+            // Map column names to indices once to avoid mapping overhead in the loop.
             var recordCol = output.Schema.IndexOf("record");
             var offsetCol = output.Schema.IndexOf("offset");
             var encodingErrorsCol = output.Schema.IndexOf("encodingErrors");
@@ -79,9 +80,9 @@ namespace HandleEncoding
             // happens inside input.Split() call and is invisible to the extractor logic. E(k+1) cannot know how many
             // bytes of R(m) were skipped inside input.Split() and thus cannot assign to R(m+1) its real precise offset.
             // Therefore:
-            // Offsets assigned to all records of all subsequent splits will be smaller than their real offsets
-            // by (R(m).Tail - DL), where R(m).Tail is the number of bytes in R(m) that extend into S(k+1).
-            // Notably, in the case B. above, the assigned offsets will be equal to the real offsets.
+            // Offsets of the records returned by the extractor in all subsequent splits will be smaller than real
+            // offsets by (R(m).Tail - DL), where R(m).Tail is the number of bytes in R(m) that extend into S(k+1).
+            // Notably, in the case B. above, the returned offsets will be equal to the real offsets.
             //
             // Issue 2: We need to avoid record offset collision on split boundary. Compensated.
             // Consider layout D. above. E(k) will extract R(m+1) and, under certain circumstances, may legitimately
@@ -173,6 +174,7 @@ namespace HandleEncoding
         {
             if (this.recordCol == -1)
             {
+                // Map column names to indices once to avoid mapping overhead for each row.
                 this.recordCol = input.Schema.IndexOf("record");
                 this.offsetCol = input.Schema.IndexOf("offset");
                 this.encodingErrorsCol = input.Schema.IndexOf("encodingErrors");
@@ -183,6 +185,8 @@ namespace HandleEncoding
 
             if (encodingErrors && this.replaceInvalidBytes)
             {
+                // Decode the record to substitute invalid bytes with the replacement character.
+                // Encode the sanitized record again before writing it to the output file.
                 record = this.nonThrowingEncoding.GetBytes(this.nonThrowingEncoding.GetString(record));
             }
 

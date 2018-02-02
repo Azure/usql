@@ -1,4 +1,7 @@
-﻿DECLARE EXTERNAL @inputFile = @"[EnlistmentRoot]\usql\Examples\HandleEncoding\FixEncodingErrors\EncodingErrorSample.txt";
+﻿// To run this sample script, copy the sample data file "EncodingErrorSample.txt"
+// to the local dataroot or to the default adls account at the reltive path below.
+// The file can be found in the script directory or in the "Samples/..." directory.
+DECLARE EXTERNAL @inputFile = @"/Samples/Data/HandleEncoding/FixEncodingErrors/EncodingErrorSample.txt";
 
 DECLARE EXTERNAL @outputFile = Path.Combine(Path.GetDirectoryName(@inputFile),
     Path.GetFileNameWithoutExtension(@inputFile) + ".filtered" + Path.GetExtension(@inputFile));
