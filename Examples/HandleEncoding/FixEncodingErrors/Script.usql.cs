@@ -54,7 +54,7 @@ namespace HandleEncoding
             // When extractors read records near the boundary between the splits, the general rules are:
             // * E(k+1) always skips one (possibly) incomplete record at the beginning of S(k+1)
             //   and starts extracting from the next record. In other words, it skips bytes at the
-            //   beginning of S(k+1) until it has seen a complete record delimiter.
+            //   beginning of S(k+1) until it sees a complete record delimiter.
             // * Complementarily, E(k) extracts the last record of S(k) and continues extracting
             //   from S(k+1) until it reads one complete record delimiter that started in S(k+1).
             //
