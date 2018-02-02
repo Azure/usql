@@ -1,0 +1,46 @@
+﻿// To run this sample script, copy the sample data file "EncodingErrorSample.txt"
+// to the local dataroot or to the default adls account at the reltive path below.
+// The file can be found in the script directory or in the "Samples/..." directory.
+DECLARE EXTERNAL @inputFile = @"/Samples/Data/HandleEncoding/FixEncodingErrors/EncodingErrorSample.txt";
+
+DECLARE EXTERNAL @outputFile = Path.Combine(Path.GetDirectoryName(@inputFile),
+    Path.GetFileNameWithoutExtension(@inputFile) + ".filtered" + Path.GetExtension(@inputFile));
+DECLARE EXTERNAL @errorsFile = Path.Combine(Path.GetDirectoryName(@inputFile),
+    Path.GetFileNameWithoutExtension(@inputFile) + ".errors" + Path.GetExtension(@inputFile));
+
+DECLARE @codePageUtf8 = 65001;
+DECLARE @codePageUtf16 = 1200;
+DECLARE @codePageUtf16be = 1201;
+DECLARE @codePageUtf32 = 12000;
+DECLARE @codePageUtf32be = 12001;
+
+DECLARE EXTERNAL @codePage = @codePageUtf8;
+DECLARE EXTERNAL @rowDelimiter = "\n";
+DECLARE EXTERNAL @removeInvalidInputRecordsFromOutputfile = false;
+DECLARE EXTERNAL @replaceInvalidBytesInErrorsFile = false;
+// If null, offsets of invalid records will not be written to the errors file
+DECLARE EXTERNAL @offsetFormatInErrorsFile = "{0}:\t";
+
+@data =
+    EXTRACT record byte[],
+            offset long,
+            encodingErrors bool
+    FROM @inputFile
+    USING new HandleEncoding.EncodingValidatingExtractor(@codePage, @rowDelimiter);
+
+IF @removeInvalidInputRecordsFromOutputfile THEN
+    OUTPUT (SELECT * FROM @data WHERE !encodingErrors)
+    TO @outputFile
+    ORDER BY offset
+    USING new HandleEncoding.RecordOutputter();
+ELSE
+    OUTPUT @data
+    TO @outputFile
+    ORDER BY offset
+    USING new HandleEncoding.RecordOutputter(@codePage, replaceInvalidBytes: true, offsetFormat: null);
+END;
+
+OUTPUT (SELECT * FROM @data WHERE encodingErrors)
+TO @errorsFile
+ORDER BY offset
+USING new HandleEncoding.RecordOutputter(@codePage, @replaceInvalidBytesInErrorsFile, @offsetFormatInErrorsFile);

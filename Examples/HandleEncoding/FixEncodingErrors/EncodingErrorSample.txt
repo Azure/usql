@@ -1,0 +1,17 @@
+Ôªø# Sample input file for FixEncodingErrors script
+This is a sample text file to demonstrate the use of FixEncodingErrors U-SQL script.
+This file is UTF-8 encoded.
+
+Here is Cat Emoji (U+1F408) embedded in the text: 'üêà'.
+The UTF-8 byte sequence for this Unicode code point is F0 9F 90 88 (in HEX).
+
+Here is the same code point encoded in a wrong way 'Ì†ΩÌ∞à'.
+Byte sequence is ED A0 BD ED B0 88.
+This encoding error happens if high and low UTF-16 surrogate halves are
+encoded individually instead of, as required by UTF-8 specification,
+encoding the Unicode code point directly into UTF-8.
+
+Note that in the output file (EncodingErrorSample.filtered.txt), the script
+substitutes bad bytes with the replacement character 'ÔøΩ' (U+FFFD).
+However, in the errors file (EncodingErrorSample.errors.txt),
+the bad bytes are written without changes.
