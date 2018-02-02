@@ -1,5 +1,5 @@
 # Handle Encoding
-These examples show how to handle various data encoding issues.
+This example shows various ways to handle invalid encodings in text files.
 
 ## FixEncodingErrors.usql
 This sample script copies its input file to the output file while
