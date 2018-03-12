@@ -91,7 +91,7 @@ OUTPUT @words TO @"users/mwinkle/output/wiki/wordCount.txt" USING Outputters.Csv
 
 ## Using the JSON Extractor
 
-The JSON Extractor treats _the entire input file_ as a single JSON document.  If you have a JSON document per line, see the next section. The columns that you try to extract will be extracted from the document.  In this case, I'm extracting out the _id and Revision properties.  Note, it's possible that one of these is a further nested object, in which case you can use the JSON UDF's for subsequent processing. 
+The JSON Extractor treats _the entire input file_ as a single JSON document.  If you have a JSON document per line, see the next two sections. The columns that you try to extract will be extracted from the document.  In this case, I'm extracting out the _id and Revision properties.  Note, it's possible that one of these is a further nested object, in which case you can use the JSON UDF's for subsequent processing. 
 
 
 
@@ -151,6 +151,103 @@ TO @"/out.csv"
 USING Outputters.Csv();
 
 ````
+## Using the Multiline-Json Extractor
+There is a limitiation with the approach above, if you have very long JSON documents in the rows. You can hit either the 128kB [limit](https://feedback.azure.com/forums/327234-data-lake/suggestions/13416093-usql-string-data-type-has-a-size-limit-of-128kb) of `string` typed columns or the 4MB limit of row size in the output of the first, text-based extractor.
+In this case, you can use MultiLineJsonExtractor, which has the following key capabilities:
+- handles line splitting using the user-supplied delimiter
+- processes lines in parallel
+- stores compressed JSON fragments in `byte[]` typed columns for further processing
+
+First, we create a table to hold all extracted data, some parts in compressed form.
+````
+CREATE TABLE dbo.WikidataImport
+(
+     [Id] string
+    ,[Type] string
+    ,[Labels] byte[]
+    ,[Descriptions] byte[]
+    ,[Aliases] byte[]
+    ,[Claims] byte[]
+    ,[Sitelinks] byte[]
+    ,INDEX cIX_ID CLUSTERED(Id ASC) DISTRIBUTED BY HASH(Id)
+);
+````
+Then we fire up the extractor and load in the staging table. For `byte[]` typed columns, the extractor GZip compresses the corresponding JSON fragment.
+````
+REFERENCE ASSEMBLY wikidata.[Newtonsoft.Json];
+REFERENCE ASSEMBLY wikidata.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+DECLARE @InputPath string = "/wikidata-json-dump/wikidata-20170918-all.json";
+
+DECLARE @OutputFile string = "/wikidata-json-dump/wikidata-extract-171228.csv";
+
+@RawData = 
+EXTRACT 
+ [id] string
+,[type] string
+,[labels] byte[]
+,[descriptions] byte[]
+,[aliases] byte[]
+,[claims] byte[]
+,[sitelinks] byte[]
+FROM @InputPath
+USING new MultiLineJsonExtractor(rowdelim:",\n");
+
+INSERT INTO WikidataImport
+SELECT [id],
+       [type],
+       [labels],
+       [descriptions],
+       [aliases],
+       [claims],
+       [sitelinks]
+FROM @RawData;
+````
+For working with the compressed colums, please refer to the next section.
+
+## Using the JSON UDF's with compressed columns
+You can pass a `byte[]` typed column with compressed JSON fragment in it to JsonTuple. First, it decompresses the fragment in-memory, then works as usual, queries the JSON via path expressions.
+
+
+````
+REFERENCE ASSEMBLY wikidata.[Newtonsoft.Json];
+REFERENCE ASSEMBLY wikidata.[Microsoft.Analytics.Samples.Formats]; 
+
+USING Microsoft.Analytics.Samples.Formats.Json;
+
+DECLARE @OutputFile string = "/wikidata-json-dump/wikidata-extract-type.csv";
+
+/*
+Search for P31 statements with object referencing an another item
+*/
+
+@jsonPathResult=
+SELECT
+ [Id]
+ ,JsonFunctions.JsonTuple([Claims],@"$.P31[?(@.mainsnak.datavalue.value.entity-type == 'item')].mainsnak.datavalue.value.numeric-id") AS JsonPathResultMap  
+FROM WikidataImport
+;
+
+@jsonPathResultExploded=
+SELECT 
+     [Id]
+     ,jpr.key AS MapKey
+     ,jpr.value AS MapValue
+FROM @jsonPathResult
+CROSS APPLY EXPLODE(JsonPathResultMap) AS jpr(key, value);
+
+@aggregateResult =
+    SELECT COUNT(DISTINCT MapValue) AS ValDCnt
+           ,COUNT(MapValue) AS ValCnt
+    FROM @jsonPathResultExploded;
+
+OUTPUT @aggregateResult
+TO @OutputFile
+USING Outputters.Csv(outputHeader:true,quoting:true);
+````
+
 ## Using the Avro Extractor
 Avro is a splittable, well-defined, binary data format. It stores data in a row-oriented format and a schema (defined as JSON) describes the metadata including fields and their corresponding data types. See https://avro.apache.org/docs/current/ for more details about Avro.
 

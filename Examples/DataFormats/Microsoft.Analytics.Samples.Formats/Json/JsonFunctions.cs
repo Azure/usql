@@ -16,6 +16,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Analytics.Types.Sql;
@@ -145,6 +148,21 @@ namespace Microsoft.Analytics.Samples.Formats.Json
                 if(type == typeof(string))
                 {
                     return JsonFunctions.GetTokenString(token);
+                }
+                if (type == typeof(byte[]))
+                {
+                    var bytes = Encoding.UTF8.GetBytes(JsonFunctions.GetTokenString(token));
+
+                    using (var msi = new MemoryStream(bytes))
+                    using (var mso = new MemoryStream())
+                    {
+                        using (var gs = new GZipStream(mso, CompressionLevel.Optimal))
+                        {
+                            msi.CopyTo(gs);                            
+                        }
+
+                        return mso.ToArray();
+                    };
                 }
             
                 // We simply delegate to Json.Net for data conversions

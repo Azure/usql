@@ -38,7 +38,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
     {
         /// <summary/>
         private string rowpath;
-        
+
         /// <summary/>
         public JsonExtractor(string rowpath = null)
         {
@@ -48,26 +48,29 @@ namespace Microsoft.Analytics.Samples.Formats.Json
         /// <summary/>
         public override IEnumerable<IRow>       Extract(IUnstructuredReader input, IUpdatableRow output)
         {
+            Stream stream = input.BaseStream;
+            foreach (var row in Extract(stream, output))
+                yield return row;
+        }
+
+        protected virtual IEnumerable<IRow> Extract(Stream inputStream, IUpdatableRow output)
+        {
             // Json.Net
-            using(var reader = new JsonTextReader(new StreamReader(input.BaseStream)))
+            using (var reader = new JsonTextReader(new StreamReader(inputStream)))
             {
                 // Parse Json one token at a time
-                while (reader.Read())
+                if (!reader.Read()) yield break;
+                if (reader.TokenType != JsonToken.StartObject) yield break;
+                var token = JToken.Load(reader);
+
+                // Rows
+                //  All objects are represented as rows
+                foreach (JObject o in SelectChildren(token, this.rowpath))
                 {
-                    if (reader.TokenType == JsonToken.StartObject)
-                    {
-                        var token = JToken.Load(reader);
+                    // All fields are represented as columns
+                    this.JObjectToRow(o, output);
 
-                        // Rows
-                        //  All objects are represented as rows
-                        foreach (JObject o in SelectChildren(token, this.rowpath))
-                        {
-                            // All fields are represented as columns
-                            this.JObjectToRow(o, output);
-
-                            yield return output.AsReadOnly();
-                        }
-                    }
+                    yield return output.AsReadOnly();
                 }
             }
         }

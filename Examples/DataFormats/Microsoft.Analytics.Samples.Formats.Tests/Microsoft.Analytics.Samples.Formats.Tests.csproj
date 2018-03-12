@@ -69,6 +69,7 @@
     <Compile Include="AvroExtractorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingleColumnPoco.cs" />
+    <Compile Include="JsonExtractorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Analytics.Samples.Formats\Microsoft.Analytics.Samples.Formats.csproj">
