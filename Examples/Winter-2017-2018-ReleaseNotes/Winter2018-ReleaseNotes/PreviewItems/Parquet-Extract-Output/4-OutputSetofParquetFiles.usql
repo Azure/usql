@@ -1,0 +1,30 @@
+﻿// Submit with 16 AU for best performance
+
+//SET @@FeaturePreviews = "InputFileGrouping:off"; // get 1 file per input vertex
+SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/";
+DECLARE @ADL_FILESET_REQVID string = @ADL_DIR + "vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+@data_req = 
+    EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int // virtual file set column
+    , date DateTime // virtual file set column
+    FROM @ADL_FILESET_REQVID
+    USING Extractors.Csv();
+
+// Now explode the data to generate enough data to produce more than one file
+@alldata_req =
+SELECT d.*
+FROM @data_req AS d CROSS APPLY EXPLODE(Enumerable.Range(1,1000)) AS M(factor);
+
+OUTPUT @alldata_req
+TO "/output/releasenotes/winter2017-18/parquet/vehicles_{*}.parquet"
+USING Outputters.Parquet();

@@ -1,0 +1,316 @@
+﻿// Write some data using a Windows-125* and test the other encodings to see if they error
+
+DROP PROCEDURE IF EXISTS TestOutputEncoding;
+CREATE PROCEDURE TestOutputEncoding(@enc int)
+AS
+BEGIN
+    DECLARE @encoding = System.Text.Encoding.GetEncoding(@enc);
+    DECLARE @output = "/output/releasenotes/winter2017-18/encoding/res_" + @enc.ToString() + ".csv";
+
+    OUTPUT
+    (
+        SELECT "Some sample text with Α α Β β θ £ ¥ Ä ä æ ç ö" AS c
+        FROM(
+            VALUES
+            (
+                1
+            )) AS T(x)
+    )
+    TO @output
+    USING Outputters.Csv(encoding:@encoding);
+    
+END;
+
+ //TestOutputEncoding(37); // IBM EBCDIC (US-Canada) 
+
+ //TestOutputEncoding(437); // IBM437 OEM United States 
+
+ //TestOutputEncoding(500); // IBM EBCDIC (International) 
+
+ //TestOutputEncoding(708); // Arabic (ASMO 708) 
+
+ //TestOutputEncoding(720); // DOS-720 Arabic (DOS) 
+
+ //TestOutputEncoding(737); // Greek (DOS) 
+
+ //TestOutputEncoding(775); //Baltic (DOS) 
+
+ //TestOutputEncoding(850); // ibm850 Western European (DOS) 
+
+ //TestOutputEncoding(852); // ibm852 Central European (DOS) 
+
+ //TestOutputEncoding(855); // IBM855 OEM Cyrillic 
+
+ //TestOutputEncoding(857); //ibm857 Turkish (DOS) 
+
+ //TestOutputEncoding(858); // IBM00858 OEM Multilingual Latin I 
+
+ //TestOutputEncoding(860); // IBM860 Portuguese (DOS) 
+
+ //TestOutputEncoding(861); // ibm861 Icelandic (DOS) 
+
+ //TestOutputEncoding(862); // DOS-862 Hebrew (DOS) 
+
+ //TestOutputEncoding(863); // IBM863 French Canadian (DOS) 
+
+ //TestOutputEncoding(864); // IBM864 Arabic (864) 
+
+ //TestOutputEncoding(865); // IBM865 Nordic (DOS) 
+
+ //TestOutputEncoding(866 ); //cp866 Cyrillic (DOS) 
+
+ //TestOutputEncoding(869); // ibm869 Greek, Modern (DOS) 
+
+ //TestOutputEncoding(870); // IBM870 IBM EBCDIC (Multilingual Latin-2) 
+
+ //TestOutputEncoding(874); // windows-874 Thai (Windows) 
+
+ //TestOutputEncoding(875); // cp875 IBM EBCDIC (Greek Modern) 
+
+ //TestOutputEncoding(932); // shift_jis Japanese (Shift-JIS) 
+
+ //TestOutputEncoding(936); // gb2312 Chinese Simplified (GB2312) 
+
+ //TestOutputEncoding(949); // ks_c_5601-1987 Korean 
+
+ //TestOutputEncoding(950); // big5 Chinese Traditional (Big5) 
+
+ //TestOutputEncoding(1026); // IBM1026 IBM EBCDIC (Turkish Latin-5) 
+
+ //TestOutputEncoding(1047); // IBM01047 IBM Latin-1 
+
+ //TestOutputEncoding(1140); // IBM01140 IBM EBCDIC (US-Canada-Euro) 
+
+ //TestOutputEncoding(1141); // IBM01141 IBM EBCDIC (Germany-Euro) 
+
+ //TestOutputEncoding(1142); // IBM01142 IBM EBCDIC (Denmark-Norway-Euro) 
+
+ //TestOutputEncoding(1143); // IBM01143 IBM EBCDIC (Finland-Sweden-Euro) 
+
+ //TestOutputEncoding(1144); // IBM01144 IBM EBCDIC (Italy-Euro) 
+
+ //TestOutputEncoding(1145); // IBM01145 IBM EBCDIC (Spain-Euro) 
+
+ //TestOutputEncoding(1146); // IBM01146 IBM EBCDIC (UK-Euro)
+
+ //TestOutputEncoding(1147); // IBM01147 IBM EBCDIC (France-Euro) 
+
+ //TestOutputEncoding(1148); // IBM01148 IBM EBCDIC (International-Euro) 
+
+ //TestOutputEncoding(1149); // IBM01149 IBM EBCDIC (Icelandic-Euro) 
+
+ //TestOutputEncoding(1200); // utf-16 Unicode <<<< Works with standard Unicode though....
+
+ // TestOutputEncoding(1201); // unicodeFFFE Unicode (Big endian) <<<< we support it normally?
+
+ TestOutputEncoding(1250); // windows-1250 Central European (Windows) 
+
+ TestOutputEncoding(1251); // windows-1251 Cyrillic (Windows) 
+
+ TestOutputEncoding(1252); // Windows-1252 Western European (Windows) 
+
+ TestOutputEncoding(1253); // windows-1253 Greek (Windows) 
+
+ TestOutputEncoding(1254); // windows-1254 Turkish (Windows) 
+
+ TestOutputEncoding(1255); // windows-1255 Hebrew (Windows) 
+
+ TestOutputEncoding(1256); // windows-1256 Arabic (Windows) 
+
+ TestOutputEncoding(1257); // windows-1257 Baltic (Windows) 
+
+ TestOutputEncoding(1258); // windows-1258 Vietnamese (Windows) 
+
+ //TestOutputEncoding(1361); // Johab Korean (Johab) 
+
+ //TestOutputEncoding(10000); // macintosh Western European (Mac) 
+
+ //TestOutputEncoding(10001); // x-mac-japanese Japanese (Mac) 
+
+ //TestOutputEncoding(10002); // x-mac-chinesetrad Chinese Traditional (Mac) 
+
+ //TestOutputEncoding(10003); // x-mac-korean Korean (Mac) 
+
+ //TestOutputEncoding(10004); // x-mac-arabic Arabic (Mac) 
+
+ //TestOutputEncoding(10005); // x-mac-hebrew Hebrew (Mac) 
+
+ //TestOutputEncoding(10006 ); // x-mac-greek Greek (Mac) 
+
+ //TestOutputEncoding(10007 ); // x-mac-cyrillic Cyrillic (Mac) 
+
+ //TestOutputEncoding(10008 ); // x-mac-chinesesimp Chinese Simplified (Mac) 
+
+ //TestOutputEncoding(10010 ); // x-mac-romanian Romanian (Mac) 
+
+ //TestOutputEncoding(10017 ); // x-mac-ukrainian Ukrainian (Mac) 
+
+ //TestOutputEncoding(10021 ); // x-mac-thai Thai (Mac) 
+
+ //TestOutputEncoding(10029 ); // x-mac-ce Central European (Mac) 
+
+ //TestOutputEncoding(10079 ); // x-mac-icelandic Icelandic (Mac) 
+
+ //TestOutputEncoding(10081 ); // x-mac-turkish Turkish (Mac) 
+
+ //TestOutputEncoding(10082 ); // x-mac-croatian Croatian (Mac) 
+
+ //TestOutputEncoding(12000 ); // utf-32 Unicode (UTF-32) <<<< we support it normally?
+
+ //TestOutputEncoding(12001 ); // utf-32BE Unicode (UTF-32 Big endian) <<<< we support it normally?
+
+ //TestOutputEncoding(20000 ); // x-Chinese-CNS Chinese Traditional (CNS) 
+
+ //TestOutputEncoding(20001 ); // x-cp20001 TCA Taiwan 
+
+ //TestOutputEncoding(20002 ); // x-Chinese-Eten Chinese Traditional (Eten) 
+
+ //TestOutputEncoding(20003 ); // x-cp20003 IBM5550 Taiwan 
+
+ //TestOutputEncoding(20004 ); // x-cp20004 TeleText Taiwan 
+
+ //TestOutputEncoding(20005 ); // x-cp20005 Wang Taiwan 
+
+ //TestOutputEncoding(20105 ); // x-IA5 Western European (IA5) 
+
+ //TestOutputEncoding(20106 ); // x-IA5-German German (IA5) 
+
+ //TestOutputEncoding(20107 ); // x-IA5-Swedish Swedish (IA5) 
+
+ //TestOutputEncoding(20108 ); // x-IA5-Norwegian Norwegian (IA5) 
+
+ //TestOutputEncoding(20127 ); // us-ascii US-ASCII <<<< we support it normally?
+
+ //TestOutputEncoding(20261 ); // x-cp20261 T.61 
+
+ //TestOutputEncoding(20269 ); // x-cp20269 ISO-6937 
+
+ //TestOutputEncoding(20273 ); // IBM273 IBM EBCDIC (Germany) 
+
+ //TestOutputEncoding(20277 ); // IBM277 IBM EBCDIC (Denmark-Norway) 
+
+ //TestOutputEncoding(20278 ); // IBM278 IBM EBCDIC (Finland-Sweden) 
+
+ //TestOutputEncoding(20280 ); // IBM280 IBM EBCDIC (Italy) 
+
+ //TestOutputEncoding(20284 ); // IBM284 IBM EBCDIC (Spain) 
+
+ //TestOutputEncoding(20285 ); // IBM285 IBM EBCDIC (UK) 
+
+ //TestOutputEncoding(20290 ); // IBM290 IBM EBCDIC (Japanese katakana) 
+
+ //TestOutputEncoding(20297 ); // IBM297 IBM EBCDIC (France) 
+
+ //TestOutputEncoding(20420 ); // IBM420 IBM EBCDIC (Arabic) 
+
+ //TestOutputEncoding(20423 ); // IBM423 IBM EBCDIC (Greek) 
+
+ //TestOutputEncoding(20424 ); // IBM424 IBM EBCDIC (Hebrew) 
+
+ //TestOutputEncoding(20833 ); // x-EBCDIC-KoreanExtended IBM EBCDIC (Korean Extended) 
+
+ //TestOutputEncoding(20838 ); // IBM-Thai IBM EBCDIC (Thai) 
+
+ //TestOutputEncoding(20866 ); // koi8-r Cyrillic (KOI8-R) 
+
+ //TestOutputEncoding(20871 ); // IBM871 IBM EBCDIC (Icelandic) 
+
+ //TestOutputEncoding(20880 ); // IBM880 IBM EBCDIC (Cyrillic Russian) 
+
+ //TestOutputEncoding(20905 ); // IBM905 IBM EBCDIC (Turkish) 
+
+ //TestOutputEncoding(20924 ); // IBM00924 IBM Latin-1 
+
+ //TestOutputEncoding(20932 ); // EUC-JP Japanese (JIS 0208-1990 and 0212-1990) 
+
+ //TestOutputEncoding(20936 ); // x-cp20936 Chinese Simplified (GB2312-80) 
+
+ //TestOutputEncoding(20949 ); // x-cp20949 Korean Wansung 
+
+ //TestOutputEncoding(21025 ); // cp1025 IBM EBCDIC (Cyrillic Serbian-Bulgarian) 
+
+ //TestOutputEncoding(21866 ); // koi8-u Cyrillic (KOI8-U) 
+
+ //TestOutputEncoding(28591 ); // iso-8859-1 Western European (ISO) 
+
+ //TestOutputEncoding(28592 ); // iso-8859-2 Central European (ISO) 
+
+ //TestOutputEncoding(28593 ); // iso-8859-3 Latin 3 (ISO) 
+
+ //TestOutputEncoding(28594 ); // iso-8859-4 Baltic (ISO) 
+
+ //TestOutputEncoding(28595 ); // iso-8859-5 Cyrillic (ISO) 
+
+ //TestOutputEncoding(28596 ); // iso-8859-6 Arabic (ISO) 
+
+ //TestOutputEncoding(28597 ); // iso-8859-7 Greek (ISO) 
+
+ //TestOutputEncoding(28598 ); // iso-8859-8 Hebrew (ISO-Visual) 
+
+ //TestOutputEncoding(28599 ); // iso-8859-9 Turkish (ISO) 
+
+ //TestOutputEncoding(28603 ); // iso-8859-13 Estonian (ISO) 
+
+ //TestOutputEncoding(28605 ); // iso-8859-15 Latin 9 (ISO) 
+
+ //TestOutputEncoding(29001 ); // x-Europa Europa 
+
+ //TestOutputEncoding(38598 ); // iso-8859-8-i Hebrew (ISO-Logical) 
+
+ //TestOutputEncoding(50220 ); // iso-2022-jp Japanese (JIS) 
+
+ //TestOutputEncoding(50221 ); // csISO2022JP Japanese (JIS-Allow 1 byte Kana) 
+
+ //TestOutputEncoding(50222 ); // iso-2022-jp Japanese (JIS-Allow 1 byte Kana - SO/SI) 
+
+ //TestOutputEncoding(50225 ); // iso-2022-kr Korean (ISO) 
+
+ //TestOutputEncoding(50227 ); // x-cp50227 Chinese Simplified (ISO-2022) 
+
+ //TestOutputEncoding(51932 ); // euc-jp Japanese (EUC) 
+
+ //TestOutputEncoding(51936 ); // EUC-CN Chinese Simplified (EUC) 
+
+ //TestOutputEncoding(51949 ); // euc-kr Korean (EUC) 
+
+ //TestOutputEncoding(52936 ); // hz-gb-2312 Chinese Simplified (HZ) 
+
+ //TestOutputEncoding(54936 ); // GB18030 Chinese Simplified (GB18030) 
+
+ //TestOutputEncoding(57002 ); // x-iscii-de ISCII Devanagari 
+
+ //TestOutputEncoding(57003 ); // x-iscii-be ISCII Bengali 
+
+ //TestOutputEncoding(57004 ); // x-iscii-ta ISCII Tamil 
+
+ //TestOutputEncoding(57005 ); // x-iscii-te ISCII Telugu 
+
+ //TestOutputEncoding(57006 ); // x-iscii-as ISCII Assamese 
+
+ //TestOutputEncoding(57007 ); // x-iscii-or ISCII Oriya 
+
+ //TestOutputEncoding(57008 ); // x-iscii-ka ISCII Kannada 
+
+ //TestOutputEncoding(57009 ); // x-iscii-ma ISCII Malayalam 
+
+ //TestOutputEncoding(57010); // x-iscii-gu ISCII Gujarati 
+
+ //TestOutputEncoding(57011); // x-iscii-pa ISCII Punjabi 
+
+ //TestOutputEncoding(65000); // utf-7 Unicode (UTF-7) <<< supported otherwise?
+
+ //TestOutputEncoding(65001); // utf-8  <<< supported otherwise?
+
+/*
+@data =
+SELECT "Some sample text with Α α Β β θ £ ¥ Ä ä æ ç ö" AS c
+FROM(
+    VALUES
+    (
+        1
+    )) AS T(x);
+
+OUTPUT @data TO "/output/releasenotes/winter2017-18/encoding/data_iso-8859-1.csv" USING Outputters.Csv(encoding:System.Text.Encoding.GetEncoding("iso-8859-1"));
+/**/
+
+

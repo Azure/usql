@@ -1,0 +1,15 @@
+﻿// This script now results in error: E_CSC_USER_ROWSETVARIABLEALREADYDECLARED
+
+DROP FUNCTION IF EXISTS TVFParameterClash;
+
+CREATE FUNCTION TVFParameterClash(@res int) RETURNS @res AS BEGIN @res = SELECT @res AS c FROM (VALUES(1))AS T(x); END;
+
+OUTPUT
+(
+    TVFParameterClash
+    (
+        1
+    )
+)
+TO "/output/releasenotes/winter2017-18/tvfparamclash.csv"
+USING Outputters.Csv();

@@ -1,0 +1,61 @@
+﻿// Translate some of the US state abbreviations into their long forms using a simple `CASE` expression.
+// If the state is not found it will return null.
+
+@input = 
+  SELECT state_abbreviation 
+  FROM (VALUES ("WA"), ("VA"), ("CA"), ("IA"), ("AK"), ("HI"), ("OR"), ("OK"), ("AZ"), ("DC")) AS s(state_abbreviation);
+
+@result =
+SELECT state_abbreviation,
+       CASE state_abbreviation
+       WHEN "AK" THEN "Alaska"
+       WHEN "AZ" THEN "Arizona"
+       WHEN "CA" THEN "California"
+       WHEN "HI" THEN "Hawaii"
+       WHEN "IA" THEN "Iowa"
+       WHEN "ID" THEN "Idaho"
+       WHEN "OK" THEN "Oklahoma"
+       WHEN "OR" THEN "Oregon"
+       WHEN "WA" THEN "Washington"
+       WHEN "VA" THEN "Virginia"
+       END AS state
+FROM @input;
+
+OUTPUT @result
+TO "/output/releasenotes/winter2017-18/simplecase.csv"
+USING Outputters.Csv(outputHeader : true);
+
+
+// Check if a temperature value falls into a certain range and provide a string classification. 
+// Note that in case of overlapping ranges, the first lexical match will be chosen.
+
+@input =
+SELECT temp_K
+FROM(
+    VALUES
+    (
+        43
+    ),
+    (
+        300
+    ),
+    (
+        285
+    ),
+    (
+        1000
+    )) AS t(temp_K);
+
+@result = 
+SELECT temp_K,
+       CASE
+       WHEN(double) temp_K BETWEEN 0.0 AND 273.15 THEN "freezing"
+       WHEN(double) temp_K BETWEEN 273.15 AND 285.0 THEN "cold"
+       WHEN(double) temp_K BETWEEN 284.0 AND 310.0 THEN "warm"
+       ELSE "too hot"
+       END AS temperature_class
+FROM @input;
+
+OUTPUT @result
+TO "/output/releasenotes/winter2017-18/searchcase.csv"
+USING Outputters.Csv(outputHeader : true);

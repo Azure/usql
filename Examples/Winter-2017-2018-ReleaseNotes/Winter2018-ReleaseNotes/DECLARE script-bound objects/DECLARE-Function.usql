@@ -1,0 +1,17 @@
+﻿        DECLARE FUNCTION @sl() RETURNS @searchlog AS
+        BEGIN
+          @searchlog =
+            EXTRACT UserId int,
+                    Start DateTime,
+                    Region string,
+                    Query string,
+                    Duration int?,
+                    Urls string,
+                    ClickedUrls string
+            FROM "/Samples/Data/SearchLog.tsv"
+            USING Extractors.Tsv();
+        END;
+
+        OUTPUT @sl()
+        TO "/output/releasenotes/winter2017-18/extract-order-by.csv"
+        USING Outputters.Csv(outputHeader:true);

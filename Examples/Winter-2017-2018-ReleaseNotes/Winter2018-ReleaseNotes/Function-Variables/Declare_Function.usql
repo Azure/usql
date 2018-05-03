@@ -1,0 +1,34 @@
+﻿DECLARE @get_mentions Func<string,SqlArray<string>> = 
+        (tweet) => new SqlArray<string>(
+                       tweet.Split(new char[]{' ', ',', '.', ':', '!', ';', '"', '“'}).Where(x => x.StartsWith("@"))
+                   );
+@t = 
+    EXTRACT date string
+           , time string
+           , author string
+           , tweet string
+    FROM "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
+    USING Extractors.Csv();
+
+// Extract mentions
+
+@m = SELECT @get_mentions(tweet) AS mentions
+     FROM @t;
+
+@m = 
+    SELECT m.Substring(1) AS m
+         , "mention" AS category
+    FROM @m CROSS APPLY EXPLODE(mentions) AS t(m)
+    WHERE m != "@";
+
+// Count mentions 
+@res = 
+    SELECT m.ToLowerInvariant() AS mention
+         , COUNT( * ) AS mentioncount
+    FROM @m
+    GROUP BY m.ToLowerInvariant();
+
+OUTPUT @res
+TO "/output/releasenotes/winter2017-18/MyTwitterAnalysis.csv"
+ORDER BY mentioncount DESC
+USING Outputters.Csv(outputHeader:true);

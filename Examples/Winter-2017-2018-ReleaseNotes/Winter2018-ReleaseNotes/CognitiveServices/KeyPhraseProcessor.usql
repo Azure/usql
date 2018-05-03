@@ -1,0 +1,40 @@
+﻿REFERENCE ASSEMBLY [TextKeyPhrase];
+
+@WarAndPeace =
+  EXTRACT No int,
+          Year string,
+          Book string,
+          Chapter string,
+          Sentence string
+  FROM @"/usqlext/samples/cognition/war_and_peace.csv"
+  USING Extractors.Csv();
+
+@keyphrase =
+  PROCESS @WarAndPeace
+  PRODUCE No,
+          Year,
+          Book,
+          Chapter,
+          Sentence,
+          KeyPhrase SqlArray<string>
+  READONLY No,
+           Year,
+           Book,
+           Chapter,
+           Sentence
+  USING new Cognition.Text.KeyPhraseProcessor(txtCol:"Sentence");
+
+@keyphrase_exploded =
+  SELECT No,
+         Year,
+         Book,
+         Chapter,
+         Sentence,
+         T.KeyPhrase
+  FROM @keyphrase
+       CROSS APPLY EXPLODE (KeyPhrase) AS T(KeyPhrase);
+
+OUTPUT @keyphrase_exploded
+TO "/output/releasenotes/winter2017-18/keyphrase-extractor.csv"
+ORDER BY No, Year, Book, Chapter
+USING Outputters.Csv(outputHeader : true);

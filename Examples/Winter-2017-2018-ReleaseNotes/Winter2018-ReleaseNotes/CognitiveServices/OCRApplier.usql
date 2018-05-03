@@ -1,0 +1,19 @@
+﻿REFERENCE ASSEMBLY ImageCommon;
+REFERENCE ASSEMBLY ImageOcr;
+
+@imgs =
+EXTRACT FileName string,
+        image byte[]
+FROM @"/usqlext/samples/cognition/{FileName}.jpg"
+USING new Cognition.Vision.ImageExtractor();
+
+@ocrs_from_applier =
+SELECT FileName,
+       ocr.*
+FROM @imgs
+     CROSS APPLY USING
+         new Cognition.Vision.OcrApplier(imgCol : "image") AS ocr(RectX float, RectY float, Width float, Height float, Text string);
+
+OUTPUT @ocrs_from_applier 
+TO "/output/releasenotes/winter2017-18/ocr_applier.csv"
+USING Outputters.Csv(outputHeader : true);

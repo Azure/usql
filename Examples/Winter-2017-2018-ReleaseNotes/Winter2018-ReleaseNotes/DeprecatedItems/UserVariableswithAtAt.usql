@@ -1,0 +1,15 @@
+﻿// This script will result in a syntax error during compilation
+
+DECLARE @@invalid_var string = "/output/releasenotes/winter2017-18/result.csv";
+
+OUTPUT
+(
+    SELECT @@invalid_var AS c
+    FROM(
+        VALUES
+        (
+            1
+        )) AS T(x)
+)
+TO @@invalid_var
+USING Outputters.Csv(outputHeader : true);

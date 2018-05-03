@@ -1,0 +1,20 @@
+﻿SET @@Diagnostics = true;
+
+@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string
+    FROM "/Samples/Data/SearchLog.tsv"
+    REQUIRED UserId
+    USING new RequiredOnExtract.SLExtractor();
+
+@res =
+SELECT UserId,
+       Start
+FROM @searchlog;
+
+OUTPUT @res
+ TO "/output/releasenotes/winter2017-18/extract-required.csv"
+ USING Outputters.Csv(outputHeader:true);
+

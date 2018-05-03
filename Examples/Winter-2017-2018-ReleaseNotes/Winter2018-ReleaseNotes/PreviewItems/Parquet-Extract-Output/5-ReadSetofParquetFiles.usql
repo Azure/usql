@@ -1,0 +1,23 @@
+﻿SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+@data_req = 
+    EXTRACT vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , vid int 
+    , date DateTime 
+    FROM "/output/releasenotes/winter2017-18/parquet/vehicles_{*}.parquet"
+    USING Extractors.Parquet();
+
+@data_req =
+SELECT DISTINCT *
+FROM @data_req;
+
+OUTPUT @data_req
+TO "/output/releasenotes/winter2017-18/parquet/vehicles_all.csv"
+USING Outputters.Csv(outputHeader:true);

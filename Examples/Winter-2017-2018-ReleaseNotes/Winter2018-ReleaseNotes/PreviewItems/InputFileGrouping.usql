@@ -1,0 +1,19 @@
+﻿// Assumes that the Images sample from https://github.com/Azure/usql/tree/master/Examples/ImageApp has been registered
+
+SET @@FeaturePreviews = " InputFileGrouping:on";
+
+DROP TABLE IF EXISTS T;
+
+REFERENCE ASSEMBLY Images;
+
+@image_features =
+    EXTRACT thumbnail byte[], 
+            name string, format string
+    FROM @"/Samples/Data/Images/{name}.{format}"
+    USING new Images.ImageFeatureExtractor(scaleWidth:500, scaleHeight:300);
+
+CREATE TABLE T(INDEX idx CLUSTERED(filename) DISTRIBUTED BY HASH (filename)) AS
+   SELECT name+"."+format AS filename, thumbnail 
+   FROM @image_features
+   WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
+

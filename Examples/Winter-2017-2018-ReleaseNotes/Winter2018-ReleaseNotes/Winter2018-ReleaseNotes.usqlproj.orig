@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>2c57c7a4-4d41-426b-90d2-677ed5b02990</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Name>Winter2018-ReleaseNotes</Name>
+    <RootNamespace>Winter2018-ReleaseNotes</RootNamespace>
+    <RuntimeVersion>default</RuntimeVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="DeprecatedItems\EmptyAsNullExtract\1-CreateEmptyAsNullInput.usql" />
+    <Script Include="DeprecatedItems\EmptyAsNullExtract\2-EmptyAsNullExtract.usql" />
+    <Script Include="DeprecatedItems\TVFParameterClash.usql" />
+    <Script Include="DeprecatedItems\UserVariableswithAtAt.usql" />
+    <Script Include="DiagnosticStream\DiagnosticStream.usql" />
+    <Script Include="FileProperties\2-FileProperties-PartitionElimination.usql" />
+    <Script Include="FileProperties\1-FileProperties-Select.usql" />
+    <Script Include="JobProperties\2-MimicUserFolder.usql" />
+    <Script Include="JobProperties\JobProperties.usql" />
+    <Script Include="PreviewItems\GZipOutput.usql" />
+    <Script Include="PreviewItems\InputFileGrouping.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\1.1-output.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\1.2-input.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\2.1-standalone-output.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\2.2-standalone-input.usql" />
+    <Script Include="Raise-Error-Warning\CreateFileForWarning.usql" />
+    <Script Include="Raise-Error-Warning\Raise-Error-Warning.usql" />
+    <Script Include="Script1.usql" />
+    <Script Include="U-SQL CASE Statements\CASE_Statements.usql" />
+    <Script Include="Windows Codepages\1-WritingWindowsEncodings.usql" />
+    <Script Include="Windows Codepages\2-ReadingWindowsEncodings.usql" />
+    <ScriptCode Include="DiagnosticStream\DiagnosticStream.usql.cs">
+      <DependentUpon>DiagnosticStream\DiagnosticStream.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="JobProperties\2-MimicUserFolder.usql.cs">
+      <DependentUpon>JobProperties\2-MimicUserFolder.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="JobProperties\JobProperties.usql.cs">
+      <DependentUpon>JobProperties\JobProperties.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="PreviewItems\InputFileGrouping.usql.cs">
+      <DependentUpon>PreviewItems\InputFileGrouping.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="Script1.usql.cs">
+      <DependentUpon>Script1.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="U-SQL CASE Statements\CASE_Statements.usql.cs">
+      <DependentUpon>U-SQL CASE Statements\CASE_Statements.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="Windows Codepages\1-WritingWindowsEncodings.usql.cs">
+      <DependentUpon>Windows Codepages\1-WritingWindowsEncodings.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="Windows Codepages\2-ReadingWindowsEncodings.usql.cs">
+      <DependentUpon>Windows Codepages\2-ReadingWindowsEncodings.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DeprecatedItems\EmptyAsNullExtract\" />
+    <Folder Include="FileProperties" />
+    <Folder Include="JobProperties" />
+    <Folder Include="DeprecatedItems" />
+    <Folder Include="DiagnosticStream" />
+    <Folder Include="PreviewItems\Parquet-Extract-Output" />
+    <Folder Include="Raise-Error-Warning" />
+    <Folder Include="Windows Codepages" />
+    <Folder Include="U-SQL CASE Statements" />
+    <Folder Include="PreviewItems" />
+  </ItemGroup>
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
+</Project>

@@ -1,0 +1,3 @@
+﻿@data = SELECT COALESCE((string) NULL, (string) null, "third_value", "fourth_value") AS val, NULLIF(4,4) AS Same, NULLIF(5,7) AS Different, ISNULL((int) null, 5) AS notnull FROM (VALUES(1)) AS T(x);
+
+OUTPUT @data TO "/output/temp/test.csv" USING Outputters.Csv();

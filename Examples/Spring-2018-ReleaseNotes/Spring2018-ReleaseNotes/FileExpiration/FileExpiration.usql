@@ -1,0 +1,16 @@
+﻿DECLARE @expiry = DateTime.Now().AddMinutes(5);
+                
+@data =
+SELECT "This is setting the file expiration " AS c1,
+       5 AS c2,
+       " minutes in the future" AS c3
+FROM(
+    VALUES
+    (
+        1
+    )) AS T(x);
+
+OUTPUT @data
+TO "/output/releasenotes/winter2018/fileexpiry/output5mins.csv"
+EXPIRATION @expiry
+USING Outputters.Text(delimiter:' ');

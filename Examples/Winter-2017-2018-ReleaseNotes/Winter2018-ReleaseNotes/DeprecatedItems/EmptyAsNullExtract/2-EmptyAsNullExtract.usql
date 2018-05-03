@@ -1,0 +1,16 @@
+﻿//SET @@InternalDebug = "EmptyStringAsNullWhenQuoting:on"; 
+
+@data = EXTRACT i int, i_null int?, s string, s_null string FROM "/output/releasenotes/winter2017-18/nulldata.csv" USING Extractors.Csv();
+
+@result =
+SELECT i,
+       i_null,
+       i_null == null? "Integer is null" : i_null.ToString() AS int_null_descr,
+       s,
+       s_null,
+       s_null ?? "String is null" AS string_null_descr
+FROM @data;
+
+OUTPUT @result
+TO "/output/releasenotes/winter2017-18/emptyasnull.csv"
+USING Outputters.Csv(outputHeader : true);

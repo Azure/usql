@@ -1,0 +1,16 @@
+﻿REFERENCE ASSEMBLY ImageCommon;
+REFERENCE ASSEMBLY ImageOcr;
+
+@ocrs_from_extractor =
+EXTRACT FileName string, 
+        RectX float,
+        RectY float,
+        Width float,
+        Height float,
+        Text string
+FROM @"/usqlext/samples/cognition/{FileName}.jpg"
+USING new Cognition.Vision.OcrExtractor(txtCol : "Text");
+
+OUTPUT @ocrs_from_extractor 
+TO "/output/releasenotes/winter2017-18/ocr_extractor.csv"
+USING Outputters.Csv(outputHeader : true);

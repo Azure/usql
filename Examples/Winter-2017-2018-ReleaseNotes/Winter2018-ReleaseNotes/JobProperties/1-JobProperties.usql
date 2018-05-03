@@ -1,0 +1,18 @@
+﻿@data =
+SELECT @@JobInfo.Id, // Guid?
+       @@JobInfo.Name AS JobName, // string
+       @@JobInfo.Priority, // int?
+       @@JobInfo.Allocation, // int?
+       @@JobInfo.Account.Name AS AccountName, // string
+       @@JobInfo.Submit.Alias, // string
+       @@JobInfo.Submit.Date // DateTime?
+FROM(
+    VALUES
+    (
+        1
+    )) AS T(x);
+
+OUTPUT @data
+TO "/output/releasenotes/winter2018/jobinfo.csv"
+USING Outputters.Csv(outputHeader : true);
+

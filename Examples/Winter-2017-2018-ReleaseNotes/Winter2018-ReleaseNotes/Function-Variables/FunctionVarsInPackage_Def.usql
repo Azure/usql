@@ -1,0 +1,13 @@
+﻿DROP PACKAGE IF EXISTS MyFunctions;
+
+CREATE PACKAGE MyFunctions () AS
+BEGIN
+  EXPORT @EnumerateToFloor Func<int,double,IEnumerable<int>> = (x, y) => Enumerable.Range(x, (int) Math.Floor(y));
+
+  EXPORT @TryParseDateTime Func<string, DateTime?> = 
+         (d) => {
+                  DateTime dt; 
+                  var b = DateTime.TryParse(d, out dt); 
+                  return b ? (DateTime?) dt : (DateTime?) null;
+                };
+END;

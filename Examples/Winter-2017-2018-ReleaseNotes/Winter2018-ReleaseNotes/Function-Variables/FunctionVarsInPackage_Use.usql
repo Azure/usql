@@ -1,0 +1,25 @@
+﻿IMPORT PACKAGE MyFunctions() AS myfns;
+
+@data1 = 
+    SELECT * 
+    FROM (VALUES(1, (float)456, (float)5.2)) AS T(id, revenueamount, BillingFrequency);
+
+@res1 = 
+    SELECT *
+    FROM @data1 CROSS APPLY EXPLODE (myfns.@EnumerateToFloor(1, BillingFrequency)) AS q(Quartile);
+
+OUTPUT @res1
+TO "/output/releasenotes/winter2017-18/quartile.csv"
+USING Outputters.Csv(outputHeader : true);
+
+@data2 =
+  SELECT myfns.@TryParseDateTime(c_date_str) AS c_date
+  FROM (VALUES
+        ("2018-01-01T01:02:03"),
+        ("12/13/2017"),
+        ("invalid")
+       ) AS T(c_date_str);
+
+OUTPUT @data2
+TO "/output/releasenotes/winter2017-18/tryparse.csv"
+USING Outputters.Csv(outputHeader : true);

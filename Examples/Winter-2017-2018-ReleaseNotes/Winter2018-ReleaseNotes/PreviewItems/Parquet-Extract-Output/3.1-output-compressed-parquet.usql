@@ -1,0 +1,29 @@
+﻿SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+@I=
+    SELECT *
+    FROM (VALUES
+           ((long?) 9223372036854775807,
+            (decimal?) 345.67800,
+            "This is a long string, so long that hopefully the compression will make a difference when writing the column. Long strings benefit from compression."),
+           ((long?) 9223372036854775807,
+            (decimal?) 1234567.89,
+            "This is another long string, so long that hopefully the compression will make a difference when writing the column. Long strings benefit from compression.")       
+         ) AS T(c_bigint, c_decimal, c_string);
+
+// write uncompressed
+OUTPUT @I 
+TO "/output/releasenotes/winter2017-18/parquet/uncompressed.parquet"
+USING Outputters.Parquet(columnOptions:"1.8");
+
+
+// write compressed string column
+OUTPUT @I 
+TO "/output/releasenotes/winter2017-18/parquet/compressed_string.snappy.parquet"
+USING Outputters.Parquet(columnOptions:"1.8,2~snappy");
+
+
+// compress string with snappy and bigint value with brotli
+OUTPUT @I 
+TO "/output/releasenotes/winter2017-18/parquet/compressed.parquet"
+USING Outputters.Parquet(columnOptions:"1.8,2~snappy,0~brotli");

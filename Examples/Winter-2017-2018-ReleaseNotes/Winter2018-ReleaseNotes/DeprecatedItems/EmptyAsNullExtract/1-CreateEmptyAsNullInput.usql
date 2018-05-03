@@ -1,0 +1,14 @@
+﻿@data =
+SELECT 1 AS i,
+       (int?) null AS i_null,
+       "b" AS s,
+       (string) null AS s_null
+FROM(
+    VALUES
+    (
+        1
+    )) AS T(x);
+
+OUTPUT @data
+TO "/output/releasenotes/winter2017-18/nulldata.csv"
+USING Outputters.Csv();

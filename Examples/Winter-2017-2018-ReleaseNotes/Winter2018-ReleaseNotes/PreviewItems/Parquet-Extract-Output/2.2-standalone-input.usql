@@ -1,0 +1,37 @@
+﻿SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+// Full schema
+@I = EXTRACT
+		c_boolean bool?,
+		c_tinyint byte?,
+		c_smallint short?,
+		c_int int?,
+		c_bigint long?,
+		c_float float?,
+		c_double double?,
+		c_decimal_int decimal?,
+		c_decimal_w_params decimal?,
+		c_timestamp DateTime?,
+		c_string string,
+		c_binary byte[]
+FROM "/output/releasenotes/winter2017-18/parquet/typedvalues.parquet"
+USING Extractors.Parquet();
+
+OUTPUT @I TO "/output/releasenotes/winter2017-18/parquet/typedvalues.csv"
+USING Outputters.Csv(outputHeader:true);
+
+// Partial schema, with the better decimal scale
+@N = EXTRACT
+		c_tinyint byte?,
+		c_smallint short?,
+		c_int int?,
+		c_bigint long?,
+		c_float float?,
+		c_double double?,
+		c_decimal_int decimal?,
+		c_decimal_w_params decimal?
+FROM "/output/releasenotes/winter2017-18/parquet/typedvalues2.parquet"
+USING Extractors.Parquet();
+
+OUTPUT @N TO "/output/releasenotes/winter2017-18/parquet/typed_numeric_values.csv"
+USING Outputters.Csv(outputHeader:true);

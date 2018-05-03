@@ -1,0 +1,18 @@
+﻿SET @@FeaturePreviews = "GZipOutput:on";
+
+@data =
+SELECT *
+FROM(
+    VALUES
+    (
+        1,
+        2
+    ),
+    (
+        3,
+        4
+    )) AS T(i, j);
+
+OUTPUT @data
+TO "/output/data.csv.gz"
+USING Outputters.Csv(outputHeader:true);

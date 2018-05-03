@@ -1,0 +1,4 @@
+﻿SET @@InternalDebug = "EnableRenameStatement:on";
+RENAME TABLE TestRename TO t2;
+//RENAME TABLE IF EXISTS t2 TO IF NOT EXISTS t2_prime;
+

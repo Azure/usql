@@ -1,0 +1,20 @@
+﻿@data = 
+    EXTRACT 
+      vehicle_id int
+    , entry_id long
+    , event_date DateTime
+    , latitude float
+    , longitude float
+    , speed int
+    , direction string
+    , trip_id int?
+    , uri = FILE.URI()
+    , modified_date = FILE.MODIFIED()
+    , created_date = FILE.CREATED()
+    , file_sz = FILE.LENGTH()
+FROM "/Samples/Data/AmbulanceData/vehicle{*}"
+USING Extractors.Csv();
+
+OUTPUT @data
+TO "/output/releasenotes/winter2017-18/fileprops.csv"
+USING Outputters.Csv(outputHeader : true);

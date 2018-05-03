@@ -1,0 +1,26 @@
+﻿// Run this script once before creating the file @semfile to raise the error. 
+// Then create the sempaphore file (with the CreateFileForWarning.usql script) and run this script to get no error or warning
+// Then run the script again to get the warning
+
+//DECLARE @semfile = @"/output/releasenotes/winter2017-18/raise-error-warning_sem.txt";
+DECLARE @outfile = @"/output/releasenotes/winter2017-18/raise-error-warning_out.csv";
+
+//DECLARE @error = "Semaphore file <" + @semfile +"> does not exists or is locking the job. Job aborted.";
+DECLARE @warning = "Output file <{0}> already exists and will be overwritten.";
+
+//IF (!FILE.EXISTS(@semfile) || FILE.LENGTH(@semfile) > 0) THEN
+//   RAISE ERROR @error;
+//ELSEIF (FILE.EXISTS(@outfile)) THEN
+   RAISE WARNING String.Format(@warning, @outfile);
+//END;
+
+@data =
+SELECT "This is some data" AS data FROM (VALUES(1)) AS T(x);
+
+OUTPUT @data
+TO @outfile
+USING Outputters.Csv();
+
+//OUTPUT (SELECT x FROM (VALUES(1)) AS T(x) )//WHERE false) 
+//TO @semfile
+//USING Outputters.Csv();

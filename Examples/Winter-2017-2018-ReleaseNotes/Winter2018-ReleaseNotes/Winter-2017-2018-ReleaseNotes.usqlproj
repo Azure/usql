@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>2c57c7a4-4d41-426b-90d2-677ed5b02990</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Name>Winter-2017-2018-ReleaseNotes</Name>
+    <RootNamespace>Winter2018-ReleaseNotes</RootNamespace>
+    <RuntimeVersion>default</RuntimeVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="CognitiveServices\KeyPhraseExtractor.usql" />
+    <Script Include="CognitiveServices\KeyPhraseProcessor.usql" />
+    <Script Include="CognitiveServices\OCRExtractor.usql" />
+    <Script Include="DECLARE script-bound objects\DECLARE-Assembly.usql" />
+    <Script Include="DECLARE script-bound objects\DECLARE-Function.usql" />
+    <Script Include="DeprecatedItems\EmptyAsNullExtract\1-CreateEmptyAsNullInput.usql" />
+    <Script Include="DeprecatedItems\EmptyAsNullExtract\2-EmptyAsNullExtract.usql" />
+    <Script Include="DeprecatedItems\TVFParameterClash.usql" />
+    <Script Include="DeprecatedItems\UserVariableswithAtAt.usql" />
+    <Script Include="DiagnosticStream\DiagnosticStream.usql" />
+    <Script Include="FileProperties\2-FileProperties-PartitionElimination.usql" />
+    <Script Include="FileProperties\1-FileProperties-Select.usql" />
+    <Script Include="Function-Variables\Declare_Function.usql" />
+    <Script Include="Function-Variables\FunctionVarsInPackage_Def.usql" />
+    <Script Include="Function-Variables\FunctionVarsInPackage_Use.usql" />
+    <Script Include="JobProperties\1-JobProperties.usql" />
+    <Script Include="JobProperties\2-MimicUserFolder.usql" />
+    <Script Include="CognitiveServices\OCRApplier.usql" />
+    <Script Include="PreviewItems\GZipOutput.usql" />
+    <Script Include="PreviewItems\InputFileGrouping.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\1.1-output.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\1.2-input.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\2.1-standalone-output.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\2.2-standalone-input.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\3.1-output-compressed-parquet.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\4-OutputSetofParquetFiles.usql" />
+    <Script Include="PreviewItems\Parquet-Extract-Output\5-ReadSetofParquetFiles.usql" />
+    <Script Include="Query Expr with ORDER-BY-FETCH\Extract-Order-By-Fetch.usql" />
+    <Script Include="Query Expr with ORDER-BY-FETCH\TVF-Order-By-Fetch.usql" />
+    <Script Include="Raise-Error-Warning\CreateFileForWarning.usql" />
+    <Script Include="Raise-Error-Warning\Raise-Error-Warning.usql" />
+    <Script Include="RequiredOnExtracts\RequiredOnExtract.usql" />
+    <Script Include="Script1.usql" />
+    <Script Include="SortedByClause\FailingSortedByExtract.usql" />
+    <Script Include="SortedByClause\WorkingSortedByExtract.usql" />
+    <Script Include="U-SQL CASE Statements\CASE_Statements.usql" />
+    <Script Include="UDO-Annotations\UDO-memory-annotation.usql" />
+    <Script Include="Windows Codepages\1-WritingWindowsEncodings.usql" />
+    <Script Include="Windows Codepages\2-ReadingWindowsEncodings.usql" />
+    <ScriptCode Include="DiagnosticStream\DiagnosticStream.usql.cs">
+      <DependentUpon>DiagnosticStream\DiagnosticStream.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="JobProperties\1-JobProperties.usql.cs">
+      <DependentUpon>JobProperties\1-JobProperties.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="JobProperties\2-MimicUserFolder.usql.cs">
+      <DependentUpon>JobProperties\2-MimicUserFolder.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="PreviewItems\InputFileGrouping.usql.cs">
+      <DependentUpon>PreviewItems\InputFileGrouping.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="RequiredOnExtracts\RequiredOnExtract.usql.cs">
+      <DependentUpon>RequiredOnExtracts\RequiredOnExtract.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="SortedByClause\FailingSortedByExtract1.usql.cs">
+      <DependentUpon>SortedByClause\FailingSortedByExtract.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="SortedByClause\WorkingSortedByExtract1.usql.cs">
+      <DependentUpon>SortedByClause\WorkingSortedByExtract.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="UDO-Annotations\UDO-memory-annotation.usql.cs">
+      <DependentUpon>UDO-Annotations\UDO-memory-annotation.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DeprecatedItems\EmptyAsNullExtract\" />
+    <Folder Include="FileProperties" />
+    <Folder Include="JobProperties" />
+    <Folder Include="DeprecatedItems" />
+    <Folder Include="DiagnosticStream" />
+    <Folder Include="DECLARE script-bound objects" />
+    <Folder Include="Function-Variables" />
+    <Folder Include="KeyPhrases-CognitiveServices" />
+    <Folder Include="UDO-Annotations" />
+    <Folder Include="RequiredOnExtracts" />
+    <Folder Include="SortedByClause" />
+    <Folder Include="Query Expr with ORDER-BY-FETCH" />
+    <Folder Include="CognitiveServices" />
+    <Folder Include="PreviewItems\Parquet-Extract-Output" />
+    <Folder Include="Raise-Error-Warning" />
+    <Folder Include="Windows Codepages" />
+    <Folder Include="U-SQL CASE Statements" />
+    <Folder Include="PreviewItems" />
+  </ItemGroup>
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" Condition="'$(BuildingInsideVisualStudio)' == 'true'" />
+  <!--target for CICD command line build added by project migration tool-->
+  <Import Project="USqlSDKBuild.targets" Condition="'$(BuildingInsideVisualStudio)' != 'true' And  Exists('USqlSDKBuild.targets')" />
+  <Import Project="$(USQLSDKPath)\USqlSDKBuild.targets" Condition="'$(BuildingInsideVisualStudio)' != 'true' And !Exists('USqlSDKBuild.targets') And '$(USQLSDKPath)' != '' And Exists('$(USQLSDKPath)\USqlSDKBuild.targets')" />
+</Project>

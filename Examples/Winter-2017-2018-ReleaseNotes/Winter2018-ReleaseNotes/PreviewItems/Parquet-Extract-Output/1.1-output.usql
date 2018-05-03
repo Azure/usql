@@ -1,0 +1,5 @@
+﻿SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+OUTPUT (SELECT driver_id,name, street, city, region, zipcode, country FROM DriverDB.[Driver Schema].Drivers)
+TO "/output/releasenotes/winter2017-18/parquet/ParquetDemo.parquet"
+USING Outputters.Parquet();

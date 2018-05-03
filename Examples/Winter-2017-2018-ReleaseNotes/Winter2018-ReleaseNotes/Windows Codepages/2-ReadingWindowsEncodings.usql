@@ -1,0 +1,23 @@
+﻿DECLARE @enc1250 = System.Text.Encoding.GetEncoding(1250);
+DECLARE @input1250 = "/output/releasenotes/winter2017-18/encoding/res_1250.csv";
+DECLARE @input1252 = "/output/releasenotes/winter2017-18/encoding/res_1252.csv";
+DECLARE @input1253 = "/output/releasenotes/winter2017-18/encoding/res_1253.csv";
+DECLARE @input1256 = "/output/releasenotes/winter2017-18/encoding/res_1256.csv";
+
+// Original text that was written was in Unicode:
+// Some sample text with Α α Β β θ £ ¥ Ä ä æ ç ö
+
+@data = EXTRACT text string FROM @input1250 USING Extractors.Csv(encoding:@enc1250);
+OUTPUT @data TO "/output/releasenotes/winter2017-18/encoding/extracted_1250.csv" USING Outputters.Csv();
+
+@data = EXTRACT text string FROM @input1252 USING Extractors.Csv(encoding:System.Text.Encoding.GetEncoding("windows-1252"));
+OUTPUT @data TO "/output/releasenotes/winter2017-18/encoding/extracted_1252.csv" USING Outputters.Csv();
+
+@data = EXTRACT text string FROM @input1253 USING Extractors.Csv(encoding:System.Text.Encoding.GetEncoding(1253));
+OUTPUT @data TO "/output/releasenotes/winter2017-18/encoding/extracted_1253.csv" USING Outputters.Csv();
+
+@data = EXTRACT text string FROM @input1256 USING Extractors.Csv(encoding:System.Text.Encoding.GetEncoding("Windows-1256"));
+OUTPUT @data TO "/output/releasenotes/winter2017-18/encoding/extracted_1256.csv" USING Outputters.Csv();
+
+@data = EXTRACT text string FROM @input1253 USING Extractors.Csv(encoding:System.Text.Encoding.GetEncoding("Windows-1253"));
+OUTPUT @data TO "/output/releasenotes/winter2017-18/encoding/extracted_1253-1252.csv" USING Outputters.Csv(encoding:System.Text.Encoding.GetEncoding(1252));

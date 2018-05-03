@@ -1,0 +1,7 @@
+﻿DECLARE CONST @output = "/output/releasenotes/winter2017-18/" + @@JobInfo.Submit.Alias.Substring(0, @@JobInfo.Submit.Alias.IndexOf('@')) + "/result.csv";
+
+@data = SELECT data FROM (VALUES ("This data is inserted into a folder based on the alias who submitted the job")) AS T(data);
+
+OUTPUT @data
+TO @output
+USING Outputters.Csv();

@@ -1,0 +1,16 @@
+﻿SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+@data =
+EXTRACT driver_id int,
+//        name string,
+        street string,
+        city string,
+        region string,
+        zipcode string,
+        country string
+FROM "/output/ParquetDemo.parquet"
+USING Extractors.Parquet();
+
+OUTPUT @data
+TO "/output/ParquetDemo.csv"
+USING Outputters.Csv();

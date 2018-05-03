@@ -1,0 +1,16 @@
+﻿SET @@Diagnostics = true;
+
+    @data =
+    EXTRACT [id] int,
+            [date] DateTime,
+            [market] string,
+            [searchstring] string,
+            [time] int,
+            [found_urls] string,
+            [visited_urls] string
+    FROM "/Samples/Data/SearchLogWithHeaderandWronglines.tsv"
+    USING new USQLApplication1.MyExtractor();
+
+    OUTPUT @data
+    TO "/output/searchlog.tsv"
+    USING Outputters.Tsv(outputHeader:true, quoting: false);

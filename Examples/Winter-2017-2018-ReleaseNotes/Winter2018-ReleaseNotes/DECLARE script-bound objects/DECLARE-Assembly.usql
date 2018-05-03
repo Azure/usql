@@ -1,0 +1,30 @@
+﻿// See https://blogs.msdn.microsoft.com/azuredatalake/2016/08/26/how-to-register-u-sql-assemblies-in-your-u-sql-catalog/#s4 for more details on which assemblies to upload.
+
+DECLARE @ASSEMBLY_PATH string = "/upload/asm/spatial/";
+DECLARE @SPATIAL_ASM string = @ASSEMBLY_PATH+"Microsoft.SqlServer.Types.dll";
+DECLARE @SPATIAL_NATIVEDLL string = @ASSEMBLY_PATH+"SqlServerSpatial130.dll";
+
+DECLARE ASSEMBLY @SqlSpatial FROM @SPATIAL_ASM
+WITH ADDITIONAL_FILES =
+     (
+         @SPATIAL_NATIVEDLL
+     );
+
+REFERENCE ASSEMBLY @SqlSpatial;
+REFERENCE SYSTEM ASSEMBLY [System.Xml];
+
+USING Geometry = Microsoft.SqlServer.Types.SqlGeometry;
+USING Geography = Microsoft.SqlServer.Types.SqlGeography;
+USING SqlChars = System.Data.SqlTypes.SqlChars;
+
+@spatial =
+    SELECT * FROM (VALUES 
+                   // The following expression is not using the native DDL
+                   ( Geometry.Point(1.0,1.0,0).ToString()),    
+                   // The following expression is using the native DDL
+                   ( Geometry.STGeomFromText(new SqlChars("LINESTRING (100 100, 20 180, 180 180)"), 0).ToString()) 
+                  ) AS T(geom);
+
+OUTPUT @spatial
+TO "//output/releasenotes/winter2017-18/spatial.csv"
+USING Outputters.Csv();

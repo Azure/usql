@@ -1,0 +1,15 @@
+﻿@searchlog =
+    EXTRACT UserId          int,
+            Start           DateTime,
+            Region          string,
+            Query           string,
+            Duration        int?,
+            Urls            string,
+            ClickedUrls     string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv()
+    ORDER BY Duration DESC FETCH 10;
+
+OUTPUT @searchlog
+ TO "/output/releasenotes/winter2017-18/extract-order-by.csv"
+ USING Outputters.Csv(outputHeader:true);

@@ -1,0 +1,26 @@
+﻿SET @@FeaturePreviews = "EnableParquetUdos:on";
+
+@I =
+SELECT (bool?) true AS c_boolean,
+       (byte?) 1 AS c_tinyint,
+       (short?) null AS c_smallint,
+       (int) 2147483647 AS c_int,
+       (long?) 9223372036854775807 AS c_bigint,
+       (float?) 123.345 AS c_float,
+       (double?) 234.567 AS c_double,
+       (decimal?) 346 AS c_decimal_int,
+       (decimal?) 345.67800 AS c_decimal_w_params,
+       DateTime.Parse("2015-05-10T12:15:35.1230000Z") AS c_timestamp,
+       "ala ma kota" AS c_string,
+       new byte[]{42, 43, 57} AS c_binary
+FROM (VALUES(1)) AS T(x);
+
+OUTPUT @I TO "/output/releasenotes/winter2017-18/parquet/typedvalues.parquet"
+USING Outputters.Parquet();
+
+
+// Setting the decimal scale explicitly
+
+OUTPUT @I 
+TO "/output/releasenotes/winter2017-18/parquet/typedvalues2.parquet"
+USING Outputters.Parquet(columnOptions:"8.8");
