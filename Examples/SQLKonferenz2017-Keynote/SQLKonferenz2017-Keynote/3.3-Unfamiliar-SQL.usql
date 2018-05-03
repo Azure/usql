@@ -1,0 +1,19 @@
+﻿@left =
+    SELECT *
+    FROM (VALUES ( 1, "x", (int?) 50 ),
+                 ( 1, "y", (int?) 60 )
+         ) AS L(K, A, C);
+
+@right =
+    SELECT *
+    FROM (VALUES ( 5, "x", 1 ),
+                 ( 6, "x", 2 ),
+                 (10, "y", 3 )
+         ) AS R(B, A, K);
+
+@res =
+    SELECT * FROM @left
+    OUTER UNION BY NAME ON (A, K)
+    SELECT * FROM @right;
+
+OUTPUT @res TO "/output/docsamples/outerunion.csv" USING Outputters.Csv();

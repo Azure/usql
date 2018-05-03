@@ -1,0 +1,8 @@
+﻿@data = EXTRACT date string,
+                time string,
+                author string,
+                tweet string
+    FROM "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
+    USING Extractors.Csv();
+
+OUTPUT @data TO "/Output/sqlkonf.csv" USING Outputters.Csv();

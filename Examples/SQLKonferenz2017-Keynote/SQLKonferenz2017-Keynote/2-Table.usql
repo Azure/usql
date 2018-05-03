@@ -1,0 +1,25 @@
+﻿DROP TABLE IF EXISTS TweetData;
+CREATE TABLE TweetData (
+                date string,
+                time string,
+                author string,
+                tweet string, 
+                origin SqlArray<string>,
+                INDEX idx CLUSTERED (author)
+                DISTRIBUTED BY HASH(author) INTO 2 
+);
+
+@data = EXTRACT date string,
+                time string,
+                author string,
+                tweet string, 
+                origin string
+    FROM "/Samples/Data/Tweets/{origin}Tweets.csv"
+    USING Extractors.Csv();
+
+INSERT INTO TweetData 
+   SELECT date, time, author, tweet, ARRAY_AGG(origin.ToLowerInvariant()) AS origin
+   FROM @data
+        
+   WHERE tweet.EndsWith("stop")
+   GROUP BY date, time, author, tweet;

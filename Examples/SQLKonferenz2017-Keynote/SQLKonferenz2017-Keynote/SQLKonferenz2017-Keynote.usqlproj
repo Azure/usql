@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>fd4830ed-213b-4c23-be5d-4b9d3957ccc2</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Name>SQLKonferenz2017-Keynote</Name>
+    <RootNamespace>SQLKonferenz2017-Keynote</RootNamespace>
+    <RuntimeVersion>default</RuntimeVersion>
+    <OutputStreamPath>C:\LocalRunDataRoot</OutputStreamPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="1.2-Fileset.usql" />
+    <Script Include="2-Table.usql" />
+    <Script Include="1.1-Files.usql" />
+    <Script Include="3.1-Familiar-CSharp.usql" />
+    <Script Include="3.2-Familiar-SQL.usql" />
+    <Script Include="4-USQL-ObjectModel.usql" />
+    <Script Include="5-USQL-UDOs.usql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ScriptCode Include="3.1-Familiar-CSharp.usql.cs">
+      <DependentUpon>3.1-Familiar-CSharp.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="5-USQL-UDOs.usql.cs">
+      <DependentUpon>5-USQL-UDOs.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
+</Project>

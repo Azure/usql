@@ -1,0 +1,46 @@
+﻿DROP FUNCTION IF EXISTS TweetAndMentionsTVF;
+
+CREATE FUNCTION TweetAndMentionsTVF(@origin string = null)
+RETURNS @res 
+AS
+BEGIN
+
+// In order to see the user-code inside the TVF, you have to reference the assembly inside the TVF body.
+REFERENCE ASSEMBLY TweetAnalysis; // Generated from TweetAnalysis Example 
+
+// Extract mentions
+@m =
+    SELECT origin,
+           TweetAnalysis.Udfs.get_mentions(tweet) AS mentions,
+           author AS mentioned_by
+    FROM TweetData
+    WHERE String.IsNullOrEmpty(@origin) || origin.Contains(@origin);
+
+// Combine authors and mentions
+@t =
+    SELECT origin,
+           author,
+           "author" AS category,
+           "" AS mentioned_by
+    FROM TweetData
+    UNION ALL
+    SELECT origin,
+           m.Substring(1) AS m,
+           "mention" AS category,
+           mentioned_by
+    FROM @m
+         CROSS APPLY
+             EXPLODE(mentions) AS t(m)
+    WHERE m != "@";
+
+// Count authors and mentions
+@res =
+    SELECT author.ToLowerInvariant() AS author,
+           category,
+           COUNT( * ) AS tweetcount,
+           new SQL.ARRAY<string>(ARRAY_AGG(origin).SelectMany(x => x).Distinct()) AS file_origin,
+           ARRAY_AGG(DISTINCT mentioned_by) AS mentioned_by
+    FROM @t
+    GROUP BY author.ToLowerInvariant(),
+             category;
+END;

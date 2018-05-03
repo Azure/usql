@@ -1,0 +1,26 @@
+﻿
+@m = SELECT TweetAnalysis.Udfs.get_mentions(tweet) AS mentions
+     FROM TweetData;
+
+@m = SELECT m.Substring(1) AS m
+          , "mention" AS category
+     FROM @m CROSS APPLY EXPLODE(mentions) AS t(m)
+     WHERE m != "@";
+
+@t =
+    SELECT author, "author" AS category
+    FROM TweetData
+    UNION ALL
+    SELECT *
+    FROM @m;
+
+@res = SELECT author.ToLowerInvariant() AS author
+            ,  category
+            , COUNT( * ) AS tweetcount
+       FROM @t
+       GROUP BY author.ToLowerInvariant(), category;
+
+OUTPUT @res
+TO "/Output/TweetAnalysis/MyTwitterAnalysis.csv"
+ORDER BY tweetcount DESC
+USING Outputters.Csv();

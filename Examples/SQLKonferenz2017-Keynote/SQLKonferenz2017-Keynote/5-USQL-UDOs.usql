@@ -1,0 +1,16 @@
+﻿@in = EXTRACT begin DateTime, end DateTime, user string
+      FROM "/Samples/Blogs/MRys/Ranges/ranges.txt"
+      USING Extractors.Text(delimiter:'-');
+
+@r = REDUCE @in PRESORT begin
+     ON user 
+     PRODUCE begin DateTime, end DateTime, user string 
+     READONLY user
+     USING new ReduceSample.RangeReducer();
+
+// Remove comment to show filter push through the reducer
+// @r = SELECT * FROM @r WHERE user == "ABC";
+
+OUTPUT @r
+TO "/temp/result.csv"
+USING Outputters.Csv();

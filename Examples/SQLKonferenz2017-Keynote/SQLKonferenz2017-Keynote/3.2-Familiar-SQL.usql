@@ -1,0 +1,69 @@
+﻿// Requires 4-USQL-ObjectModel.usql to be executed to create the TVF
+
+// Analyzes cooked TweetAuthorsAndMentions
+//
+// Does some analytics using windowing expressions.
+// 
+// 1. Shows use of windowing expressions
+// 2. Constant table with VALUES
+// 3. ARRAY Contains
+// 4. Joins
+
+// For each author and category with tweetcount > 50, get their tweetcount, the median tweetcount in the category, their percentile and absolute rank in rank order 
+@res =
+  SELECT DISTINCT
+         author, category, tweetcount
+       , PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY tweetcount ASC) 
+         OVER (PARTITION BY category) AS median_tweetcount_perhandle_category
+       , PERCENT_RANK() OVER 
+         (PARTITION BY category ORDER BY tweetcount ASC) AS relative_rank
+       , ROW_NUMBER() OVER 
+         (PARTITION BY category ORDER BY tweetcount DESC) AS absolute_rank
+FROM TweetAndMentionsTVF(DEFAULT) AS t
+WHERE tweetcount >= 50;
+
+OUTPUT @res
+TO "/Output/TweetAnalysis/MyTwitterAnalysis6.csv"
+ORDER BY absolute_rank, category ASC
+USING Outputters.Csv();
+
+// For each author who provided their tweet feed (to be fair), provide their influence measured as mentioned/authored 
+// Account for changes to tweet handles with a constant lookup table 
+// (could also be done as a standard table, or as a file that gets deployed as resource and looked up with a UDF)
+
+@tweet_handle_mapping = SELECT * FROM (VALUES ("sqlservermike","mikedoesbigdata")) AS T(old_handle, new_handle);
+
+@t =
+    SELECT n.new_handle ?? t.author AS author,
+           category,
+           tweetcount, 
+           file_origin
+    FROM TweetAndMentionsTVF(DEFAULT) AS t
+         LEFT OUTER JOIN
+             @tweet_handle_mapping AS n
+         ON t.author == n.old_handle;
+
+@t =
+    SELECT author,
+           category,
+           SUM(tweetcount) AS tweetcount
+    FROM @t
+    WHERE file_origin != null && file_origin.Contains(author)
+    GROUP BY author,
+             category;
+
+@res =
+    SELECT m.author,
+           a.tweetcount AS authored_count,
+           m.tweetcount AS mentioned_count,
+           (double) m.tweetcount / (double) a.tweetcount AS influence
+    FROM @t AS a
+         JOIN
+             @t AS m
+         ON a.author == m.author
+    WHERE a.category == "author" AND m.category == "mention";
+
+OUTPUT @res
+TO "/Output/TweetAnalysis/influencer.csv"
+ORDER BY influence DESC
+USING Outputters.Csv();
