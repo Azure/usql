@@ -1,3 +1,0 @@
-﻿OUTPUT (SELECT x FROM (VALUES(1)) AS T(x) WHERE false) 
-TO "/output/releasenotes/winter2018/raise-error-warning_sem.txt" 
-USING Outputters.Csv();

@@ -1,0 +1,17 @@
+﻿REFERENCE ASSEMBLY [TextKeyPhrase];
+
+@keyphrase_from_extractor = 
+    EXTRACT FileName string,
+            NumPhrases int,
+            KeyPhrase SQL.ARRAY<string>
+    FROM @"/usqlext/samples/cognition/{FileName}.txt"
+    USING new Cognition.Text.KeyPhraseExtractor();
+
+@keyphrase_from_extractor_exploded =
+    SELECT FileName, NumPhrases, T.KeyPhrase
+    FROM @keyphrase_from_extractor
+         CROSS APPLY EXPLODE (KeyPhrase) AS T(KeyPhrase);
+
+OUTPUT @keyphrase_from_extractor_exploded
+TO "/output/releasenotes/winter2017-18/keyphrase-extractor.csv"
+USING Outputters.Csv(outputHeader : true);

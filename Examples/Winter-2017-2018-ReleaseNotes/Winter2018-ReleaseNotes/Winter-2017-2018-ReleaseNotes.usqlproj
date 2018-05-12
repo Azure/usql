@@ -53,11 +53,9 @@
     <Script Include="Raise-Error-Warning\CreateFileForWarning.usql" />
     <Script Include="Raise-Error-Warning\Raise-Error-Warning.usql" />
     <Script Include="RequiredOnExtracts\RequiredOnExtract.usql" />
-    <Script Include="Script1.usql" />
     <Script Include="SortedByClause\FailingSortedByExtract.usql" />
     <Script Include="SortedByClause\WorkingSortedByExtract.usql" />
     <Script Include="U-SQL CASE Statements\CASE_Statements.usql" />
-    <Script Include="UDO-Annotations\UDO-memory-annotation.usql" />
     <Script Include="Windows Codepages\1-WritingWindowsEncodings.usql" />
     <Script Include="Windows Codepages\2-ReadingWindowsEncodings.usql" />
     <ScriptCode Include="DiagnosticStream\DiagnosticStream.usql.cs">
@@ -81,9 +79,6 @@
     <ScriptCode Include="SortedByClause\WorkingSortedByExtract1.usql.cs">
       <DependentUpon>SortedByClause\WorkingSortedByExtract.usql</DependentUpon>
     </ScriptCode>
-    <ScriptCode Include="UDO-Annotations\UDO-memory-annotation.usql.cs">
-      <DependentUpon>UDO-Annotations\UDO-memory-annotation.usql</DependentUpon>
-    </ScriptCode>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DeprecatedItems\EmptyAsNullExtract\" />
@@ -93,8 +88,6 @@
     <Folder Include="DiagnosticStream" />
     <Folder Include="DECLARE script-bound objects" />
     <Folder Include="Function-Variables" />
-    <Folder Include="KeyPhrases-CognitiveServices" />
-    <Folder Include="UDO-Annotations" />
     <Folder Include="RequiredOnExtracts" />
     <Folder Include="SortedByClause" />
     <Folder Include="Query Expr with ORDER-BY-FETCH" />
