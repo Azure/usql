@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // 
+using System.Collections;
 using System.IO;
 using Microsoft.Analytics.Interfaces;
 using Newtonsoft.Json;
@@ -79,23 +80,43 @@ namespace Microsoft.Analytics.Samples.Formats.Json
 
             // Fields
             var columns = row.Schema;
+
             for(int i=0; i<columns.Count; i++)
             {
                 // Note: We simply delegate to Json.Net for all data conversions
                 //  For data conversions beyond what Json.Net supports, do an explicit projection:
                 //      ie: SELECT datetime.ToString(...) AS datetime, ...
-                object value = row.Get<object>(i);
-
-                // Note: We don't bloat the JSON with sparse (null) properties
-                if(value != null)
-                { 
-                    writer.WritePropertyName(columns[i].Name, escape:true);
-                    writer.WriteValue(value);
-                }
+                writer.WritePropertyName(columns[i].Name, escape: true);
+                WriteValue(row.Get<object>(i), writer);
             }
 
             // Footer
             writer.WriteEndObject();
+        }
+
+        private static void WriteValue(object value, JsonTextWriter writer)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            if (value.GetType() != typeof(string) && value.GetType() != typeof(byte[]) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
+            {
+                var items = (IEnumerable)value;
+
+                writer.WriteStartArray();
+
+                foreach (var item in items)
+                {
+                    WriteValue(item, writer);
+                }
+
+                writer.WriteEndArray();
+                return;
+            }
+
+            writer.WriteValue(value);
         }
     }
 }
