@@ -31,6 +31,8 @@
     <Script Include="DeprecatedItems\TVFParameterClash.usql" />
     <Script Include="DeprecatedItems\UserVariableswithAtAt.usql" />
     <Script Include="DiagnosticStream\DiagnosticStream.usql" />
+    <Script Include="EXTRACT with TYPE\1-CreateTableTypes.usql" />
+    <Script Include="EXTRACT with TYPE\2-EXTRACTWithTypes.usql" />
     <Script Include="FileProperties\2-FileProperties-PartitionElimination.usql" />
     <Script Include="FileProperties\1-FileProperties-Select.usql" />
     <Script Include="Function-Variables\Declare_Function.usql" />
@@ -88,6 +90,7 @@
     <Folder Include="DiagnosticStream" />
     <Folder Include="DECLARE script-bound objects" />
     <Folder Include="Function-Variables" />
+    <Folder Include="EXTRACT with TYPE" />
     <Folder Include="RequiredOnExtracts" />
     <Folder Include="SortedByClause" />
     <Folder Include="Query Expr with ORDER-BY-FETCH" />

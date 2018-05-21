@@ -1,0 +1,5 @@
+﻿DROP TYPE IF EXISTS type1;
+DROP TYPE IF EXISTS type2;
+
+CREATE TYPE type1 AS TABLE(UserId int, Start DateTime, Region string, Query string);
+CREATE TYPE type2 AS TABLE(Urls string, ClickedUrls string);

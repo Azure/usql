@@ -1,0 +1,13 @@
+﻿// Run 1-CreateTableTypes.usql first
+
+    @searchlog =
+    EXTRACT type1.*
+          , Duration int?
+          , master.dbo.type2.*
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+ 
+ OUTPUT @searchlog
+ TO "/output/test.csv"
+ USING Outputters.Csv();
+                       
