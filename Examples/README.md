@@ -33,5 +33,5 @@ outputter that writes the column names and optionally their type of
 a rowset into a file.
 
 - [***Handle Encoding Issues***](HandleEncoding) : Contains sample
-scripts that help dealing with various data encoding issues. Currently,
+scripts that helps dealing with various data encoding issues. Currently,
 the only available sample is FixEncodingErrors.
