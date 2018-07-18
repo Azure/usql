@@ -11,7 +11,6 @@ using System.Text;
 // The project is reference by DatabaseProject to create an assembly
 // The project is also referenced by USqlCSharpUdoUnitTestProject1 to create and run test cases for this processor
 
-
 namespace CSharpUDO
 {
     [SqlUserDefinedProcessor]
