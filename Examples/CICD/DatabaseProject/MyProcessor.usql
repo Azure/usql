@@ -1,0 +1,12 @@
+﻿// This U-SQL script defines the assembly CSharpUDO
+// The source code for CSharpUDO is in CSharpUDO project
+// DatabaseProject references CSharpUDO reference, removing this reference fails build
+// DROP Statement is not supported during public preview, will be supported soon.
+
+DROP ASSEMBLY IF EXISTS [CSharpUDO];
+
+CREATE ASSEMBLY IF NOT EXISTS [CSharpUDO]
+FROM @_DeployTempDirectory + @"/CSharpUDO/CSharpUDO.dll"
+WITH ADDITIONAL FILES = (
+    NODEPLOY @_DeployTempDirectory + @"/CSharpUDO/CSharpUDO.pdb"
+);

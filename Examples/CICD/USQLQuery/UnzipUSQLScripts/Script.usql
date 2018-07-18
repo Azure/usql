@@ -1,0 +1,34 @@
+// Auto-generated header code
+
+// Auto-generated header code ended
+
+// User script
+
+USE DATABASE USQLDatabase;
+REFERENCE ASSEMBLY [CSharpUDO];
+
+@input =
+    EXTRACT col1 int,
+            col2 int
+    FROM "input.csv"
+    USING Extractors.Csv();
+
+@results =
+    PROCESS @input
+    PRODUCE col1 int,
+            col2 int
+    USING new CSharpUDO.MyProcessor();
+
+OUTPUT @results
+TO "/output/results.csv"
+USING Outputters.Csv();
+
+
+
+// User script ended
+
+// Auto-generated footer code
+
+
+// Auto-generated footer code ended
+
