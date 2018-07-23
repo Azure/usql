@@ -41,7 +41,7 @@
       <Name>3.DatabaseProject</Name>
       <Project>{abe16675-df80-4db4-bda8-e41bd9807e94}</Project>
       <Private>True</Private>
-      <Database>DatabaseProject</Database>
+      <Database>USQLDatabase</Database>
     </ProjectReference>
   </ItemGroup>
   <!-- check for SDK Build target in current path then in USQLSDKPath-->

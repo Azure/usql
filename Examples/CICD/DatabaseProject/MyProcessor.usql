@@ -6,7 +6,7 @@
 DROP ASSEMBLY IF EXISTS [CSharpUDO];
 
 CREATE ASSEMBLY IF NOT EXISTS [CSharpUDO]
-FROM @_DeployTempDirectory + @"/CSharpUDO/CSharpUDO.dll"
+FROM @_DeployTempDirectory + @"/4.CSharpUDO/CSharpUDO.dll"
 WITH ADDITIONAL FILES = (
-    NODEPLOY @_DeployTempDirectory + @"/CSharpUDO/CSharpUDO.pdb"
+    NODEPLOY @_DeployTempDirectory + @"/4.CSharpUDO/CSharpUDO.pdb"
 );
