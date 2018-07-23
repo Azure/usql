@@ -3,21 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "USQLQuery", "USQLQuery\USQLQuery.usqlproj", "{F7E61949-19B8-4D3E-8356-1C79765E3F75}"
+Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "1.USQLQuery", "USQLQuery\1.USQLQuery.usqlproj", "{F7E61949-19B8-4D3E-8356-1C79765E3F75}"
 EndProject
-Project("{9C73B746-C089-4FFF-A4E6-C6994F33CB10}") = "USQLQuery_UnitTest", "USQLUnitTests\USQLQuery_UnitTest\USQLQuery_UnitTest.usqlutproj", "{1226F583-43AA-4A49-9A58-B3D6388AA7CB}"
+Project("{9C73B746-C089-4FFF-A4E6-C6994F33CB10}") = "2.USQLQuery_UnitTest", "USQLUnitTests\USQLQuery_UnitTest\2.USQLQuery_UnitTest.usqlutproj", "{1226F583-43AA-4A49-9A58-B3D6388AA7CB}"
 EndProject
-Project("{0C603C2C-620A-423B-A800-4F3E2F6281F1}") = "DatabaseProject", "DatabaseProject\DatabaseProject.usqldbproj", "{ABE16675-DF80-4DB4-BDA8-E41BD9807E94}"
+Project("{0C603C2C-620A-423B-A800-4F3E2F6281F1}") = "3.DatabaseProject", "DatabaseProject\3.DatabaseProject.usqldbproj", "{ABE16675-DF80-4DB4-BDA8-E41BD9807E94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USqlCSharpUdoUnitTestProject1", "USqlCSharpUdoUnitTestProject1\USqlCSharpUdoUnitTestProject1.csproj", "{86A585BB-0828-400F-A586-61A89AD02C9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5.USqlCSharpUdoUnitTestProject1", "USqlCSharpUdoUnitTestProject1\5.USqlCSharpUdoUnitTestProject1.csproj", "{86A585BB-0828-400F-A586-61A89AD02C9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{0D80ECAC-9263-481E-8B34-FBC1D77F61B9}"
 	ProjectSection(SolutionItems) = preProject
-		Deployment\GetAzureSDK.ps1 = Deployment\GetAzureSDK.ps1
-		Deployment\JobSubmission.ps1 = Deployment\JobSubmission.ps1
+		Deployment\GetUSQLDBDeploymentSDK.ps1 = Deployment\GetUSQLDBDeploymentSDK.ps1
+		Deployment\USQLJobSubmission.ps1 = Deployment\USQLJobSubmission.ps1
+		Deployment\USQLScriptUpload.ps1 = Deployment\USQLScriptUpload.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpUDO", "CSharpUDO\CSharpUDO.csproj", "{F59ED57F-5B72-42FD-AE00-02A35FE4942B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4.CSharpUDO", "CSharpUDO\4.CSharpUDO.csproj", "{F59ED57F-5B72-42FD-AE00-02A35FE4942B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -86,9 +86,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpUDO\CSharpUDO.csproj">
+    <ProjectReference Include="..\CSharpUDO\4.CSharpUDO.csproj">
       <Project>{f59ed57f-5b72-42fd-ae00-02a35fe4942b}</Project>
-      <Name>CSharpUDO</Name>
+      <Name>4.CSharpUDO</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

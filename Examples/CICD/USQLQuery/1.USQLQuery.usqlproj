@@ -24,16 +24,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Script Include="Script.usql" />
+    <Script Include="Script1.usql" />
+    <Script Include="Script2.usql" />
     <ScriptCode Include="Script.usql.cs">
       <DependentUpon>Script.usql</DependentUpon>
     </ScriptCode>
+    <ScriptCode Include="Script1.usql.cs">
+      <DependentUpon>Script1.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="Script2.usql.cs">
+      <DependentUpon>Script2.usql</DependentUpon>
+    </ScriptCode>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseProject\DatabaseProject.usqldbproj">
-      <Name>DatabaseProject</Name>
+    <ProjectReference Include="..\DatabaseProject\3.DatabaseProject.usqldbproj">
+      <Name>3.DatabaseProject</Name>
       <Project>{abe16675-df80-4db4-bda8-e41bd9807e94}</Project>
       <Private>True</Private>
-      <Database>USQLDatabase</Database>
+      <Database>DatabaseProject</Database>
     </ProjectReference>
   </ItemGroup>
   <!-- check for SDK Build target in current path then in USQLSDKPath-->
