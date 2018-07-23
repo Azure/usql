@@ -8,7 +8,7 @@
     <OutputType>File</OutputType>
     <AssemblyName>DatabaseProject.usqldbpack</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <Name>DatabaseProject</Name>
+    <Name>3.DatabaseProject</Name>
     <RootNamespace>DatabaseProject</RootNamespace>
     <TargetDirectorySeparator>/</TargetDirectorySeparator>
     <IncludeAssemblyPDBFile>true</IncludeAssemblyPDBFile>

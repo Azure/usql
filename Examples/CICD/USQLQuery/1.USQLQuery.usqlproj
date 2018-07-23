@@ -9,7 +9,7 @@
     <AssemblyName>USQLQuery.usqlpack</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <USQLProjectVersion>2</USQLProjectVersion>
-    <Name>USQLQuery</Name>
+    <Name>1.USQLQuery</Name>
     <RootNamespace>USQLQuery</RootNamespace>
     <RuntimeVersion>default</RuntimeVersion>
     <USqlLocalTestDataFolders>..\USQLUnitTests\USQLQuery_UnitTest\TestData</USqlLocalTestDataFolders>
