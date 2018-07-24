@@ -1,0 +1,15 @@
+﻿REFERENCE ASSEMBLY [BitMiracle.LibTiff.NET40];
+REFERENCE ASSEMBLY [System.IO.Compression];
+REFERENCE ASSEMBLY SplitTiff;
+
+DECLARE @in string = "/tiff_inputs/RGB_Imagery.tif";
+DECLARE @out string = "/tiff_outputs/output.zip";
+
+@tiff_chunks =
+    EXTRACT tiff byte[]
+    FROM @in
+    USING new SplitTiff.SplitTiffExtractor(1000, 1000);
+
+OUTPUT @tiff_chunks
+TO @out
+USING new SplitTiff.ZipOutputter("out_{0}.tiff");
