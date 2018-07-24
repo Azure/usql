@@ -23,8 +23,8 @@ Function UploadResources()
     $files = @(get-childitem $usqlScripts -recurse)
     foreach($file in $files)
     {
-        Write-Host "Uploading file: $($file.Name)"
-        Import-AzureRmDataLakeStoreItem -AccountName $ADLSName -Path $file.FullName -Destination "/$(Join-Path $DesitinationFolder $file)" -Force
+        Write-Host "Uploading file: $($file.Name) to \$(Join-Path $DesitinationFolder $file.Name)"
+        Import-AzureRmDataLakeStoreItem -AccountName $ADLSName -Path $file.FullName -Destination "\$(Join-Path $DesitinationFolder $file.Name)" -Force
     }
 }
 
