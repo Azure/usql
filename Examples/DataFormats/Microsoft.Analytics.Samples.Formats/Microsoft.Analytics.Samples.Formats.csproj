@@ -48,11 +48,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.XML" />
     <Reference Include="Microsoft.Analytics.Interfaces" />
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Avro\EventDataExtractor.cs" />
+    <Compile Include="Avro\EventDataPoco.cs" />
     <Compile Include="Json\MultiLevelJsonExtractor.cs" />
     <Compile Include="Exceptions\PathNotFoundException.cs" />
     <Compile Include="Avro\AvroExtractor.cs" />
