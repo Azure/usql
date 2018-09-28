@@ -176,7 +176,7 @@ DECLARE @output_file string = @"\output\twitter.csv";
         partitionid             long,
         eventenqueuedutctime    string
     FROM @input_file
-    USING new Microsoft.Analytics.Samples.Formats.Avro.AvroExtractor(@"
+    USING new Microsoft.Analytics.Samples.Formats.ApacheAvro.AvroExtractor(@"
     {
       ""type"" : ""record"",
       ""name"" : ""GenericFromIRecord0"",
