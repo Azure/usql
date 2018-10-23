@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>abe16675-df80-4db4-bda8-e41bd9807e94</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>DatabaseProject.usqldbpack</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <Name>3.DatabaseProject</Name>
+    <RootNamespace>DatabaseProject</RootNamespace>
+    <TargetDirectorySeparator>/</TargetDirectorySeparator>
+    <IncludeAssemblyPDBFile>true</IncludeAssemblyPDBFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="MyProcessor.usql">
+      <SubType>Assembly</SubType>
+    </Script>
+    <Script Include="Schema1.usql">
+      <SubType>Schema</SubType>
+    </Script>
+    <Script Include="TableValuedFunction1.usql">
+      <SubType>TableValuedFunction</SubType>
+    </Script>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSharpUDO\4.CSharpUDO.csproj">
+      <Name>4.CSharpUDO</Name>
+      <Project>{f59ed57f-5b72-42fd-ae00-02a35fe4942b}</Project>
+      <Private>True</Private>
+      <TargetDir>4.CSharpUDO</TargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(USQLSDKPath)\USqlDBProject.targets" Condition="'$(USQLSDKPath)' != '' And Exists('$(USQLSDKPath)\USqlDBProject.targets')" />
+</Project>

@@ -1,0 +1,4 @@
+// This U-SQL script defines a schema
+// One script one database object is preferred
+
+CREATE SCHEMA IF NOT EXISTS [schema1];
