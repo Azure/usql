@@ -98,6 +98,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
         {
             if (value == null)
             {
+                writer.WriteNull();
                 return;
             }
 
