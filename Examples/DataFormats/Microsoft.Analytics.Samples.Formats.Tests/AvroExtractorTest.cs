@@ -306,6 +306,165 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
         }
 
         [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfInt_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""int""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", 1 } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, int?>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, int?>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, int?>>("Value").Values[0] == 1);
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfBool_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""boolean""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", true } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, bool?>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, bool?>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, bool?>>("Value").Values[0] == true);
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfLong_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""long""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", 0x7FFFFFFFFFFFFFFF } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, long?>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, long?>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, long?>>("Value").Values[0] == 0x7FFFFFFFFFFFFFFF);
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfDouble_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""double""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", 3D } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, double?>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, double?>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, double?>>("Value").Values[0] == 3D);
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfString_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""string""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", "value1" } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, string>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, string>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, string>>("Value").Values[0] == "value1");
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfFloat_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""float""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", 3.5F } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, float?>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, float?>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, float?>>("Value").Values[0] == 3.5F);
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfByte_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""bytes""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            byte[] bytes = { 2, 4, 6 };
+            var dict = new Dictionary<string, object> { { "item1", bytes } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, byte[]>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, byte[]>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, byte[]>>("Value").Values[0].SequenceEqual(bytes));
+        }
+
+        [TestMethod]
+        public void AvroExtractor_DatatypeMap_MapOfInt_EmptyMap_Extracted()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": [""int"",""null""]}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object>();
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, int?>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, int?>>("Value"));
+            Assert.IsTrue(result[0].Get<SqlMap<string, int?>>("Value").Values.Count == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "Unsupported datatype for SQL.MAP.")]
+        public void AvroExtractor_DatatypeMap_MapOfUnspportedType_Exception()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""int""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", 1 } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, int[]>>(data, schema);
+
+            Assert.IsNotNull(result[0].Get<SqlMap<string, int>>("Value"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "")]
+        public void AvroExtractor_DatatypeMap_DatatypeMismatch_Exception()
+        {
+            var schema = @"{""fields"":[{""name"": ""Value"",""type"": { ""type"": ""map"",""values"": ""string""}}],""name"": ""SingleColumnPoco"",""namespace"": ""Microsoft.Analytics.Samples.Formats.Tests"",""type"": ""record""}";
+            var dict = new Dictionary<string, object> { { "item1", "asdf" } };
+            var data = new List<SingleColumnPoco<Dictionary<string, object>>>
+            {
+                new SingleColumnPoco<Dictionary<string, object>>() { Value = dict }
+            };
+
+            var result = ExecuteExtract<Dictionary<string, object>, SqlMap<string, int?>>(data, schema);
+        }
+
+        [TestMethod]
         public void AvroExtractor_EmptyFile_ReturnNoRow()
         {
             var schema = @"{""type"":""record"",""name"":""SingleColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value"",""type"":""string""}]}";
@@ -318,7 +477,12 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
 
         private IList<IRow> ExecuteExtract<T>(List<SingleColumnPoco<T>> data, string schema)
         {
-            var output = SingleColumnRowGenerator<T>().AsUpdatable();
+            return ExecuteExtract<T,T>(data, schema);
+        }
+
+        private IList<IRow> ExecuteExtract<T,O>(List<SingleColumnPoco<T>> data, string schema)
+        {
+            var output = SingleColumnRowGenerator<O>().AsUpdatable();
 
             using (var dataStream = new MemoryStream())
             {
