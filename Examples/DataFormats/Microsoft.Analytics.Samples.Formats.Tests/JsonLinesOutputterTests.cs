@@ -296,10 +296,10 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<string>("b"),
                 new USqlColumn<string>("c")
             );
-            object[] values = { "test", "", null };
+            object[] values = { "test", "foo\r\nbar", null };
             var row = new USqlRow(schema, values);
 
-            var expected = "{\"a\":\"test\",\"b\":\"\"}";
+            var expected = "{\"a\":\"test\",\"b\":\"foo\\r\\nbar\"}";
             var actual = GetOutputterResult(row);
 
             Assert.AreEqual(expected, actual);
@@ -601,7 +601,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             rows.Add(new USqlRow(schema, new object[] { dict }));
 
 
-            var expected = "{\"a\":{\"test1\":[2,3],\"test2\":[\"asd\",\"\"]}}"+
+            var expected = "{\"a\":{\"test1\":[2,3],\"test2\":[\"asd\",\"\"]}}" +
                 Environment.NewLine +
                 "{\"a\":{\"test3\":[1,4],\"test4\":[\"foo\",\"bar\"]}}";
             var actual = GetOutputterResult(rows);
@@ -671,7 +671,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 foreach (IRow row in rows)
                 {
                     outputter.Output(row, unstructuredWriter);
-                }                
+                }
                 outputter.Close();
                 var output = Encoding.ASCII.GetString(ms.ToArray()).TrimEnd();
                 return output;

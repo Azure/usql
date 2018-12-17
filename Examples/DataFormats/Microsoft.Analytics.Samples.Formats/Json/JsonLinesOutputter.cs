@@ -35,6 +35,7 @@ namespace Microsoft.Analytics.Samples.Formats.Json
     ///         ...
     /// Notice that this outputter doesn't require atomic output,
     /// since it produces standalone JSON documents as opposed to a single JSON array.
+    /// Adds an extra newline at the end of the file.
     /// </summary>
     [SqlUserDefinedOutputter(AtomicFileProcessing = false)]
     public class JsonLinesOutputter : IOutputter
