@@ -22,7 +22,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             );
             short a = 0;
             short b = 1;
-            object[] values = new object[2] { a, b };
+            object[] values = { a, b };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":0,\"b\":1}";
@@ -41,7 +41,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             );
             short a = 0;
             short b = 1;
-            object[] values = new object[3] { a, b, null };
+            object[] values = { a, b, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":0,\"b\":1}";
@@ -57,7 +57,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<int>("a"),
                 new USqlColumn<int>("b")
             );
-            object[] values = new object[2] { 0, 1 };
+            object[] values = { 0, 1 };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":0,\"b\":1}";
@@ -74,7 +74,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<int?>("b"),
                 new USqlColumn<int?>("c")
             );
-            object[] values = new object[3] { 0, 1, null };
+            object[] values = { 0, 1, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":0,\"b\":1}";
@@ -90,7 +90,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<long>("a"),
                 new USqlColumn<long>("b")
             );
-            object[] values = new object[2] { 9223372036854775807, -9223372036854775807 };
+            object[] values = { 9223372036854775807, -9223372036854775807 };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":9223372036854775807,\"b\":-9223372036854775807}";
@@ -107,7 +107,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<long?>("b"),
                 new USqlColumn<long?>("c")
             );
-            object[] values = new object[3] { 9223372036854775807, -9223372036854775807, null };
+            object[] values = { 9223372036854775807, -9223372036854775807, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":9223372036854775807,\"b\":-9223372036854775807}";
@@ -123,7 +123,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<float>("a"),
                 new USqlColumn<float>("b")
             );
-            object[] values = new object[2] { 3.5F, 0F };
+            object[] values = { 3.5F, 0F };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":3.5,\"b\":0.0}";
@@ -140,7 +140,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<float?>("b"),
                 new USqlColumn<float?>("c")
             );
-            object[] values = new object[3] { 3.5F, 0F, null };
+            object[] values = { 3.5F, 0F, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":3.5,\"b\":0.0}";
@@ -156,7 +156,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<double>("a"),
                 new USqlColumn<double>("b")
             );
-            object[] values = new object[2] { 3.5D, 0D };
+            object[] values = { 3.5D, 0D };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":3.5,\"b\":0.0}";
@@ -173,7 +173,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<double?>("b"),
                 new USqlColumn<double?>("c")
             );
-            object[] values = new object[3] { 3.5, 0D, null };
+            object[] values = { 3.5, 0D, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":3.5,\"b\":0.0}";
@@ -189,7 +189,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<decimal>("a"),
                 new USqlColumn<decimal>("b")
             );
-            object[] values = new object[2] { 350.5M, 0M };
+            object[] values = { 350.5M, 0M };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":350.5,\"b\":0.0}";
@@ -206,7 +206,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<decimal?>("b"),
                 new USqlColumn<decimal?>("c")
             );
-            object[] values = new object[3] { 350.5M, 0M, null };
+            object[] values = { 350.5M, 0M, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":350.5,\"b\":0.0}";
@@ -226,7 +226,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             byte a = 2;
             byte b = 4;
 
-            object[] values = new object[2] { a, b };
+            object[] values = { a, b };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":2,\"b\":4}";
@@ -246,7 +246,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             byte? a = 2;
             byte? b = null;
 
-            object[] values = new object[2] { a, b };
+            object[] values = { a, b };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":2}";
@@ -262,7 +262,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<bool>("a"),
                 new USqlColumn<bool>("b")
             );
-            object[] values = new object[2] { true, false };
+            object[] values = { true, false };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":true,\"b\":false}";
@@ -279,7 +279,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<bool?>("b"),
                 new USqlColumn<bool?>("c")
             );
-            object[] values = new object[3] { true, false, null };
+            object[] values = { true, false, null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":true,\"b\":false}";
@@ -296,7 +296,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<string>("b"),
                 new USqlColumn<string>("c")
             );
-            object[] values = new object[3] { "test", "", null };
+            object[] values = { "test", "", null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":\"test\",\"b\":\"\"}";
@@ -312,7 +312,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<char>("a"),
                 new USqlColumn<char>("b")
             );
-            object[] values = new object[2] { 'a', ' ' };
+            object[] values = { 'a', ' ' };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":\"a\",\"b\":\" \"}";
@@ -329,7 +329,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<char?>("b"),
                 new USqlColumn<char?>("c")
             );
-            object[] values = new object[3] { 'a', ' ', null };
+            object[] values = { 'a', ' ', null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":\"a\",\"b\":\" \"}";
@@ -344,7 +344,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             USqlSchema schema = new USqlSchema(
                 new USqlColumn<DateTime>("a")
             );
-            object[] values = new object[1] { new DateTime(2010, 01, 05) };
+            object[] values = { new DateTime(2010, 01, 05) };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":\"2010-01-05T00:00:00\"}";
@@ -360,7 +360,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<DateTime?>("a"),
                 new USqlColumn<DateTime?>("b")
             );
-            object[] values = new object[2] { new DateTime(2010, 01, 05), null };
+            object[] values = { new DateTime(2010, 01, 05), null };
             var row = new USqlRow(schema, values);
 
             var expected = "{\"a\":\"2010-01-05T00:00:00\"}";
@@ -385,18 +385,18 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<char?[]>("j"),
                 new USqlColumn<DateTime?[]>("k")
             );
-            object[] values = new object[11] {
-                new short?[3] { 0, 1, null },
-                new int?[3] { 0, 1, null },
-                new long?[3] { 9223372036854775807, -9223372036854775807, null },
-                new float?[3] { 3.5F, 0F, null },
-                new double?[3] { 3.5D, 0D, null },
-                new decimal?[3] { 205.2M, 0M, null },
-                new byte?[3] { 2, 4, null },
-                new bool?[3] { true, false, null },
-                new string[3] { "test", "", null },
-                new char?[3] { 'a', ' ', null },
-                new DateTime?[3] { new DateTime(2010, 01, 05), new DateTime(2015, 05, 06), null }
+            object[] values = {
+                new short?[] { 0, 1, null },
+                new int?[] { 0, 1, null },
+                new long?[] { 9223372036854775807, -9223372036854775807, null },
+                new float?[] { 3.5F, 0F, null },
+                new double?[] { 3.5D, 0D, null },
+                new decimal?[] { 205.2M, 0M, null },
+                new byte?[] { 2, 4, null },
+                new bool?[] { true, false, null },
+                new[] { "test", "", null },
+                new char?[] { 'a', ' ', null },
+                new DateTime?[] { new DateTime(2010, 01, 05), new DateTime(2015, 05, 06), null }
             };
 
             var row = new USqlRow(schema, values);
@@ -440,7 +440,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 { "DateTime", new DateTime(2015, 05, 06) }
             };
 
-            object[] values = new object[1] { dict };
+            object[] values = { dict };
 
             var row = new USqlRow(schema, values);
 
@@ -483,7 +483,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 { "DateTime", new DateTime(2015, 05, 06) }
             });
 
-            object[] values = new object[1] { map };
+            object[] values = { map };
 
             var row = new USqlRow(schema, values);
 
@@ -513,7 +513,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             );
             var keyValuePair = new KeyValuePair<string, object>("int", 3);
 
-            object[] values = new object[1] { keyValuePair };
+            object[] values = { keyValuePair };
 
             var row = new USqlRow(schema, values);
 
@@ -530,8 +530,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new USqlColumn<Dictionary<string, object>[]>("a")
             );
 
-            Dictionary<string, object>[] dictArray = new Dictionary<string, object>[2]
-            {
+            Dictionary<string, object>[] dictArray = {
                 new Dictionary<string, object>
                 {
                     { "test1", "asd" },
@@ -544,7 +543,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 }
             };
 
-            object[] values = new object[1] { dictArray };
+            object[] values = { dictArray };
 
             var row = new USqlRow(schema, values);
 
@@ -563,11 +562,11 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
 
             Dictionary<string, object> dict = new Dictionary<string, object>
             {
-                { "test1", new int[]{ 2, 3 } },
-                { "test2", new string[]{ "asd", "" } },
+                { "test1", new[]{ 2, 3 } },
+                { "test2", new[]{ "asd", "" } },
             };
 
-            object[] values = new object[1] { dict };
+            object[] values = { dict };
 
             var row = new USqlRow(schema, values);
 
@@ -587,16 +586,16 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             List<USqlRow> rows = new List<USqlRow>();
             Dictionary<string, object> dict = new Dictionary<string, object>
             {
-                { "test1", new int[]{ 2, 3 } },
-                { "test2", new string[]{ "asd", "" } },
+                { "test1", new[]{ 2, 3 } },
+                { "test2", new[]{ "asd", "" } },
             };
 
             rows.Add(new USqlRow(schema, new object[] { dict }));
 
             dict = new Dictionary<string, object>
             {
-                { "test3", new int[]{ 1, 4 } },
-                { "test4", new string[]{ "foo", "bar" } },
+                { "test3", new[]{ 1, 4 } },
+                { "test4", new[]{ "foo", "bar" } },
             };
 
             rows.Add(new USqlRow(schema, new object[] { dict }));
@@ -620,10 +619,10 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             Dictionary<string, object> complex = new Dictionary<string, object>
             {
                 {
-                    "test1", new Dictionary<string, object>(){ { "nested", 1}, { "nestedArray", new int[] { 1, 2 } } }
+                    "test1", new Dictionary<string, object>(){ { "nested", 1}, { "nestedArray", new[] { 1, 2 } } }
                 },
                 {
-                    "test2", new Dictionary<string, object>[]
+                    "test2", new[]
                     {
                         new Dictionary<string, object>
                         {
@@ -639,7 +638,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 }
             };
 
-            object[] values = new object[1] { complex };
+            object[] values = { complex };
 
             var row = new USqlRow(schema, values);
 
