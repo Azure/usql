@@ -1,12 +1,12 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Analytics.Samples.Formats.Json;
-using System.IO;
-using Microsoft.Analytics.UnitTest;
-using Microsoft.Analytics.Interfaces;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using Microsoft.Analytics.Interfaces;
+using Microsoft.Analytics.Samples.Formats.Json;
 using Microsoft.Analytics.Types.Sql;
+using Microsoft.Analytics.UnitTest;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.Analytics.Samples.Formats.Tests
 {
@@ -534,12 +534,12 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                 new Dictionary<string, object>
                 {
                     { "test1", "asd" },
-                    { "test2", 3 },
+                    { "test2", 3 }
                 },
                 new Dictionary<string, object>
                 {
                     { "test1", "das" },
-                    { "test2", 3 },
+                    { "test2", 3 }
                 }
             };
 
@@ -563,7 +563,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             Dictionary<string, object> dict = new Dictionary<string, object>
             {
                 { "test1", new[]{ 2, 3 } },
-                { "test2", new[]{ "asd", "" } },
+                { "test2", new[]{ "asd", "" } }
             };
 
             object[] values = { dict };
@@ -587,7 +587,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             Dictionary<string, object> dict = new Dictionary<string, object>
             {
                 { "test1", new[]{ 2, 3 } },
-                { "test2", new[]{ "asd", "" } },
+                { "test2", new[]{ "asd", "" } }
             };
 
             rows.Add(new USqlRow(schema, new object[] { dict }));
@@ -595,7 +595,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             dict = new Dictionary<string, object>
             {
                 { "test3", new[]{ 1, 4 } },
-                { "test4", new[]{ "foo", "bar" } },
+                { "test4", new[]{ "foo", "bar" } }
             };
 
             rows.Add(new USqlRow(schema, new object[] { dict }));
@@ -619,7 +619,7 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             Dictionary<string, object> complex = new Dictionary<string, object>
             {
                 {
-                    "test1", new Dictionary<string, object>(){ { "nested", 1}, { "nestedArray", new[] { 1, 2 } } }
+                    "test1", new Dictionary<string, object> { { "nested", 1}, { "nestedArray", new[] { 1, 2 } } }
                 },
                 {
                     "test2", new[]
@@ -627,12 +627,12 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
                         new Dictionary<string, object>
                         {
                             { "test1", "asd" },
-                            { "test2", 3 },
+                            { "test2", 3 }
                         },
                         new Dictionary<string, object>
                         {
                             { "test1", "das" },
-                            { "test2", 3 },
+                            { "test2", 3 }
                         }
                     }
                 }
