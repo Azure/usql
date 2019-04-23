@@ -9,6 +9,7 @@ using Microsoft.Analytics.Samples.Formats.Json.Exceptions;
 
 namespace Microsoft.Analytics.Samples.Formats.Json
 {
+    [SqlUserDefinedExtractor(AtomicFileProcessing=true)]
     public class MultiLevelJsonExtractor : JsonExtractor
     {
         private string[] jsonPaths;
