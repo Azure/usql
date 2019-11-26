@@ -16,6 +16,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Analytics.Types.Sql;
@@ -145,6 +146,11 @@ namespace Microsoft.Analytics.Samples.Formats.Json
                 if(type == typeof(string))
                 {
                     return JsonFunctions.GetTokenString(token);
+                }
+                else if(type == typeof(byte[]))
+                {
+                    //Workaround to U-SQL string limit issue for nested JSONs
+                    return Encoding.UTF8.GetBytes(JsonFunctions.GetTokenString(token));
                 }
             
                 // We simply delegate to Json.Net for data conversions
