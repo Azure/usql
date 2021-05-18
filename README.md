@@ -6,8 +6,7 @@ U-SQL is a new language from Microsoft for processing big data.  U-SQL combines 
 
 Here are a few links with a lot more information:
 
-* [U-SQL FAQ](FAQ.md)
-* [U-SQL reference documentation](http://aka.ms/usql_reference)
+* [U-SQL reference documentation](https://docs.microsoft.com/u-sql/)
 * [Get Started with U-SQL](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-u-sql-get-started)
 * [About Azure Data Lake](https://aka.ms/azuredatalake)
 
