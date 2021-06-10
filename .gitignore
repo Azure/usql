@@ -138,6 +138,9 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+
 # =========================
 # Windows detritus
 # =========================
