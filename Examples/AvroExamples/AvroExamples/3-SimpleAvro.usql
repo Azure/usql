@@ -1,4 +1,4 @@
-﻿REFERENCE ASSEMBLY [Newtonsoft.Json];
+REFERENCE ASSEMBLY [Newtonsoft.Json];
 REFERENCE ASSEMBLY [log4net];
 REFERENCE ASSEMBLY [Avro]; 
 REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
