@@ -1,4 +1,4 @@
-﻿DROP ASSEMBLY IF EXISTS [Avro];
+DROP ASSEMBLY IF EXISTS [Avro];
 CREATE ASSEMBLY [Avro] FROM @"/Assemblies/Avro/Avro.dll";
 DROP ASSEMBLY IF EXISTS [Microsoft.Analytics.Samples.Formats];
 CREATE ASSEMBLY [Microsoft.Analytics.Samples.Formats] FROM @"/Assemblies/Avro/Microsoft.Analytics.Samples.Formats.dll";
