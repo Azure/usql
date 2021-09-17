@@ -1,0 +1,25 @@
+﻿// The U-SQL script contains the query logic. Note that:
+//      1. USQLDatabase is a database project referenced by USQLQuery
+//      2. CSharpUDO is an assembly defined in DatabaseProject project with referencing the C# source code in CSharpUDO project
+//      3. Don't remove project references, or project build will fail
+// 
+
+USE DATABASE USQLDatabase;
+REFERENCE ASSEMBLY [CSharpUDO];
+
+@input =
+    EXTRACT col1 int,
+            col2 int
+    FROM "input.csv"
+    USING Extractors.Csv();
+
+@results =
+    PROCESS @input
+    PRODUCE col1 int,
+            col2 int
+    USING new CSharpUDO.MyProcessor();
+
+OUTPUT @results
+TO "/output/results.csv"
+USING Outputters.Csv();
+

@@ -1,0 +1,22 @@
+﻿// This U-SQL script defines a table valued function
+// One script one database object is preferred
+
+DROP FUNCTION IF EXISTS [dbo].[TableValuedFunction1];
+
+CREATE FUNCTION IF NOT EXISTS [dbo].[TableValuedFunction1]()
+RETURNS @searchlog TABLE(UserId int, Start DateTime, Region string, 
+                         Query string, Duration int?, Urls string, ClickedUrls string)
+AS
+BEGIN
+    @searchlog =
+        EXTRACT UserId int,
+                Start DateTime,
+                Region string,
+                Query string,
+                Duration int?,
+                Urls string,
+                ClickedUrls string
+        FROM "/Samples/Data/SearchLog.tsv"
+        USING Extractors.Tsv();
+RETURN;
+END;
