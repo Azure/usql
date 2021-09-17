@@ -12,6 +12,7 @@ using Avro.Generic;
 using Avro;
 using Avro.File;
 using Avro.IO;
+using System.Reflection;
 
 namespace Microsoft.Analytics.Samples.Formats.Tests
 {
@@ -67,8 +68,17 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
 
         public IRow SingleColumnRowGenerator<T>()
         {
-            var foo = new USqlColumn<T>("Value");
-            var columns = new List<IColumn> { foo };
+            var col1 = new USqlColumn<T>("Value");
+            var columns = new List<IColumn> { col1 };
+            var schema = new USqlSchema(columns);
+            return new USqlRow(schema, null);
+        }
+
+        public IRow TwoColumnRowGenerator<T>()
+        {
+            var col1 = new USqlColumn<T>("Value1");
+            var col2 = new USqlColumn<T>("Value2");
+            var columns = new List<IColumn> { col1, col2 };
             var schema = new USqlSchema(columns);
             return new USqlRow(schema, null);
         }
@@ -316,6 +326,20 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             Assert.IsTrue(result.Count == 0);
         }
 
+        [TestMethod]
+        public void AvroExtractor_MultipleColumns_ReturnColumnsInOneRow()
+        {
+            var schema = @"{""type"":""record"",""name"":""TwoColumnPoco"",""namespace"":""Microsoft.Analytics.Samples.Formats.Tests"",""fields"":[{""name"":""Value1"",""type"":""string""},{""name"":""Value2"",""type"":""string""}]}";
+            var data = new List<TwoColumnPoco<string>>()
+            {
+                new TwoColumnPoco<string>() { Value1 = "foo", Value2 = "bar" }
+            };
+
+            var result = ExecuteExtract(data, schema);
+
+            Assert.IsTrue(result.Count == 1);
+        }
+
         private IList<IRow> ExecuteExtract<T>(List<SingleColumnPoco<T>> data, string schema)
         {
             var output = SingleColumnRowGenerator<T>().AsUpdatable();
@@ -330,18 +354,35 @@ namespace Microsoft.Analytics.Samples.Formats.Tests
             }
         }
 
-        private void serializeAvro<T>(MemoryStream dataStream, List<SingleColumnPoco<T>> data, string schema)
+        private IList<IRow> ExecuteExtract<T>(List<TwoColumnPoco<T>> data, string schema)
+        {
+            var output = TwoColumnRowGenerator<T>().AsUpdatable();
+
+            using (var dataStream = new MemoryStream())
+            {
+                serializeAvro(dataStream, data, schema);
+
+                var reader = new USqlStreamReader(dataStream);
+                var extractor = new AvroExtractor(schema);
+                return extractor.Extract(reader, output).ToList();
+            }
+        }
+
+        private void serializeAvro<T>(MemoryStream dataStream, List<T> data, string schema)
         {
             var avroSchema = Schema.Parse(schema);
             var writer = new GenericWriter<GenericRecord>(avroSchema);
             var fileWriter = DataFileWriter<GenericRecord>.OpenWriter(writer, dataStream);
             var encoder = new BinaryEncoder(dataStream);
 
-            foreach (SingleColumnPoco<T> record in data)
+            foreach (T record in data)
             {
                 var genericRecord = new GenericRecord(avroSchema as RecordSchema);
 
-                genericRecord.Add("Value", record.Value);
+                foreach (var prop in typeof(T).GetProperties())
+                {
+                    genericRecord.Add(prop.Name, prop.GetValue(record));
+                }
 
                 fileWriter.Append(genericRecord);
             }
