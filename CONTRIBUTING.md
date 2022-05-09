@@ -1,1 +1,2 @@
 # Contributing to MicrosoftBigData/usql
+ 
