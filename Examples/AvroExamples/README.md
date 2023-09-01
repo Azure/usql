@@ -2,7 +2,8 @@
 This example demonstrates how you can use U-SQL to analyze data stored in Avro files.
 
 ## Build
-1. Open Microsoft.Analytics.Samples.sln in Visual Studio 2017
+1. Clone the U-SQL repo (https://github.com/Azure/usql.git)
+1. From the cloned repo open usql/Examples/DataFormats/Microsoft.Analytics.Samples.sln in Visual Studio 2017
 2. Build the Microsoft.Analytics.Samples solution
 
 ### Register assemblies
