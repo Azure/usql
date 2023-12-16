@@ -1,0 +1,64 @@
+﻿USE DATABASE Avro;  
+
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+REFERENCE ASSEMBLY [log4net];
+REFERENCE ASSEMBLY [Avro]; 
+REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+
+DECLARE @input_file string = @"/Avro/Samples/EHC.avro";
+DECLARE @output_file string = @"/output/EHC.csv";
+
+@rs =
+    EXTRACT
+        SequenceNumber          long,
+        Offset                  string,
+        EnqueuedTimeUtc         string,
+        SystemProperties        SQL.MAP<string,string>,
+        Properties              SQL.MAP<string,string>,
+        Body                    byte[]
+    FROM @input_file
+    USING new Microsoft.Analytics.Samples.Formats.ApacheAvro.AvroExtractor(@"
+    {
+      ""type"" : ""record"",
+      ""name"" : ""EventData"",
+      ""namespace"" : ""Microsoft.ServiceBus.Messaging"",
+      ""fields"" : [ {
+        ""name"" : ""SequenceNumber"",
+        ""type"" : ""long""
+      }, {
+        ""name"" : ""Offset"",
+        ""type"" : ""string""
+      }, {
+        ""name"" : ""EnqueuedTimeUtc"",
+        ""type"" : ""string""
+      }, {
+        ""name"" : ""SystemProperties"",
+        ""type"" : {
+          ""type"" : ""map"",
+          ""values"" : [ ""long"", ""double"", ""string"", ""bytes"" ]
+        }
+      }, {
+        ""name"" : ""Properties"",
+        ""type"" : {
+          ""type"" : ""map"",
+          ""values"" : [ ""long"", ""double"", ""string"", ""bytes"", ""null"" ]
+        }
+      }, {
+        ""name"" : ""Body"",
+        ""type"" : [ ""null"", ""bytes"" ]
+      } ]
+    }
+    ");
+
+@mapexplode =
+    SELECT SequenceNumber, 
+           Offset, 
+           EnqueuedTimeUtc,
+           Encoding.UTF8.GetString(Body) AS Body,
+           p.key AS PropertiesKey,
+           p.value AS PropertiesValue
+    FROM @rs
+    OUTER APPLY EXPLODE(Properties) AS p(key, value);
+
+OUTPUT @mapexplode TO @output_file USING Outputters.Text();
+

@@ -18,6 +18,9 @@ using Microsoft.Analytics.Interfaces;
 using Avro.File;
 using Avro.Generic;
 using System.IO;
+using System;
+using Microsoft.Analytics.Types.Sql;
+using System.Linq;
 
 namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
 {
@@ -51,7 +54,15 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
                     {
                         if (avroRecord[column.Name] != null)
                         {
-                            output.Set(column.Name, avroRecord[column.Name]);
+                            // Map
+                            if(avroRecord[column.Name] is Dictionary<string, object>)
+                            {
+                                OutputDictionaryAsMap((Dictionary<string, object>)avroRecord[column.Name], column, output); 
+                            }
+                            else
+                            {
+                                output.Set(column.Name, avroRecord[column.Name]);
+                            }
                         }
                         else
                         {
@@ -61,6 +72,67 @@ namespace Microsoft.Analytics.Samples.Formats.ApacheAvro
                     
                     yield return output.AsReadOnly();
                 }
+            }
+        }
+
+        private void OutputDictionaryAsMap(Dictionary<string, object> dict, IColumn column, IUpdatableRow output)
+        {
+            // int
+            if (column.Type == typeof(SqlMap<string, int?>))
+            {
+                output.Set(column.Name, new SqlMap<string, int?>(dict.ToDictionary(p => p.Key, p => {
+                    try
+                    {
+                        return (int?)Convert.ToInt32(p.Value);
+                    }
+                    catch
+                    {
+                        throw new Exception("Type mismatch. Cannot convert source value to integer.");
+                    }
+                })));
+            }
+            // string
+            else if (column.Type == typeof(SqlMap<string, string>))
+            {
+                output.Set(column.Name, new SqlMap<string, string>(dict.ToDictionary(p => p.Key, p => p.Value.ToString())));
+            }
+            // bool
+            else if (column.Type == typeof(SqlMap<string, bool?>))
+            {
+                output.Set(column.Name, new SqlMap<string, bool?>(dict.ToDictionary(p => p.Key, p => (bool?)p.Value)));
+            }
+            // long
+            else if (column.Type == typeof(SqlMap<string, long?>))
+            {
+                output.Set(column.Name, new SqlMap<string, long?>(dict.ToDictionary(p => p.Key, p => (long?)p.Value)));
+            }
+            // double
+            else if (column.Type == typeof(SqlMap<string, double?>))
+            {
+                output.Set(column.Name, new SqlMap<string, double?>(dict.ToDictionary(p => p.Key, p => {
+                    try
+                    {
+                        return (double?)Convert.ToInt64(p.Value);
+                    }
+                    catch
+                    {
+                        throw new Exception("Type mismatch. Cannot convert source value to double.");
+                    }
+                })));
+            }
+            // float
+            else if (column.Type == typeof(SqlMap<string, float?>))
+            {
+                output.Set(column.Name, new SqlMap<string, float?>(dict.ToDictionary(p => p.Key, p => (float?)p.Value)));
+            }
+            // byte[]
+            else if (column.Type == typeof(SqlMap<string, byte[]>))
+            {
+                output.Set(column.Name, new SqlMap<string, byte[]>(dict.ToDictionary(p => p.Key, p => (byte[])p.Value)));
+            }
+            else
+            {
+                throw new Exception($"Unsupported datatype. {column.Type.GetGenericArguments()[1]} is not supported for SQL.MAP.");
             }
         }
 
